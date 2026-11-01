@@ -54,7 +54,8 @@ async function boot() {
   } catch {
     seed = { bookings: [], blocked: [] };
   }
-  let state = loadState(config.id, seed, servicesById, today);
+  document.body.classList.add('owner-page');
+  let state = loadState(config.id, seed, servicesById, today, config.openingHours);
   let selectedDate = today;
   let blockError = '';
   let announced = '';
@@ -116,7 +117,7 @@ async function boot() {
         </div>
         <button type="button" class="btn-ghost" id="next-day">Next day</button>
       </div>
-      ${selectedDate === today ? '' : '<button type="button" class="btn-text" id="jump-today">Back to today</button>'}
+      <button type="button" class="btn-text today-link" id="jump-today" ${selectedDate === today ? 'disabled' : ''}>Back to today</button>
       ${closedNote}
       <ul class="stats">
         <li class="stat"><strong>${dayBookings.length}</strong><span>Bookings this day</span></li>
@@ -189,6 +190,7 @@ async function boot() {
     </div>
     <main id="main">
       <div class="wrap">
+        <p class="login-note" role="note"><strong>Demo: no login</strong></p>
         <p class="owner-note" role="note"><strong>Demo owner view, no login in this demo.</strong> Anyone with this link can change the sample schedule. It is saved only in this browser.</p>
         <p id="day-live" class="visually-hidden" aria-live="polite"></p>
         <div id="schedule"></div>
@@ -248,7 +250,7 @@ async function boot() {
       return;
     }
     if (event.target.closest('#reset-yes')) {
-      state = resetState(config.id, seed, servicesById, today);
+      state = resetState(config.id, seed, servicesById, today, config.openingHours);
       selectedDate = today;
       blockError = '';
       paint('#reset-demo');
@@ -289,7 +291,7 @@ async function boot() {
     if (event.key !== storageKey(config.id) || !event.newValue) return;
     try {
       const parsed = JSON.parse(event.newValue);
-      if (parsed?.seedVersion === 1) {
+      if (parsed?.seedVersion === 2) {
         state = parsed;
         paint();
       }
