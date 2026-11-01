@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Demo booking page for the fictional salon Chipo's Braids & Beauty in Kabulonga, Lusaka. Example prices only.">
+    <meta name="theme-color" content="#f3eee6">
+    <meta name="robots" content="noindex">
+    <meta property="og:title" content="Chipo's Braids & Beauty">
+    <meta property="og:description" content="Fictional Kabulonga salon. Example prices and sample bookings.">
+    <meta property="og:type" content="website">
+    <title>Chipo's Braids &amp; Beauty · Book</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <script>
+      (function () {
+        var params = new URLSearchParams(location.search);
+        var id = (params.get('config') || 'salon').toLowerCase();
+        if (!/^[a-z0-9-]+$/.test(id)) id = 'salon';
+        function preload(href) {
+          var link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'fetch';
+          link.href = href;
+          link.crossOrigin = 'anonymous';
+          document.head.appendChild(link);
+        }
+        preload('config/' + id + '.json');
+        preload('data/seed.json');
+        try {
+          var raw = sessionStorage.getItem('bookit-theme:' + id);
+          if (!raw) return;
+          var saved = JSON.parse(raw);
+          var theme = saved.vars || {};
+          var root = document.documentElement;
+          Object.keys(theme).forEach(function (key) {
+            if (key.indexOf('--') === 0) root.style.setProperty(key, theme[key]);
+          });
+          if (saved.colorScheme) root.style.colorScheme = saved.colorScheme;
+        } catch (error) {
+          /* The salon theme in CSS is the fallback. */
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="./src/styles.css">
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <noscript>
+      <p class="demo-banner">Demo only. This is a fictional business. Prices and bookings are examples. JavaScript is required to browse services and times.</p>
+    </noscript>
+    <div id="app" aria-busy="true">
+      <p class="boot">Loading the booking page…</p>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
