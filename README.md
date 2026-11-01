@@ -56,7 +56,7 @@ Switching is the `config` query parameter. To make another file the default, cha
 
 The JSON sets the name, area, tagline, initials, address, colours (`theme` CSS variables), light or dark `colorScheme`, the WhatsApp placeholder, opening hours, staff, services, deposit mock and gallery. Colours on the page come from those variables.
 
-`phone.whatsappE164` is the number used in the `wa.me` link. In every shipped preset it is `260970000000`, which is a **placeholder, not a real WhatsApp account**. `phone.display` is what people see. The demos show `+260 9XX XXX XXX`. Replace both fields together when this is no longer a demo.
+`phone.whatsappE164` is the only phone number. In every shipped preset it is `260970000000`, a **placeholder, not a real WhatsApp account**. The page formats those same digits as `+260 97 000 0000` and labels them **demo number**. The WhatsApp link uses the same digits. Replace this one value when this is no longer a demo.
 
 Leave the demo banner in place until the business, prices and bookings are real. The pages also send `noindex` so the fictional prices are less likely to be indexed. Remove that meta tag for a real business.
 
@@ -67,7 +67,7 @@ Sample bookings and blocked times live in `public/data/seed.json`, keyed by the 
 1. Pick a service. Prices show the kwacha amount and the word example.
 2. Optionally pick a staff member, or leave no preference.
 3. Pick a date. Closed days are visible and cannot be selected.
-4. Pick a time. Open times are clickable. A booked or impossible time stays on the grid in grey, labelled unavailable. A long run collapses into one row, such as `Fully booked 08:00-14:00`.
+4. Pick a time. Open times use 24-hour `HH:MM`. Grey times cannot be booked. A peach row is a longer booked stretch, such as `Fully booked 08:00-14:00`.
 5. Enter a name and phone number, then review the booking.
 6. Optionally open the Mobile Money step. It lists MTN MoMo, Airtel Money and Zamtel. It is marked **Demo**. Nothing is charged and nothing is sent to a provider. This step comes after the review.
 7. Confirm on WhatsApp. The booking is saved in this browser and a `wa.me` link is built with the service, date, time, duration, example price, name and phone. The number is read from the config and labelled **demo number**.
@@ -122,7 +122,7 @@ Opening hours are keyed by weekday. `null` means closed. `breaks` are times the 
 
 ### Seed file
 
-`public/data/seed.json` uses `dayOffset` from today in Lusaka, not a fixed calendar date. The offset counts **open** days: `0` is today when today is open, otherwise the next open day, and a negative offset walks backward through open days. Closed days, such as Sunday at the salon, never receive sample bookings or blocks. Each preset has exactly one `no-show`, on that open “today”, so the no-show count is visible. The sample is rebuilt when the calendar day changes; bookings you added stay.
+`public/data/seed.json` uses `dayOffset` from today in Lusaka, not a fixed calendar date. The offset counts **open** days: `0` is today when today is open, otherwise the next open day, and a negative offset walks backward through open days. Closed days, such as Sunday at the salon, never receive sample bookings or blocks. Each preset has exactly one `no-show`, and a block, on that next open day. When today is closed, the owner schedule and the customer date picker open on that day so the sample is visible immediately. The sample is rebuilt when the calendar day changes; bookings you added stay.
 
 ```json
 {

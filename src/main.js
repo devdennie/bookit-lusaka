@@ -7,13 +7,14 @@ import {
   loadSeed,
   requestedConfigId,
 } from './config.js';
-import { addDays, eachDate, todayISO, weekdayName } from './dates.js';
+import { addDays, eachDate, openDayFromOffset, todayISO, weekdayName } from './dates.js';
 import {
   bookingMessage,
   endTime,
   escapeHtml,
   formatDateLong,
   formatDayParts,
+  formatDemoPhone,
   formatDuration,
   formatPrice,
   formatTime,
@@ -224,12 +225,14 @@ async function boot() {
   }
 
   function dateStep() {
-    const days = eachDate(today, DAY_COUNT).map((iso, index) => {
+    const suggested = openDayFromOffset(today, 0, config.openingHours);
+    const days = eachDate(today, DAY_COUNT).map((iso) => {
       const parts = formatDayParts(iso);
       const closed = !config.openingHours?.[weekdayName(iso)];
       const label = `${formatDateLong(iso)}${closed ? ', closed' : ''}`;
+      const suggestedClass = iso === suggested ? ' is-suggested' : '';
       return `
-        <button type="button" class="day${closed ? ' is-closed' : ''}" data-date="${iso}" tabindex="${index === 0 ? '0' : '-1'}" ${closed ? 'aria-disabled="true"' : ''} aria-label="${escapeHtml(label)}">
+        <button type="button" class="day${closed ? ' is-closed' : ''}${suggestedClass}" data-date="${iso}" tabindex="${iso === suggested ? '0' : '-1'}" ${closed ? 'aria-disabled="true"' : ''} aria-label="${escapeHtml(label)}">
           <span class="dow">${escapeHtml(parts.weekday)}</span>
           <span class="dom">${escapeHtml(parts.day)}</span>
           <span class="mon">${closed ? 'Closed' : escapeHtml(parts.month)}</span>
@@ -239,7 +242,7 @@ async function boot() {
       <h2 id="booker-title">Pick a date</h2>
       ${summaryHtml()}
       <div class="day-scroller">
-        <button type="button" class="day-nav" id="day-prev" aria-label="Show earlier days"><span aria-hidden="true">‹</span></button>
+        <button type="button" class="day-nav" id="day-prev" aria-label="Show earlier days" disabled><span aria-hidden="true">‹</span></button>
         <div class="day-strip-wrap">
           <div class="day-strip" id="day-strip" role="group" aria-label="Upcoming days">${days}</div>
         </div>
@@ -268,7 +271,8 @@ async function boot() {
     let radioIndex = 0;
     const cells = timeline.map((item) => {
       if (item.kind === 'span') {
-        return `<p class="slot-span" role="note">${escapeHtml(item.label)}</p>`;
+        const tone = item.booked ? ' slot-span-booked' : '';
+        return `<p class="slot-span${tone}" role="note">${escapeHtml(item.label)}</p>`;
       }
       if (item.kind === 'unavailable') {
         const label = `Unavailable, ${formatTime(item.start)} to ${formatTime(item.end)}`;
@@ -288,11 +292,15 @@ async function boot() {
     }).join('');
     const empty = flow.slots.length
       ? ''
-      : `<p class="empty" role="status">No open times on this day. Grey times are unavailable, and a long run is summed up in one row.</p>`;
+      : `<p class="empty" role="status">No open times on this day. Grey marks a time you cannot book. A peach row is a longer booked stretch.</p>`;
     return `
       <h2 id="booker-title">Pick a time</h2>
       ${summaryHtml()}
-      <p class="help">Grey times are unavailable. A long gap is one row, such as Fully booked 08:00-14:00, so the list does not jump.</p>
+      <ul class="slot-legend">
+        <li><span class="legend-swatch legend-grey" aria-hidden="true"></span> Unavailable</li>
+        <li><span class="legend-swatch legend-peach" aria-hidden="true"></span> Fully booked</li>
+      </ul>
+      <p class="help">Grey times cannot be booked. A peach row is a longer booked stretch, such as Fully booked 08:00-14:00.</p>
       ${error}
       <div class="slot-grid" role="radiogroup" aria-label="Times">${cells}</div>
       ${empty}
@@ -412,7 +420,7 @@ async function boot() {
         <a class="btn btn-block" href="${href}" target="_blank" rel="noopener noreferrer">Send booking on WhatsApp</a>
         <span class="demo-number">demo number</span>
       </div>
-      <p class="phone-note">WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong> <span class="demo-number">demo number</span>. The link uses the placeholder from this business config.</p>
+      <p class="phone-note">WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
       <button type="button" class="btn-text" id="book-another">Book another service</button>
     `;
   }
@@ -447,6 +455,7 @@ async function boot() {
       back.hidden = index <= 0;
     }
     document.querySelector('#booker-step').innerHTML = `<div class="step-panel">${renderStepBody()}</div>`;
+    if (flow.step === 'date') positionDayStrip();
     if (live.textContent !== kicker.textContent) live.textContent = kicker.textContent;
     if (flow.step === 'details' && flow.error) {
       document.querySelector('[aria-invalid="true"]')?.focus();
@@ -579,7 +588,7 @@ async function boot() {
               <p class="eyebrow">${escapeHtml(config.area)}, Lusaka</p>
               <h1>${escapeHtml(config.name)}</h1>
               <p class="lede">${escapeHtml(config.tagline || '')}</p>
-              <p class="contact-line">WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong> <span class="demo-number">demo number</span></p>
+              <p class="contact-line">WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
               <p class="status-pill">${escapeHtml(todayStatus())}</p>
               <div class="hero-actions">
                 <button type="button" class="btn" data-open="book">Book now</button>
@@ -617,7 +626,7 @@ async function boot() {
               <p class="eyebrow">Visit</p>
               <h2 id="visit-title">${escapeHtml(config.area)}</h2>
               <p>${escapeHtml(config.address || '')}</p>
-              <p>WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong> <span class="demo-number">demo number</span></p>
+              <p>WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
               <table class="hours">
                 <caption class="visually-hidden">Opening hours</caption>
                 <tbody>${hours}</tbody>
@@ -696,6 +705,7 @@ async function boot() {
       if (strip) {
         const amount = event.target.closest('#day-prev') ? -240 : 240;
         strip.scrollBy({ left: amount, behavior: 'auto' });
+        syncDayNav();
       }
       return;
     }
@@ -777,6 +787,28 @@ async function boot() {
     if (event.target.name === 'name') flow.name = event.target.value;
     if (event.target.name === 'phone') flow.phone = event.target.value;
   });
+
+  function syncDayNav() {
+    const strip = document.querySelector('#day-strip');
+    const prev = document.querySelector('#day-prev');
+    const next = document.querySelector('#day-next');
+    if (!strip || !prev || !next) return;
+    const box = strip.getBoundingClientRect();
+    const first = strip.querySelector('.day');
+    const last = strip.querySelector('.day:last-child');
+    prev.disabled = !first || first.getBoundingClientRect().left >= box.left - 1;
+    next.disabled = !last || last.getBoundingClientRect().right <= box.right + 1;
+  }
+
+  function positionDayStrip() {
+    const strip = document.querySelector('#day-strip');
+    const suggested = document.querySelector('.day.is-suggested');
+    if (strip && suggested) {
+      strip.scrollLeft = Math.max(0, suggested.offsetLeft - strip.offsetLeft - 8);
+    }
+    syncDayNav();
+    strip?.addEventListener('scroll', syncDayNav, { passive: true });
+  }
 
   function moveDay(current, direction) {
     const days = [...dialog.querySelectorAll('#day-strip .day')];

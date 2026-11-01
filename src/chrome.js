@@ -1,6 +1,6 @@
 import { whatsappIcon } from './art.js';
 import { pageHref, presetHref } from './config.js';
-import { escapeHtml, whatsappUrl } from './format.js';
+import { escapeHtml, formatDemoPhone, whatsappUrl } from './format.js';
 
 const PRESETS = [
   ['salon', 'Salon'],
@@ -43,7 +43,7 @@ export function siteFooter(config, page) {
         <div>
           <p class="footer-name">${escapeHtml(config.name)}</p>
           <p>${escapeHtml(config.address || '')}</p>
-          <p>WhatsApp <strong class="phone-display">${escapeHtml(config.phone?.display || '')}</strong> <span class="demo-number">demo number</span></p>
+          <p>WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone?.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
         </div>
         <div>
           <p class="footer-label">Demo presets</p>
@@ -62,7 +62,7 @@ export function whatsappFab(config) {
     config.phone?.whatsappE164,
     `Hello ${config.name}, I have a question about booking.`,
   );
-  const label = `WhatsApp ${config.phone?.display || ''}, demo number`;
+  const label = `WhatsApp ${formatDemoPhone(config.phone?.whatsappE164)}, demo number`;
   return `<a class="wa-fab" href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${whatsappIcon}<span>WhatsApp</span><span class="demo-number">demo number</span></a>`;
 }
 

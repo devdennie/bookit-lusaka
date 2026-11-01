@@ -179,6 +179,7 @@ test('collapses a long booked run into Fully booked 08:00-14:00', () => {
   });
   const span = timeline.find((item) => item.kind === 'span');
   assert.equal(span.label, 'Fully booked 08:00-14:00');
+  assert.equal(span.booked, true);
   assert.equal(timeline.some((item) => item.kind === 'open' && item.start === '14:00'), true);
   assert.equal(timeline.some((item) => item.start === '09:00' && item.kind === 'unavailable'), false);
 });

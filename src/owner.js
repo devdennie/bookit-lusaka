@@ -1,6 +1,6 @@
 import { demoBanner, loadErrorPage, siteFooter, siteHeader } from './chrome.js';
 import { applyTheme, flattenServices, loadConfig, loadSeed, pageHref } from './config.js';
-import { addDays, todayISO, weekdayName } from './dates.js';
+import { addDays, openDayFromOffset, todayISO, weekdayName } from './dates.js';
 import {
   endTime,
   escapeHtml,
@@ -56,7 +56,7 @@ async function boot() {
   }
   document.body.classList.add('owner-page');
   let state = loadState(config.id, seed, servicesById, today, config.openingHours);
-  let selectedDate = today;
+  let selectedDate = openDayFromOffset(today, 0, config.openingHours);
   let blockError = '';
   let announced = '';
 
@@ -77,7 +77,9 @@ async function boot() {
     const allNoShows = state.bookings.filter((booking) => booking.status === 'no-show').length;
     const dayHours = config.openingHours?.[weekdayName(selectedDate)];
     const hoursText = dayHours ? hoursLabel(dayHours) : 'Closed';
-    const closedNote = dayHours ? '' : '<p class="help">The shop is closed this day. You can still review what is saved, or block the date.</p>';
+    const closedText = dayHours
+      ? ''
+      : 'Closed this day. You can still look at saved visits or block time.';
 
     const bookings = dayBookings.length
       ? dayBookings.map((booking) => `
@@ -118,7 +120,7 @@ async function boot() {
         <button type="button" class="btn-ghost" id="next-day">Next day</button>
       </div>
       <button type="button" class="btn-text today-link" id="jump-today" ${selectedDate === today ? 'disabled' : ''}>Back to today</button>
-      ${closedNote}
+      <p class="closed-note"${dayHours ? ' aria-hidden="true"' : ''}>${escapeHtml(closedText)}</p>
       <ul class="stats">
         <li class="stat"><strong>${dayBookings.length}</strong><span>Bookings this day</span></li>
         <li class="stat"><strong>${dayNoShows}</strong><span>No-shows this day</span></li>
@@ -251,7 +253,7 @@ async function boot() {
     }
     if (event.target.closest('#reset-yes')) {
       state = resetState(config.id, seed, servicesById, today, config.openingHours);
-      selectedDate = today;
+      selectedDate = openDayFromOffset(today, 0, config.openingHours);
       blockError = '';
       paint('#reset-demo');
     }

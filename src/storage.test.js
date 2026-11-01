@@ -28,6 +28,7 @@ test('sample bookings never land on a closed Sunday and today has one no-show', 
   const noShows = state.bookings.filter((item) => item.status === 'no-show');
   assert.equal(noShows.length, 1);
   assert.equal(noShows[0].date, '2026-11-02');
+  assert.equal(state.blocked.some((item) => item.date === '2026-11-02'), true);
   assert.equal(state.bookings.filter((item) => item.date === '2026-11-02' && item.status === 'no-show').length, 1);
 });
 

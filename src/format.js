@@ -37,9 +37,7 @@ export function formatTime(hhmm) {
   if (total == null) return String(hhmm ?? '');
   const hours = Math.floor(total / 60);
   const minutes = total % 60;
-  const suffix = hours >= 12 ? 'pm' : 'am';
-  const hour = hours % 12 || 12;
-  return `${hour}:${String(minutes).padStart(2, '0')} ${suffix}`;
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
 
 export function formatTimeRange(start, end) {
@@ -100,8 +98,17 @@ export function staffName(staff, staffId) {
 
 /**
  * `e164` is a placeholder in this demo (260970000000), not a real WhatsApp account.
- * The page shows `phone.display` (for example +260 9XX XXX XXX) instead of these digits.
+ * The visible number is this same value, formatted (260970000000 becomes +260 97 000 0000).
  */
+export function formatDemoPhone(e164) {
+  const digits = String(e164 ?? '').replace(/\D/g, '');
+  if (digits.startsWith('260') && digits.length === 12) {
+    const local = digits.slice(3);
+    return `+260 ${local.slice(0, 2)} ${local.slice(2, 5)} ${local.slice(5)}`;
+  }
+  return digits ? `+${digits}` : '';
+}
+
 export function whatsappUrl(e164, text) {
   const digits = String(e164 ?? '').replace(/\D/g, '');
   return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
