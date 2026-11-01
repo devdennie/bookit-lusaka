@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { getAvailableSlots } from './slots.js';
+import { getAvailableSlots, getSlotTimeline } from './slots.js';
 
 const MONDAY = '2026-11-02';
 
@@ -145,4 +145,40 @@ test('hides earlier today slots that have already started', () => {
 
 test('returns nothing on a closed day', () => {
   assert.deepEqual(starts({ date: '2026-11-01' }), []);
+});
+
+test('keeps a booked start visible as an unavailable slot', () => {
+  const timeline = getSlotTimeline({
+    date: MONDAY,
+    durationMinutes: 60,
+    openingHours: hours(),
+    bookings: [
+      { date: MONDAY, start: '09:00', durationMinutes: 30, staffId: 'a', status: 'confirmed' },
+    ],
+    blocked: [],
+    staffId: 'a',
+    staffIds: ['a'],
+    intervalMinutes: 30,
+  });
+  const booked = timeline.find((item) => item.start === '09:00');
+  assert.equal(booked.kind, 'unavailable');
+  assert.equal(booked.label, 'Unavailable');
+  assert.equal(timeline.some((item) => item.kind === 'open' && item.start === '09:30'), true);
+});
+
+test('collapses a long booked run into Fully booked 08:00-14:00', () => {
+  const timeline = getSlotTimeline({
+    date: MONDAY,
+    durationMinutes: 60,
+    openingHours: hours(),
+    bookings: [],
+    blocked: [{ date: MONDAY, start: '08:00', end: '14:00', staffId: null }],
+    staffId: 'a',
+    staffIds: ['a'],
+    intervalMinutes: 30,
+  });
+  const span = timeline.find((item) => item.kind === 'span');
+  assert.equal(span.label, 'Fully booked 08:00-14:00');
+  assert.equal(timeline.some((item) => item.kind === 'open' && item.start === '14:00'), true);
+  assert.equal(timeline.some((item) => item.start === '09:00' && item.kind === 'unavailable'), false);
 });
