@@ -38,7 +38,7 @@
         "status": "confirmed"
       },
       {
-        "dayOffset": -1,
+        "dayOffset": 0,
         "start": "15:00",
         "serviceId": "lash-fill",
         "staffId": "tasha",
@@ -103,7 +103,7 @@
         "status": "confirmed"
       },
       {
-        "dayOffset": -1,
+        "dayOffset": 0,
         "start": "11:00",
         "serviceId": "follow-up",
         "staffId": "namwinga",
@@ -152,8 +152,8 @@
         "status": "confirmed"
       },
       {
-        "dayOffset": -1,
-        "start": "16:00",
+        "dayOffset": 0,
+        "start": "09:00",
         "serviceId": "beard-shape",
         "staffId": "peter",
         "customerName": "Daniel Phiri",

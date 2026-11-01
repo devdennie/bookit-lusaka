@@ -23,7 +23,7 @@ import {
   staffName,
   whatsappUrl,
 } from './format.js';
-import { getAvailableSlots } from './slots.js';
+import { getAvailableSlots, getSlotTimeline } from './slots.js';
 import { loadState, readStoredState, saveState } from './storage.js';
 
 const TIME_ZONE = 'Africa/Lusaka';
@@ -103,7 +103,7 @@ async function boot() {
   } catch {
     seed = { bookings: [], blocked: [] };
   }
-  let state = loadState(config.id, seed, servicesById, today);
+  let state = loadState(config.id, seed, servicesById, today, config.openingHours);
   let flow = freshFlow(null);
 
   const noun = capitalNoun(config);
@@ -152,8 +152,8 @@ async function boot() {
       ['time', 'Time'],
       ['details', 'Details'],
     ];
-    if (config.deposit?.enabled) steps.push(['deposit', 'Deposit']);
     steps.push(['review', 'Review']);
+    if (config.deposit?.enabled) steps.push(['deposit', 'Deposit']);
     return steps;
   }
 
@@ -224,12 +224,12 @@ async function boot() {
   }
 
   function dateStep() {
-    const days = eachDate(today, DAY_COUNT).map((iso) => {
+    const days = eachDate(today, DAY_COUNT).map((iso, index) => {
       const parts = formatDayParts(iso);
       const closed = !config.openingHours?.[weekdayName(iso)];
       const label = `${formatDateLong(iso)}${closed ? ', closed' : ''}`;
       return `
-        <button type="button" class="day" data-date="${iso}" ${closed ? 'disabled' : ''} aria-label="${escapeHtml(label)}">
+        <button type="button" class="day${closed ? ' is-closed' : ''}" data-date="${iso}" tabindex="${index === 0 ? '0' : '-1'}" ${closed ? 'aria-disabled="true"' : ''} aria-label="${escapeHtml(label)}">
           <span class="dow">${escapeHtml(parts.weekday)}</span>
           <span class="dom">${escapeHtml(parts.day)}</span>
           <span class="mon">${closed ? 'Closed' : escapeHtml(parts.month)}</span>
@@ -238,30 +238,64 @@ async function boot() {
     return `
       <h2 id="booker-title">Pick a date</h2>
       ${summaryHtml()}
-      <div class="day-strip" role="group" aria-label="Upcoming days">${days}</div>
-      <p class="help">Closed days stay visible and cannot be selected.</p>
+      <div class="day-scroller">
+        <button type="button" class="day-nav" id="day-prev" aria-label="Show earlier days"><span aria-hidden="true">‹</span></button>
+        <div class="day-strip-wrap">
+          <div class="day-strip" id="day-strip" role="group" aria-label="Upcoming days">${days}</div>
+        </div>
+        <button type="button" class="day-nav" id="day-next" aria-label="Show later days"><span aria-hidden="true">›</span></button>
+      </div>
+      <p class="help">Closed days stay visible and cannot be selected. Scroll sideways for more days.</p>
     `;
   }
 
   function timeStep() {
     const service = servicesById[flow.serviceId];
-    const available = computeSlots(flow.date, service, flow.staffChoice);
-    flow.slots = available;
+    const people = eligibleStaff(service);
+    const timeline = getSlotTimeline({
+      date: flow.date,
+      durationMinutes: service.durationMinutes,
+      openingHours: config.openingHours,
+      bookings: state.bookings,
+      blocked: state.blocked,
+      staffId: flow.staffChoice && flow.staffChoice !== 'any' ? flow.staffChoice : null,
+      staffIds: people.map((person) => person.id),
+      intervalMinutes: config.intervalMinutes || 30,
+      nowMinutes: flow.date === today ? minutesNow() : null,
+    });
+    flow.slots = timeline.filter((item) => item.kind === 'open');
     const error = flow.error ? `<p class="form-error" role="alert">${escapeHtml(flow.error)}</p>` : '';
-    const grid = available.length
-      ? `<div class="slot-grid" role="radiogroup" aria-label="Available times">${available.map((slot, index) => `
-          <button type="button" class="slot" role="radio" aria-checked="false" tabindex="${index === 0 ? '0' : '-1'}" data-start="${slot.start}" aria-label="${escapeHtml(formatTimeRange(slot.start, slot.end))}">
-            <span class="slot-start">${escapeHtml(formatTime(slot.start))}</span>
-            <small>to ${escapeHtml(formatTime(slot.end))}</small>
-          </button>
-        `).join('')}</div>`
-      : `<p class="empty" role="status">No open times on this day. A ${escapeHtml(formatDuration(service.durationMinutes))} appointment has to finish before closing, stay clear of breaks, and avoid booked or blocked time.</p>`;
+    let radioIndex = 0;
+    const cells = timeline.map((item) => {
+      if (item.kind === 'span') {
+        return `<p class="slot-span" role="note">${escapeHtml(item.label)}</p>`;
+      }
+      if (item.kind === 'unavailable') {
+        const label = `Unavailable, ${formatTime(item.start)} to ${formatTime(item.end)}`;
+        return `
+          <button type="button" class="slot slot-unavailable" disabled aria-label="${escapeHtml(label)}">
+            <span class="slot-start">${escapeHtml(formatTime(item.start))}</span>
+            <small>Unavailable</small>
+          </button>`;
+      }
+      const tabIndex = radioIndex === 0 ? 0 : -1;
+      radioIndex += 1;
+      return `
+        <button type="button" class="slot" role="radio" aria-checked="false" tabindex="${tabIndex}" data-start="${item.start}" aria-label="${escapeHtml(formatTimeRange(item.start, item.end))}">
+          <span class="slot-start">${escapeHtml(formatTime(item.start))}</span>
+          <small>to ${escapeHtml(formatTime(item.end))}</small>
+        </button>`;
+    }).join('');
+    const empty = flow.slots.length
+      ? ''
+      : `<p class="empty" role="status">No open times on this day. Grey times are unavailable, and a long run is summed up in one row.</p>`;
     return `
       <h2 id="booker-title">Pick a time</h2>
       ${summaryHtml()}
-      <p class="help">Booked, blocked and too-short times are hidden, so a long braid cannot overlap another visit or run past closing.</p>
+      <p class="help">Grey times are unavailable. A long gap is one row, such as Fully booked 08:00-14:00, so the list does not jump.</p>
       ${error}
-      ${grid}
+      <div class="slot-grid" role="radiogroup" aria-label="Times">${cells}</div>
+      ${empty}
     `;
   }
 
@@ -318,11 +352,11 @@ async function boot() {
     `;
   }
 
-  function reviewList(start, end, staffId) {
+  function reviewList(start, end, staffId, depositNote) {
     const service = servicesById[flow.serviceId];
-    const deposit = flow.depositProvider
+    const deposit = depositNote || (flow.depositProvider
       ? `${providerName(flow.depositProvider)} selected · demo only, not paid`
-      : 'Not paid · demo only';
+      : 'Not paid · demo only');
     return `
       <dl class="review">
         <div><dt>Service</dt><dd>${escapeHtml(service.name)}</dd></div>
@@ -339,11 +373,18 @@ async function boot() {
 
   function reviewStep() {
     const end = flow.slot.end || endTime(flow.slot.start, servicesById[flow.serviceId].durationMinutes);
+    const depositNote = config.deposit?.enabled ? 'Optional demo deposit is next' : 'Not paid · demo only';
+    const action = config.deposit?.enabled
+      ? '<button type="button" class="btn btn-block" id="review-continue">Continue</button>'
+      : '<button type="button" class="btn btn-block" id="confirm-booking">Confirm booking</button>';
+    const intro = config.deposit?.enabled
+      ? 'Check the details. The demo deposit comes next, then WhatsApp.'
+      : 'Check the details, then save them on this device. You can send them on WhatsApp after that.';
     return `
-      <h2 id="booker-title">Confirm your booking</h2>
-      <p>Check the details, then save them on this device. You can send them on WhatsApp after that.</p>
-      ${reviewList(flow.slot.start, end, flow.slot.staffId)}
-      <button type="button" class="btn btn-block" id="confirm-booking">Confirm booking</button>
+      <h2 id="booker-title">Review your booking</h2>
+      <p>${intro}</p>
+      ${reviewList(flow.slot.start, end, flow.slot.staffId, depositNote)}
+      ${action}
     `;
   }
 
@@ -367,8 +408,11 @@ async function boot() {
       <h2 id="booker-title">Saved in this demo</h2>
       <p>The booking is on this device and will show in the owner view. Nothing has been sent yet.</p>
       ${reviewList(saved.start, end, saved.staffId)}
-      <a class="btn btn-block" href="${href}" target="_blank" rel="noopener noreferrer">Send booking on WhatsApp</a>
-      <p class="phone-note">WhatsApp is shown as <strong class="phone-display">${escapeHtml(config.phone.display)}</strong>. That is a placeholder, not a live number.</p>
+      <div class="wa-row">
+        <a class="btn btn-block" href="${href}" target="_blank" rel="noopener noreferrer">Send booking on WhatsApp</a>
+        <span class="demo-number">demo number</span>
+      </div>
+      <p class="phone-note">WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong> <span class="demo-number">demo number</span>. The link uses the placeholder from this business config.</p>
       <button type="button" class="btn-text" id="book-another">Book another service</button>
     `;
   }
@@ -434,15 +478,14 @@ async function boot() {
       return;
     }
     flow.error = '';
-    flow.depositStage = 'choose';
-    flow.step = config.deposit?.enabled ? 'deposit' : 'review';
+    flow.step = 'review';
     renderStep();
   }
 
   function confirmBooking() {
     const service = servicesById[flow.serviceId];
     const stored = readStoredState(config.id);
-    if (stored?.seedVersion === 1 && Array.isArray(stored.bookings) && Array.isArray(stored.blocked)) {
+    if (stored?.seedVersion === 2 && Array.isArray(stored.bookings) && Array.isArray(stored.blocked)) {
       state = stored;
     }
     const available = computeSlots(flow.date, service, flow.staffChoice);
@@ -536,7 +579,7 @@ async function boot() {
               <p class="eyebrow">${escapeHtml(config.area)}, Lusaka</p>
               <h1>${escapeHtml(config.name)}</h1>
               <p class="lede">${escapeHtml(config.tagline || '')}</p>
-              <p class="contact-line">WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong></p>
+              <p class="contact-line">WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong> <span class="demo-number">demo number</span></p>
               <p class="status-pill">${escapeHtml(todayStatus())}</p>
               <div class="hero-actions">
                 <button type="button" class="btn" data-open="book">Book now</button>
@@ -574,7 +617,7 @@ async function boot() {
               <p class="eyebrow">Visit</p>
               <h2 id="visit-title">${escapeHtml(config.area)}</h2>
               <p>${escapeHtml(config.address || '')}</p>
-              <p>WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong> (placeholder number)</p>
+              <p>WhatsApp <strong class="phone-display">${escapeHtml(config.phone.display)}</strong> <span class="demo-number">demo number</span></p>
               <table class="hours">
                 <caption class="visually-hidden">Opening hours</caption>
                 <tbody>${hours}</tbody>
@@ -648,8 +691,16 @@ async function boot() {
       renderStep();
       return;
     }
+    if (event.target.closest('#day-prev') || event.target.closest('#day-next')) {
+      const strip = document.querySelector('#day-strip');
+      if (strip) {
+        const amount = event.target.closest('#day-prev') ? -240 : 240;
+        strip.scrollBy({ left: amount, behavior: 'auto' });
+      }
+      return;
+    }
     const dayBtn = event.target.closest('[data-date]');
-    if (dayBtn && flow.step === 'date' && !dayBtn.disabled) {
+    if (dayBtn && flow.step === 'date' && dayBtn.getAttribute('aria-disabled') !== 'true') {
       flow.date = dayBtn.dataset.date;
       flow.slot = null;
       flow.error = '';
@@ -658,7 +709,7 @@ async function boot() {
       return;
     }
     const slotBtn = event.target.closest('[data-start]');
-    if (slotBtn && flow.step === 'time') {
+    if (slotBtn && flow.step === 'time' && !slotBtn.disabled) {
       const slot = flow.slots.find((item) => item.start === slotBtn.dataset.start);
       if (!slot) return;
       slotBtn.setAttribute('aria-checked', 'true');
@@ -683,16 +734,20 @@ async function boot() {
       renderStep();
       return;
     }
-    if (event.target.closest('#skip-deposit')) {
-      flow.depositProvider = null;
-      flow.depositRef = '';
-      flow.step = 'review';
+    if (event.target.closest('#review-continue')) {
+      flow.depositStage = 'choose';
+      flow.step = 'deposit';
       renderStep();
       return;
     }
+    if (event.target.closest('#skip-deposit')) {
+      flow.depositProvider = null;
+      flow.depositRef = '';
+      confirmBooking();
+      return;
+    }
     if (event.target.closest('#deposit-continue')) {
-      flow.step = 'review';
-      renderStep();
+      confirmBooking();
       return;
     }
     if (event.target.closest('#deposit-clear')) {
@@ -723,7 +778,26 @@ async function boot() {
     if (event.target.name === 'phone') flow.phone = event.target.value;
   });
 
+  function moveDay(current, direction) {
+    const days = [...dialog.querySelectorAll('#day-strip .day')];
+    const index = days.indexOf(current);
+    if (index < 0) return;
+    const next = days[index + direction];
+    if (!next) return;
+    days.forEach((day, dayIndex) => {
+      day.tabIndex = dayIndex === index + direction ? 0 : -1;
+    });
+    next.focus();
+    next.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+  }
+
   dialog.addEventListener('keydown', (event) => {
+    const day = event.target.closest?.('#day-strip .day');
+    if (day && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
+      event.preventDefault();
+      moveDay(day, event.key === 'ArrowRight' ? 1 : -1);
+      return;
+    }
     const radio = event.target.closest?.('[role="radio"]');
     if (!radio) return;
     const map = {
@@ -744,7 +818,7 @@ async function boot() {
     if (event.key !== `bookit-lusaka:v1:${config.id}` || !event.newValue) return;
     try {
       const parsed = JSON.parse(event.newValue);
-      if (parsed?.seedVersion === 1) {
+      if (parsed?.seedVersion === 2) {
         state = parsed;
         if (dialog.open && (flow.step === 'time' || flow.step === 'date')) renderStep();
       }

@@ -45,3 +45,34 @@ export function nowMinutes(timeZone = 'Africa/Lusaka', now = new Date()) {
 export function eachDate(startIso, count) {
   return Array.from({ length: count }, (_, index) => addDays(startIso, index));
 }
+
+export function isOpenDay(isoDate, openingHours) {
+  if (!openingHours || Object.keys(openingHours).length === 0) return true;
+  const day = openingHours[weekdayName(isoDate)];
+  return Boolean(day?.open && day?.close);
+}
+
+/** Offset counts open days. A closed today uses the next open day as offset 0. */
+export function openDayFromOffset(today, offset, openingHours = {}) {
+  const magnitude = Math.abs(Number(offset) || 0);
+  const direction = Number(offset) < 0 ? -1 : 1;
+  let cursor = today;
+  if (isOpenDay(cursor, openingHours)) {
+    let remaining = magnitude;
+    for (let guard = 0; remaining > 0 && guard < 28; guard += 1) {
+      cursor = addDays(cursor, direction);
+      if (isOpenDay(cursor, openingHours)) remaining -= 1;
+    }
+    return cursor;
+  }
+  for (let guard = 0; guard < 21 && !isOpenDay(cursor, openingHours); guard += 1) {
+    cursor = addDays(cursor, direction);
+  }
+  // Walking backward already landed on the previous open day, which is offset -1.
+  let remaining = direction < 0 ? Math.max(0, magnitude - 1) : magnitude;
+  for (let guard = 0; remaining > 0 && guard < 28; guard += 1) {
+    cursor = addDays(cursor, direction);
+    if (isOpenDay(cursor, openingHours)) remaining -= 1;
+  }
+  return cursor;
+}
