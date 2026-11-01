@@ -1,0 +1,142 @@
+{
+  "_comment": "whatsappE164 260970000000 is a PLACEHOLDER, not a real phone. Show phone.display (+260 9XX XXX XXX) in the interface.",
+  "id": "barber",
+  "name": "Saka's Barbershop",
+  "initials": "SB",
+  "area": "Woodlands",
+  "city": "Lusaka",
+  "address": "Shop 2, Woodlands Main, Lusaka",
+  "tagline": "Clean fades and an unhurried shave in Woodlands.",
+  "illustration": "barber",
+  "staffNoun": "barber",
+  "colorScheme": "dark",
+  "phone": {
+    "whatsappE164": "260970000000",
+    "display": "+260 9XX XXX XXX"
+  },
+  "intervalMinutes": 30,
+  "theme": {
+    "--bg": "#121110",
+    "--bg-elev": "#1c1a17",
+    "--ink": "#f6f1e8",
+    "--muted": "#cbbba6",
+    "--accent": "#e2b15a",
+    "--accent-hover": "#f0c57a",
+    "--on-accent": "#1a1408",
+    "--accent-soft": "#2a2418",
+    "--line": "#3a342c",
+    "--gold": "#e2b15a",
+    "--ok": "#b6d38a",
+    "--danger": "#fecdd3",
+    "--focus": "#f6f1e8",
+    "--banner": "#e2b15a",
+    "--banner-ink": "#1a1408",
+    "--shadow": "0 18px 50px rgba(0, 0, 0, 0.35)"
+  },
+  "openingHours": {
+    "monday": null,
+    "tuesday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
+    "wednesday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
+    "thursday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
+    "friday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
+    "saturday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
+    "sunday": { "open": "10:00", "close": "15:00", "breaks": [] }
+  },
+  "staff": [
+    { "id": "saka", "name": "Saka Mbewe", "role": "Owner" },
+    { "id": "peter", "name": "Peter Zulu", "role": "Barber" }
+  ],
+  "categories": [
+    {
+      "id": "cuts",
+      "name": "Cuts",
+      "blurb": "Fades and classic cuts. The chair is yours for the full slot.",
+      "services": [
+        {
+          "id": "skin-fade",
+          "name": "Skin fade",
+          "description": "A tight fade, scissor work on top and a clean lineup.",
+          "durationMinutes": 45,
+          "priceZmw": 100,
+          "staffIds": ["saka", "peter"]
+        },
+        {
+          "id": "classic-cut",
+          "name": "Classic cut",
+          "description": "A straightforward cut and style, no skin fade.",
+          "durationMinutes": 30,
+          "priceZmw": 70,
+          "staffIds": ["saka", "peter"]
+        },
+        {
+          "id": "kids-cut",
+          "name": "Kids cut",
+          "description": "A patient cut for children under 12, with a simple finish.",
+          "durationMinutes": 30,
+          "priceZmw": 50,
+          "staffIds": ["saka", "peter"]
+        }
+      ]
+    },
+    {
+      "id": "beard",
+      "name": "Beard",
+      "blurb": "Shape-ups and a hot towel shave.",
+      "services": [
+        {
+          "id": "beard-shape",
+          "name": "Beard shape",
+          "description": "Line, shape and a short beard oil finish.",
+          "durationMinutes": 20,
+          "priceZmw": 40,
+          "staffIds": ["saka", "peter"]
+        },
+        {
+          "id": "hot-towel",
+          "name": "Hot towel shave",
+          "description": "A traditional shave with hot towels. Allow half an hour.",
+          "durationMinutes": 30,
+          "priceZmw": 80,
+          "staffIds": ["saka"]
+        }
+      ]
+    },
+    {
+      "id": "packages",
+      "name": "Packages",
+      "blurb": "Longer visits when you want the cut and the beard together.",
+      "services": [
+        {
+          "id": "cut-beard",
+          "name": "Cut and beard",
+          "description": "Skin fade or classic cut plus a beard shape in one hour.",
+          "durationMinutes": 60,
+          "priceZmw": 130,
+          "staffIds": ["saka", "peter"]
+        },
+        {
+          "id": "scalp-treatment",
+          "name": "Scalp treatment",
+          "description": "A short treatment for a dry or itchy scalp, after a consultation.",
+          "durationMinutes": 30,
+          "priceZmw": 90,
+          "staffIds": ["saka"]
+        }
+      ]
+    }
+  ],
+  "deposit": {
+    "enabled": true,
+    "amountZmw": 50,
+    "providers": [
+      { "id": "mtn", "name": "MTN MoMo", "swatch": "#ffcb05" },
+      { "id": "airtel", "name": "Airtel Money", "swatch": "#e4002b" },
+      { "id": "zamtel", "name": "Zamtel", "swatch": "#0a8f3d" }
+    ]
+  },
+  "gallery": [
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" },
+    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a gold disc" }
+  ]
+}

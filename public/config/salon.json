@@ -1,0 +1,183 @@
+{
+  "_comment": "whatsappE164 260970000000 is a PLACEHOLDER, not a real phone. Show phone.display (+260 9XX XXX XXX) in the interface.",
+  "id": "salon",
+  "name": "Chipo's Braids & Beauty",
+  "initials": "CB",
+  "area": "Kabulonga",
+  "city": "Lusaka",
+  "address": "Plot 18, Kabulonga Road, Lusaka",
+  "tagline": "Unhurried braids, nails and hair care in Kabulonga.",
+  "illustration": "salon",
+  "staffNoun": "stylist",
+  "colorScheme": "light",
+  "phone": {
+    "whatsappE164": "260970000000",
+    "display": "+260 9XX XXX XXX"
+  },
+  "intervalMinutes": 30,
+  "theme": {
+    "--bg": "#f3eee6",
+    "--bg-elev": "#fffdfb",
+    "--ink": "#241812",
+    "--muted": "#5e4c43",
+    "--accent": "#9c4221",
+    "--accent-hover": "#7c3318",
+    "--on-accent": "#fffaf6",
+    "--accent-soft": "#f3e1d4",
+    "--line": "#e6d9cc",
+    "--gold": "#8a5a12",
+    "--ok": "#3f6212",
+    "--danger": "#9f1239",
+    "--focus": "#1d4ed8",
+    "--banner": "#241812",
+    "--banner-ink": "#f6f1ea",
+    "--shadow": "0 18px 50px rgba(36, 24, 18, 0.08)"
+  },
+  "openingHours": {
+    "monday": { "open": "08:00", "close": "18:30", "breaks": [{ "start": "13:00", "end": "13:30" }] },
+    "tuesday": { "open": "08:00", "close": "18:30", "breaks": [{ "start": "13:00", "end": "13:30" }] },
+    "wednesday": { "open": "08:00", "close": "19:00", "breaks": [] },
+    "thursday": { "open": "08:00", "close": "18:30", "breaks": [{ "start": "13:00", "end": "13:30" }] },
+    "friday": { "open": "08:00", "close": "18:30", "breaks": [{ "start": "13:00", "end": "13:30" }] },
+    "saturday": { "open": "08:00", "close": "18:00", "breaks": [{ "start": "13:00", "end": "13:30" }] },
+    "sunday": null
+  },
+  "staff": [
+    { "id": "chipo", "name": "Chipo Mwale", "role": "Lead braider" },
+    { "id": "bana", "name": "Bana Mulenga", "role": "Braider" },
+    { "id": "tasha", "name": "Tasha Banda", "role": "Nails and lashes" },
+    { "id": "lombe", "name": "Lombe Zulu", "role": "Hair care" }
+  ],
+  "categories": [
+    {
+      "id": "braids",
+      "name": "Braids",
+      "blurb": "Long sittings. Only times that fit the full braid are shown.",
+      "services": [
+        {
+          "id": "knotless-medium",
+          "name": "Knotless braids, medium",
+          "description": "Lightweight braids with no knot at the scalp, finished simply and comfortably.",
+          "durationMinutes": 240,
+          "priceZmw": 550,
+          "staffIds": ["chipo", "bana"]
+        },
+        {
+          "id": "knotless-small",
+          "name": "Knotless braids, small",
+          "description": "A fuller small size. Needs a five-hour stretch without crossing the lunch break.",
+          "durationMinutes": 300,
+          "priceZmw": 700,
+          "staffIds": ["chipo", "bana"]
+        },
+        {
+          "id": "knotless-jumbo",
+          "name": "Knotless braids, jumbo",
+          "description": "The fullest size, about six hours. It only fits on Wednesday, when there is no lunch break.",
+          "durationMinutes": 360,
+          "priceZmw": 850,
+          "staffIds": ["chipo", "bana"]
+        },
+        {
+          "id": "cornrows",
+          "name": "Cornrows",
+          "description": "Neat feed-in rows, sized for a two-hour appointment.",
+          "durationMinutes": 120,
+          "priceZmw": 250,
+          "staffIds": ["chipo", "bana"]
+        },
+        {
+          "id": "takedown",
+          "name": "Braids takedown",
+          "description": "Gentle removal, detangle and a simple scalp cleanse.",
+          "durationMinutes": 90,
+          "priceZmw": 180,
+          "staffIds": ["chipo", "bana"]
+        }
+      ]
+    },
+    {
+      "id": "nails",
+      "name": "Nails",
+      "blurb": "Gel colour and care with Tasha.",
+      "services": [
+        {
+          "id": "gel-manicure",
+          "name": "Gel manicure",
+          "description": "Shape, cuticle care and a gel colour that cures before you leave.",
+          "durationMinutes": 60,
+          "priceZmw": 200,
+          "staffIds": ["tasha"]
+        },
+        {
+          "id": "pedicure",
+          "name": "Classic pedicure",
+          "description": "Soak, tidy and colour for a one-hour visit.",
+          "durationMinutes": 60,
+          "priceZmw": 180,
+          "staffIds": ["tasha"]
+        }
+      ]
+    },
+    {
+      "id": "lashes",
+      "name": "Lashes",
+      "blurb": "Sets and fills. Plan for a still hour or two.",
+      "services": [
+        {
+          "id": "classic-lashes",
+          "name": "Classic lash set",
+          "description": "A full classic set, one lash at a time, with aftercare notes.",
+          "durationMinutes": 120,
+          "priceZmw": 400,
+          "staffIds": ["tasha"]
+        },
+        {
+          "id": "lash-fill",
+          "name": "Lash fill",
+          "description": "A refill for a set that is two to three weeks old.",
+          "durationMinutes": 60,
+          "priceZmw": 220,
+          "staffIds": ["tasha"]
+        }
+      ]
+    },
+    {
+      "id": "hair",
+      "name": "Hair care",
+      "blurb": "Washes, trims and silk presses with Lombe.",
+      "services": [
+        {
+          "id": "wash-trim",
+          "name": "Wash, condition and trim",
+          "description": "A careful wash, deep condition and dusting of the ends.",
+          "durationMinutes": 90,
+          "priceZmw": 230,
+          "staffIds": ["lombe"]
+        },
+        {
+          "id": "silk-press",
+          "name": "Silk press",
+          "description": "Wash, treatment and a smooth press. Ends are not cut unless you ask.",
+          "durationMinutes": 150,
+          "priceZmw": 420,
+          "staffIds": ["lombe"]
+        }
+      ]
+    }
+  ],
+  "deposit": {
+    "enabled": true,
+    "amountZmw": 150,
+    "providers": [
+      { "id": "mtn", "name": "MTN MoMo", "swatch": "#ffcb05" },
+      { "id": "airtel", "name": "Airtel Money", "swatch": "#e4002b" },
+      { "id": "zamtel", "name": "Zamtel", "swatch": "#0a8f3d" }
+    ]
+  },
+  "gallery": [
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" },
+    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines on a cream ground" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a gold disc" }
+  ]
+}
