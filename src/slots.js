@@ -153,6 +153,7 @@ export function getSlotTimeline({
         start: run[0].start,
         end: endLabel,
         available: false,
+        booked: fullyBooked,
         label: `${title} ${run[0].start}-${endLabel}`,
       });
     } else {

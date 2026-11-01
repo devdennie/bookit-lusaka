@@ -1,5 +1,5 @@
 {
-  "_comment": "whatsappE164 260970000000 is a PLACEHOLDER, not a real phone. Show phone.display (+260 9XX XXX XXX) in the interface.",
+  "_comment": "whatsappE164 260970000000 is a PLACEHOLDER, not a real phone. The page formats these same digits as +260 97 000 0000 and labels them demo number.",
   "id": "barber",
   "name": "Saka's Barbershop",
   "initials": "SB",
@@ -11,8 +11,7 @@
   "staffNoun": "barber",
   "colorScheme": "dark",
   "phone": {
-    "whatsappE164": "260970000000",
-    "display": "+260 9XX XXX XXX"
+    "whatsappE164": "260970000000"
   },
   "intervalMinutes": 30,
   "theme": {
