@@ -1,19 +1,24 @@
-import { addDays } from './dates.js';
+import { openDayFromOffset } from './dates.js';
 
 const PREFIX = 'bookit-lusaka:v1:';
+const SEED_VERSION = 2;
 
 export function storageKey(configId) {
   return `${PREFIX}${configId}`;
 }
 
-export function createStateFromSeed(seed, servicesById, today) {
+function seedDate(today, dayOffset, openingHours) {
+  return openDayFromOffset(today, Number(dayOffset) || 0, openingHours);
+}
+
+export function createStateFromSeed(seed, servicesById, today, openingHours = {}) {
   const bookings = [];
   (seed?.bookings ?? []).forEach((item, index) => {
     const service = servicesById[item.serviceId];
     if (!service || !item.start) return;
     bookings.push({
       id: `seed-b-${index}`,
-      date: addDays(today, Number(item.dayOffset) || 0),
+      date: seedDate(today, item.dayOffset, openingHours),
       start: item.start,
       durationMinutes: service.durationMinutes,
       priceZmw: service.priceZmw,
@@ -29,39 +34,57 @@ export function createStateFromSeed(seed, servicesById, today) {
 
   const blocked = (seed?.blocked ?? []).map((item, index) => ({
     id: `seed-k-${index}`,
-    date: addDays(today, Number(item.dayOffset) || 0),
+    date: seedDate(today, item.dayOffset, openingHours),
     start: item.start,
     end: item.end,
     staffId: item.staffId || null,
     reason: item.reason || 'Blocked',
   }));
 
-  return { seedVersion: 1, bookings, blocked };
+  return { seedVersion: SEED_VERSION, seedDay: today, bookings, blocked };
 }
 
-export function loadState(configId, seed, servicesById, today) {
-  const fresh = () => createStateFromSeed(seed, servicesById, today);
+function isSeedId(id) {
+  return String(id || '').startsWith('seed-');
+}
+
+function withKeptChanges(created, previous) {
+  if (!previous) return created;
+  return {
+    ...created,
+    bookings: [
+      ...created.bookings,
+      ...(previous.bookings ?? []).filter((item) => !isSeedId(item.id)),
+    ],
+    blocked: [
+      ...created.blocked,
+      ...(previous.blocked ?? []).filter((item) => !isSeedId(item.id)),
+    ],
+  };
+}
+
+export function loadState(configId, seed, servicesById, today, openingHours = {}) {
+  const fresh = (previous) => withKeptChanges(
+    createStateFromSeed(seed, servicesById, today, openingHours),
+    previous,
+  );
   try {
     const raw = localStorage.getItem(storageKey(configId));
     if (!raw) {
-      const created = fresh();
+      const created = fresh(null);
       localStorage.setItem(storageKey(configId), JSON.stringify(created));
       return created;
     }
     const parsed = JSON.parse(raw);
-    if (
-      !parsed ||
-      parsed.seedVersion !== 1 ||
-      !Array.isArray(parsed.bookings) ||
-      !Array.isArray(parsed.blocked)
-    ) {
-      const created = fresh();
+    const usable = parsed && Array.isArray(parsed.bookings) && Array.isArray(parsed.blocked);
+    if (!usable || parsed.seedVersion !== SEED_VERSION || parsed.seedDay !== today) {
+      const created = fresh(usable ? parsed : null);
       localStorage.setItem(storageKey(configId), JSON.stringify(created));
       return created;
     }
     return parsed;
   } catch {
-    return fresh();
+    return fresh(null);
   }
 }
 
@@ -73,8 +96,8 @@ export function saveState(configId, state) {
   }
 }
 
-export function resetState(configId, seed, servicesById, today) {
-  const state = createStateFromSeed(seed, servicesById, today);
+export function resetState(configId, seed, servicesById, today, openingHours = {}) {
+  const state = createStateFromSeed(seed, servicesById, today, openingHours);
   saveState(configId, state);
   return state;
 }
