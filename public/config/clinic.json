@@ -1,0 +1,135 @@
+{
+  "_comment": "whatsappE164 260970000000 is a PLACEHOLDER, not a real phone. Show phone.display (+260 9XX XXX XXX) in the interface.",
+  "id": "clinic",
+  "name": "Mtendere Physio Studio",
+  "initials": "MP",
+  "area": "Longacres",
+  "city": "Lusaka",
+  "address": "Suite 4, Longacres Mall, Lusaka",
+  "tagline": "Steady, practical physiotherapy for pain, sport and recovery.",
+  "illustration": "clinic",
+  "staffNoun": "therapist",
+  "colorScheme": "light",
+  "phone": {
+    "whatsappE164": "260970000000",
+    "display": "+260 9XX XXX XXX"
+  },
+  "intervalMinutes": 30,
+  "theme": {
+    "--bg": "#f3f7f6",
+    "--bg-elev": "#ffffff",
+    "--ink": "#132421",
+    "--muted": "#3e5550",
+    "--accent": "#0f5c56",
+    "--accent-hover": "#0c4944",
+    "--on-accent": "#f4fffd",
+    "--accent-soft": "#e4f2ef",
+    "--line": "#d3e4e0",
+    "--gold": "#0f5c56",
+    "--ok": "#1f6b3a",
+    "--danger": "#9f1239",
+    "--focus": "#0b3d91",
+    "--banner": "#132421",
+    "--banner-ink": "#f3f7f6",
+    "--shadow": "0 18px 50px rgba(19, 36, 33, 0.08)"
+  },
+  "openingHours": {
+    "monday": { "open": "08:00", "close": "17:00", "breaks": [{ "start": "12:30", "end": "13:30" }] },
+    "tuesday": { "open": "08:00", "close": "17:00", "breaks": [{ "start": "12:30", "end": "13:30" }] },
+    "wednesday": { "open": "08:00", "close": "17:00", "breaks": [{ "start": "12:30", "end": "13:30" }] },
+    "thursday": { "open": "08:00", "close": "17:00", "breaks": [{ "start": "12:30", "end": "13:30" }] },
+    "friday": { "open": "08:00", "close": "17:00", "breaks": [{ "start": "12:30", "end": "13:30" }] },
+    "saturday": { "open": "08:00", "close": "12:00", "breaks": [] },
+    "sunday": null
+  },
+  "staff": [
+    { "id": "namwinga", "name": "Namwinga Tembo", "role": "Physiotherapist" },
+    { "id": "joseph", "name": "Joseph Bwalya", "role": "Physiotherapist" },
+    { "id": "helen", "name": "Helen Phiri", "role": "Massage therapist" }
+  ],
+  "categories": [
+    {
+      "id": "assessment",
+      "name": "Assessment",
+      "blurb": "First visits get a longer slot so the plan is clear.",
+      "services": [
+        {
+          "id": "initial-assessment",
+          "name": "Initial assessment",
+          "description": "History, movement screen and a written plan for the next few weeks.",
+          "durationMinutes": 45,
+          "priceZmw": 400,
+          "staffIds": ["namwinga", "joseph"]
+        },
+        {
+          "id": "exercise-review",
+          "name": "Home-exercise review",
+          "description": "A short check of your programme, with progressions if you are ready.",
+          "durationMinutes": 30,
+          "priceZmw": 200,
+          "staffIds": ["namwinga", "joseph"]
+        }
+      ]
+    },
+    {
+      "id": "treatment",
+      "name": "Treatment",
+      "blurb": "Hands-on sessions and follow-ups.",
+      "services": [
+        {
+          "id": "follow-up",
+          "name": "Follow-up session",
+          "description": "Treatment and a recap of what to do at home before the next visit.",
+          "durationMinutes": 30,
+          "priceZmw": 250,
+          "staffIds": ["namwinga", "joseph"]
+        },
+        {
+          "id": "sports-injury",
+          "name": "Sports injury treatment",
+          "description": "A full hour for an acute or returning sports injury.",
+          "durationMinutes": 60,
+          "priceZmw": 450,
+          "staffIds": ["namwinga", "joseph"]
+        },
+        {
+          "id": "postnatal",
+          "name": "Post-natal core session",
+          "description": "A gentle core and breath session after your six-week check.",
+          "durationMinutes": 45,
+          "priceZmw": 300,
+          "staffIds": ["namwinga"]
+        }
+      ]
+    },
+    {
+      "id": "recovery",
+      "name": "Recovery",
+      "blurb": "Massage that stays inside the treatment plan.",
+      "services": [
+        {
+          "id": "deep-tissue",
+          "name": "Deep tissue massage",
+          "description": "Focused work for tight calves, back or shoulders. Not a spa package.",
+          "durationMinutes": 60,
+          "priceZmw": 350,
+          "staffIds": ["helen"]
+        }
+      ]
+    }
+  ],
+  "deposit": {
+    "enabled": true,
+    "amountZmw": 200,
+    "providers": [
+      { "id": "mtn", "name": "MTN MoMo", "swatch": "#ffcb05" },
+      { "id": "airtel", "name": "Airtel Money", "swatch": "#e4002b" },
+      { "id": "zamtel", "name": "Zamtel", "swatch": "#0a8f3d" }
+    ]
+  },
+  "gallery": [
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" },
+    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines on a pale ground" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles" }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "salon": {
+    "bookings": [
+      {
+        "dayOffset": 0,
+        "start": "09:00",
+        "serviceId": "cornrows",
+        "staffId": "chipo",
+        "customerName": "Mwaka Phiri",
+        "customerPhone": "0972001001",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": 0,
+        "start": "11:00",
+        "serviceId": "gel-manicure",
+        "staffId": "tasha",
+        "customerName": "Bupe Mulenga",
+        "customerPhone": "0972001002",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": 0,
+        "start": "08:30",
+        "serviceId": "wash-trim",
+        "staffId": "lombe",
+        "customerName": "Kondwani Sakala",
+        "customerPhone": "0972001003",
+        "status": "completed"
+      },
+      {
+        "dayOffset": 1,
+        "start": "10:00",
+        "serviceId": "knotless-medium",
+        "staffId": "chipo",
+        "customerName": "Namwinga Tembo",
+        "customerPhone": "0972001004",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": -1,
+        "start": "15:00",
+        "serviceId": "lash-fill",
+        "staffId": "tasha",
+        "customerName": "Inonge Hamoonga",
+        "customerPhone": "0972001005",
+        "status": "no-show"
+      }
+    ],
+    "blocked": [
+      {
+        "dayOffset": 0,
+        "start": "15:00",
+        "end": "17:30",
+        "staffId": "lombe",
+        "reason": "Product training"
+      },
+      {
+        "dayOffset": 1,
+        "start": "14:00",
+        "end": "16:00",
+        "staffId": "bana",
+        "reason": "School run"
+      }
+    ]
+  },
+  "clinic": {
+    "bookings": [
+      {
+        "dayOffset": 0,
+        "start": "08:00",
+        "serviceId": "initial-assessment",
+        "staffId": "namwinga",
+        "customerName": "Chanda Mutale",
+        "customerPhone": "0973002001",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": 0,
+        "start": "10:00",
+        "serviceId": "follow-up",
+        "staffId": "joseph",
+        "customerName": "Ruth Zimba",
+        "customerPhone": "0973002002",
+        "status": "completed"
+      },
+      {
+        "dayOffset": 0,
+        "start": "14:00",
+        "serviceId": "deep-tissue",
+        "staffId": "helen",
+        "customerName": "Moses Banda",
+        "customerPhone": "0973002003",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": 1,
+        "start": "09:00",
+        "serviceId": "sports-injury",
+        "staffId": "joseph",
+        "customerName": "Luyando Kasonde",
+        "customerPhone": "0973002004",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": -1,
+        "start": "11:00",
+        "serviceId": "follow-up",
+        "staffId": "namwinga",
+        "customerName": "Gift Phiri",
+        "customerPhone": "0973002005",
+        "status": "no-show"
+      }
+    ],
+    "blocked": [
+      {
+        "dayOffset": 0,
+        "start": "15:30",
+        "end": "17:00",
+        "staffId": null,
+        "reason": "Team meeting"
+      }
+    ]
+  },
+  "barber": {
+    "bookings": [
+      {
+        "dayOffset": 0,
+        "start": "10:00",
+        "serviceId": "skin-fade",
+        "staffId": "saka",
+        "customerName": "Kondwani Daka",
+        "customerPhone": "0974003001",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": 0,
+        "start": "11:00",
+        "serviceId": "classic-cut",
+        "staffId": "peter",
+        "customerName": "Brian Tembo",
+        "customerPhone": "0974003002",
+        "status": "completed"
+      },
+      {
+        "dayOffset": 1,
+        "start": "15:00",
+        "serviceId": "cut-beard",
+        "staffId": "saka",
+        "customerName": "Isaac Mwape",
+        "customerPhone": "0974003003",
+        "status": "confirmed"
+      },
+      {
+        "dayOffset": -1,
+        "start": "16:00",
+        "serviceId": "beard-shape",
+        "staffId": "peter",
+        "customerName": "Daniel Phiri",
+        "customerPhone": "0974003004",
+        "status": "no-show"
+      }
+    ],
+    "blocked": [
+      {
+        "dayOffset": 0,
+        "start": "16:00",
+        "end": "18:00",
+        "staffId": "peter",
+        "reason": "Off-site wedding party"
+      }
+    ]
+  }
+}
