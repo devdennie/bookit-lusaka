@@ -54,7 +54,7 @@ Each business is one JSON file in `public/config/`:
 
 Switching is the `config` query parameter. To make another file the default, change `DEFAULT_CONFIG` in `src/config.js` (one line). A new file such as `public/config/nails.json` is picked up by `?config=nails` as long as the name is lowercase letters, numbers and hyphens.
 
-The JSON sets the name, area, tagline, initials, address, the WhatsApp placeholder, opening hours, staff, services, deposit mock and gallery. Cream paper, black ink, hot pink, and the display and serif fonts are shared publication tokens in CSS. Salon, clinic, and barber presets all use that palette.
+The JSON sets the name, area, tagline, initials, address, the WhatsApp placeholder, opening hours, staff, services, deposit mock, sample policies, placeholder social handles, and gallery. Cream paper, black ink, hot pink, and the display and serif fonts are shared publication tokens in CSS. Salon, clinic, and barber presets all use that palette.
 
 `phone.whatsappE164` is the only phone number. In every shipped preset it is `260970000000`, a **placeholder, not a real WhatsApp account**. The page formats those same digits as `+260 97 000 0000` and labels them **demo number**. The WhatsApp link uses the same digits. Replace this one value when this is no longer a demo.
 
@@ -206,9 +206,17 @@ No-show and cancelled bookings do not hide a slot. The time list still shows tho
 
 `.github/workflows/deploy.yml` publishes `dist` to GitHub Pages on a push to `main`. In the repository settings, set Pages to **GitHub Actions**. The public URL for this repository is `https://devdennie.github.io/bookit-lusaka/`.
 
-## Images
+## Magazine restyle
 
-The mark, hero illustrations and the three pictures under Visit are original SVGs drawn for this demo (`public/favicon.svg`, `src/art.js`, `public/images/arc-study.svg`, `public/images/loop-study.svg`, `public/images/circle-study.svg`). There are no third-party photographs. The gallery images are lazy-loaded.
+The customer landing page is laid out like a small magazine: a ruled masthead, a meet-your-stylist collage, an hours and visit grid, and sample booking policies. **Book today** jumps to the booking section, and the next tap opens the existing booking flow. The booking dialog and the owner page use the same cream paper (`#f4efe4`), black ink (`#141414`), and hot pink (`#be185d`).
+
+Hot pink on the cream paper is about 5.3:1, and white text on the pink buttons is about 6:1, so both meet WCAG AA. Pink is not used for small text on the pink itself. Focus is a black outline set off the control. The stylist collage, hours, visit line, tag-us handles, and policies all come from the business config, so `?config=clinic` and `?config=barber` show their own words in the same layout.
+
+## Images and fonts
+
+The mark, hero illustrations, and the framed collage are original SVGs drawn for this demo (`public/favicon.svg`, `src/art.js`, `public/images/arc-study.svg`, `public/images/loop-study.svg`, `public/images/circle-study.svg`). There are no third-party photographs. The collage and the visit gallery lazy-load those SVGs.
+
+Headings and buttons use [Barlow Condensed](https://fonts.google.com/specimen/Barlow+Condensed). Body text uses [Newsreader](https://fonts.google.com/specimen/Newsreader). Both are served by Google Fonts and used under the SIL Open Font License.
 
 ## Licence
 
