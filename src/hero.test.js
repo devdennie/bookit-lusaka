@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { landingHero } from './chrome.js';
+import { landingHero, meetStylist } from './chrome.js';
 
 const css = readFileSync(new URL('./styles.css', import.meta.url), 'utf8');
 
@@ -33,6 +33,20 @@ test('the hero headline and blurb are rendered and not hidden', () => {
     assert.ok(blurb && blurb[1].trim().length > 0, `${id} hero blurb`);
     assert.doesNotMatch(blurb[0], /visually-hidden|aria-hidden|\bhidden\b/);
   }
+
+  const bubbles = {
+    salon: 'The whole sitting, not a squeeze.',
+    clinic: 'Time to assess, not to rush.',
+    barber: 'The whole cut, not a squeeze.',
+  };
+  for (const [id, line] of Object.entries(bubbles)) {
+    const html = meetStylist(preset(id));
+    assert.match(html, new RegExp(`<p class="bubble">${line.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</p>`));
+    assert.match(html, new RegExp(`aria-label="${preset(id).collageAlt}"`));
+    assert.match(html, /class="frame-art"/);
+  }
+  assert.doesNotMatch(meetStylist(preset('clinic')), /The whole sitting, not a squeeze\./);
+  assert.doesNotMatch(meetStylist(preset('barber')), /The whole sitting, not a squeeze\./);
 
   for (const selector of ['.hero-title', '.lede']) {
     const block = ruleBlock(selector);

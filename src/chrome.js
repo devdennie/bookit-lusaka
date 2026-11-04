@@ -1,4 +1,4 @@
-import { whatsappIcon } from './art.js';
+import { heroMarkup, whatsappIcon } from './art.js';
 import { pageHref, presetHref } from './config.js';
 import { escapeHtml, formatDemoPhone, hoursRows, whatsappUrl } from './format.js';
 
@@ -114,17 +114,23 @@ export function meetStylist(config) {
   const name = lead?.name || config.name;
   const role = lead?.role || noun;
   const place = [config.area, config.city].filter(Boolean).join(', ');
-  const base = import.meta.env.BASE_URL;
-  const frames = (config.gallery ?? []).slice(0, 3);
-  const pictures = frames.map((image, index) => `
-    <figure class="frame${index === 0 ? ' frame-tall' : ''}${index === 1 ? ' frame-tag' : ''}">
+  const base = import.meta.env?.BASE_URL || '/';
+  const bubble = escapeHtml(config.bubble || '');
+  const studies = (config.gallery ?? []).slice(0, 2);
+  const leadFrame = `
+    <figure class="frame frame-tall">
+      <div class="frame-art" role="img" aria-label="${escapeHtml(config.collageAlt || '')}">${heroMarkup(config.illustration)}</div>
+    </figure>`;
+  const pictures = studies.map((image, index) => `
+    <figure class="frame${index === 0 ? ' frame-tag' : ''}">
       <img src="${base}${image.src}" alt="${escapeHtml(image.alt || '')}" width="800" height="600" loading="lazy" decoding="async">
-      ${index === 1 ? '<p class="bubble">The whole sitting, not a squeeze.</p>' : ''}
+      ${index === 0 && bubble ? `<p class="bubble">${bubble}</p>` : ''}
     </figure>
   `).join('');
   return `
     <section class="meet" aria-labelledby="meet-title">
       <div class="collage">
+        ${leadFrame}
         ${pictures}
       </div>
       <div class="meet-copy">

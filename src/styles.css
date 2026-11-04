@@ -678,7 +678,8 @@ a.book-today:hover { background: var(--accent-hover); }
   padding: 8px;
 }
 
-.frame img {
+.frame img,
+.frame-art svg {
   display: block;
   width: 100%;
   height: auto;
@@ -689,7 +690,8 @@ a.book-today:hover { background: var(--accent-hover); }
 
 .frame-tall { grid-row: span 2; }
 
-.frame-tall img { aspect-ratio: 3 / 4; }
+.frame-tall img,
+.frame-tall .frame-art svg { aspect-ratio: 3 / 4; }
 
 .frame-tag { position: relative; }
 
@@ -1705,7 +1707,8 @@ select {
 @media (max-width: 480px) {
   .collage { grid-template-columns: 1fr; }
   .frame-tall { grid-row: auto; }
-  .frame-tall img { aspect-ratio: 4 / 3; }
+  .frame-tall img,
+  .frame-tall .frame-art svg { aspect-ratio: 4 / 3; }
   .info-hours,
   .info-hours tbody,
   .info-hours tr,
