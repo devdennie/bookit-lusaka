@@ -87,6 +87,33 @@ export function landingMasthead(config) {
     </header>`;
 }
 
+export function meetStylist(config) {
+  const noun = config.staffNoun || 'stylist';
+  const lead = config.staff?.[0];
+  const name = lead?.name || config.name;
+  const role = lead?.role || noun;
+  const place = [config.area, config.city].filter(Boolean).join(', ');
+  const base = import.meta.env.BASE_URL;
+  const frames = (config.gallery ?? []).slice(0, 3);
+  const pictures = frames.map((image, index) => `
+    <figure class="frame${index === 0 ? ' frame-tall' : ''}${index === 1 ? ' frame-tag' : ''}">
+      <img src="${base}${image.src}" alt="${escapeHtml(image.alt || '')}" width="800" height="600" loading="lazy" decoding="async">
+      ${index === 1 ? '<p class="bubble">The whole sitting, not a squeeze.</p>' : ''}
+    </figure>
+  `).join('');
+  return `
+    <section class="meet" aria-labelledby="meet-title">
+      <div class="collage">
+        ${pictures}
+      </div>
+      <div class="meet-copy">
+        <h2 id="meet-title">Meet your <span class="meet-accent">${escapeHtml(noun)}</span></h2>
+        <p>${escapeHtml(name)} is the ${escapeHtml(role.toLowerCase())} in ${escapeHtml(place)}. Each visit is booked for the full sitting, so the time you choose is the time you keep.</p>
+        <a class="book-today" href="#booking">Book today</a>
+      </div>
+    </section>`;
+}
+
 export function loadErrorPage(message) {
   const home = import.meta.env.BASE_URL;
   return `

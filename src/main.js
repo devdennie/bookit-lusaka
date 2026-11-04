@@ -1,5 +1,5 @@
 import { heroMarkup } from './art.js';
-import { demoBanner, landingMasthead, loadErrorPage, siteFooter, whatsappFab } from './chrome.js';
+import { demoBanner, landingMasthead, loadErrorPage, meetStylist, siteFooter, whatsappFab } from './chrome.js';
 import {
   applyTheme,
   flattenServices,
@@ -595,6 +595,7 @@ async function boot() {
             <div class="hero-art">${heroMarkup(config.illustration)}</div>
           </div>
         </section>
+        ${meetStylist(config)}
         </div>
         <div id="booking" class="booking">
         <section class="band" aria-labelledby="how-title">

@@ -641,6 +641,86 @@ a.book-today:hover { background: var(--accent-hover); }
   a.book-today { width: 100%; }
 }
 
+.meet {
+  width: min(var(--max), calc(100% - 32px));
+  margin: 8px auto 28px;
+  display: grid;
+  gap: 22px;
+  align-items: center;
+}
+
+.collage {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.frame {
+  margin: 0;
+  border: 3px solid var(--ink);
+  background: var(--bg-elev);
+  padding: 8px;
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--accent-soft);
+}
+
+.frame-tall { grid-row: span 2; }
+
+.frame-tall img { aspect-ratio: 3 / 4; }
+
+.frame-tag { position: relative; }
+
+.bubble {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 16px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -12px;
+  border-width: 12px 8px 0;
+  border-style: solid;
+  border-color: var(--ink) transparent transparent;
+}
+
+.meet-copy h2 {
+  margin: 0 0 10px;
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+}
+
+.meet-accent { color: var(--accent); }
+
+.meet-copy p { max-width: 38rem; }
+
+.meet-copy .book-today { margin-top: 6px; }
+
+@media (min-width: 800px) {
+  .meet { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 36px; }
+}
+
 .booking {
   border-top: 3px solid var(--line);
   scroll-margin-top: 8.5rem;
