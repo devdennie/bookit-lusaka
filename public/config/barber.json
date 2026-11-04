@@ -13,6 +13,17 @@
   "phone": {
     "whatsappE164": "260970000000"
   },
+  "social": [
+    { "network": "Instagram", "handle": "@sakasbarber.demo" },
+    { "network": "Facebook", "handle": "sakasbarber.demo" },
+    { "network": "TikTok", "handle": "@sakasbarber.demo" }
+  ],
+  "policies": [
+    { "title": "Deposits", "body": "The demo may show a sample hold in kwacha. Nothing is charged, and the chair is only saved in this browser." },
+    { "title": "Lateness", "body": "Sample note: arrive within 10 minutes. A late start may mean a shorter cut if the next guest is waiting." },
+    { "title": "Cancellations", "body": "Sample note: tell the shop the day before if you cannot come. Same-day misses can be marked as a no-show in the demo." },
+    { "title": "What to bring", "body": "Sample note: bring a photo of the cut you want. The shop supplies the cape and tools." }
+  ],
   "intervalMinutes": 30,
   "theme": {
     "--bg": "#121110",

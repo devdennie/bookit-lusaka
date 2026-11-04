@@ -1,5 +1,5 @@
 import { heroMarkup } from './art.js';
-import { demoBanner, loadErrorPage, siteFooter, siteHeader, whatsappFab } from './chrome.js';
+import { demoBanner, landingInfo, landingMasthead, landingPolicies, loadErrorPage, meetStylist, siteFooter, whatsappFab } from './chrome.js';
 import {
   applyTheme,
   flattenServices,
@@ -579,29 +579,32 @@ async function boot() {
     app.innerHTML = `
       <div class="top-stack">
         ${demoBanner(config.name)}
-        ${siteHeader(config, '<button type="button" class="btn book-now" id="book-now">Book now</button>')}
       </div>
       <main id="main">
-        <section class="hero">
+        <div id="landing" class="landing">
+        ${landingMasthead(config)}
+        <section class="hero" aria-label="Today">
           <div class="wrap hero-grid">
             <div>
-              <p class="eyebrow">${escapeHtml(config.area)}, Lusaka</p>
-              <h1>${escapeHtml(config.name)}</h1>
-              <p class="lede">${escapeHtml(config.tagline || '')}</p>
               <p class="contact-line">WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
               <p class="status-pill">${escapeHtml(todayStatus())}</p>
               <div class="hero-actions">
-                <button type="button" class="btn" data-open="book">Book now</button>
                 <a class="btn-ghost" href="#services">Browse services</a>
               </div>
             </div>
             <div class="hero-art">${heroMarkup(config.illustration)}</div>
           </div>
         </section>
+        ${meetStylist(config)}
+        ${landingInfo(config)}
+        ${landingPolicies(config)}
+        </div>
+        <div id="booking" class="booking">
         <section class="band" aria-labelledby="how-title">
           <div class="wrap">
             <p class="eyebrow">How it works</p>
             <h2 id="how-title">Three short steps</h2>
+            <p><button type="button" class="btn" data-open="book">Book today</button></p>
             <ol class="steps">
               <li><span class="step-num">1</span><h3>Choose a service</h3><p>Add a ${escapeHtml(config.staffNoun || 'stylist')} if you want one.</p></li>
               <li><span class="step-num">2</span><h3>Pick a time that fits</h3><p>Long visits only appear when the whole slot is free.</p></li>
@@ -635,6 +638,7 @@ async function boot() {
             <div class="gallery">${gallery}</div>
           </div>
         </section>
+        </div>
       </main>
       ${siteFooter(config, 'customer')}
       ${whatsappFab(config)}
@@ -657,7 +661,6 @@ async function boot() {
   app.removeAttribute('aria-busy');
 
   const dialog = document.querySelector('#booker');
-  document.querySelector('#book-now').addEventListener('click', () => openBooker(null));
   document.querySelector('#main').addEventListener('click', (event) => {
     if (event.target.closest('[data-open="book"]')) openBooker(null);
     const book = event.target.closest('[data-book]');

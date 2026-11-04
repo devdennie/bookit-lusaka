@@ -13,24 +13,36 @@
   "phone": {
     "whatsappE164": "260970000000"
   },
+  "social": [
+    { "network": "Instagram", "handle": "@chiposbraids.demo" },
+    { "network": "Facebook", "handle": "chiposbraids.demo" },
+    { "network": "TikTok", "handle": "@chiposbraids.demo" }
+  ],
+  "policies": [
+    { "title": "Deposits", "body": "The demo may show a sample hold in kwacha. Nothing is charged, and the seat is only saved in this browser." },
+    { "title": "Lateness", "body": "Sample note: arrive within 15 minutes. A long braid may be shortened if the sitting would run past closing." },
+    { "title": "Cancellations", "body": "Sample note: tell the salon the day before if you cannot come. Same-day misses can be marked as a no-show in the demo." },
+    { "title": "What to bring", "body": "Sample note: come with clean, detangled hair for braids, and a photo of the style you want." }
+  ],
   "intervalMinutes": 30,
   "theme": {
-    "--bg": "#f3eee6",
-    "--bg-elev": "#fffdfb",
-    "--ink": "#241812",
-    "--muted": "#5e4c43",
-    "--accent": "#9c4221",
-    "--accent-hover": "#7c3318",
-    "--on-accent": "#fffaf6",
-    "--accent-soft": "#f3e1d4",
-    "--line": "#e6d9cc",
-    "--gold": "#8a5a12",
-    "--ok": "#3f6212",
+    "--bg": "#f4efe4",
+    "--bg-elev": "#fbf7f0",
+    "--ink": "#141414",
+    "--muted": "#3d3a36",
+    "--accent": "#be185d",
+    "--accent-hover": "#9d1249",
+    "--on-accent": "#ffffff",
+    "--accent-soft": "#f8d5e5",
+    "--line": "#141414",
+    "--rule": "#141414",
+    "--gold": "#9d1249",
+    "--ok": "#1f6b32",
     "--danger": "#9f1239",
-    "--focus": "#1d4ed8",
-    "--banner": "#241812",
-    "--banner-ink": "#f6f1ea",
-    "--shadow": "0 18px 50px rgba(36, 24, 18, 0.08)"
+    "--focus": "#141414",
+    "--banner": "#141414",
+    "--banner-ink": "#f4efe4",
+    "--shadow": "4px 4px 0 rgba(20, 20, 20, 0.16)"
   },
   "openingHours": {
     "monday": { "open": "08:00", "close": "18:30", "breaks": [{ "start": "13:00", "end": "13:30" }] },

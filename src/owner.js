@@ -192,6 +192,7 @@ async function boot() {
     </div>
     <main id="main">
       <div class="wrap">
+        <h1 class="owner-title">${escapeHtml(config.name)}</h1>
         <p class="login-note" role="note"><strong>Demo: no login</strong></p>
         <p class="owner-note" role="note"><strong>Demo owner view, no login in this demo.</strong> Anyone with this link can change the sample schedule. It is saved only in this browser.</p>
         <p id="day-live" class="visually-hidden" aria-live="polite"></p>

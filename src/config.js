@@ -40,26 +40,43 @@ export function flattenServices(config) {
   return services;
 }
 
+/** Publication colours and type live in CSS. Presets do not paint over them. */
+const PUBLICATION_TOKENS = new Set([
+  '--bg',
+  '--bg-elev',
+  '--ink',
+  '--muted',
+  '--accent',
+  '--accent-hover',
+  '--on-accent',
+  '--accent-soft',
+  '--line',
+  '--rule',
+  '--gold',
+  '--ok',
+  '--danger',
+  '--focus',
+  '--banner',
+  '--banner-ink',
+  '--shadow',
+  '--font-display',
+  '--font-body',
+  '--serif',
+  '--sans',
+]);
+
 export function applyTheme(config) {
   const root = document.documentElement;
   const theme = config.theme ?? {};
   for (const [key, value] of Object.entries(theme)) {
-    if (key.startsWith('--') && typeof value === 'string') {
+    if (key.startsWith('--') && typeof value === 'string' && !PUBLICATION_TOKENS.has(key)) {
       root.style.setProperty(key, value);
     }
   }
-  const scheme = config.colorScheme === 'dark' ? 'dark' : 'light';
-  root.style.colorScheme = scheme;
+  root.style.colorScheme = 'light';
   const themeColor = document.querySelector('meta[name="theme-color"]');
-  if (themeColor && theme['--bg']) themeColor.setAttribute('content', theme['--bg']);
-  try {
-    sessionStorage.setItem(
-      `bookit-theme:${config.id}`,
-      JSON.stringify({ vars: theme, colorScheme: scheme }),
-    );
-  } catch {
-    /* Ignore quota or private-mode errors. */
-  }
+  if (themeColor) themeColor.setAttribute('content', '#f4efe4');
+  void config;
 }
 
 export function pageHref(page, configId = requestedConfigId()) {
