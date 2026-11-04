@@ -18,6 +18,12 @@
     { "network": "Facebook", "handle": "chiposbraids.demo" },
     { "network": "TikTok", "handle": "@chiposbraids.demo" }
   ],
+  "policies": [
+    { "title": "Deposits", "body": "The demo may show a sample hold in kwacha. Nothing is charged, and the seat is only saved in this browser." },
+    { "title": "Lateness", "body": "Sample note: arrive within 15 minutes. A long braid may be shortened if the sitting would run past closing." },
+    { "title": "Cancellations", "body": "Sample note: tell the salon the day before if you cannot come. Same-day misses can be marked as a no-show in the demo." },
+    { "title": "What to bring", "body": "Sample note: come with clean, detangled hair for braids, and a photo of the style you want." }
+  ],
   "intervalMinutes": 30,
   "theme": {
     "--bg": "#f4efe4",

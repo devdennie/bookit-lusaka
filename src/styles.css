@@ -799,6 +799,103 @@ a.book-today:hover { background: var(--accent-hover); }
   .info-grid { grid-template-columns: 1.15fr 1fr 0.9fr; align-items: stretch; }
 }
 
+.policies {
+  width: min(var(--max), calc(100% - 32px));
+  margin: 0 auto 36px;
+}
+
+.policies h2 { margin: 0 0 6px; }
+
+.policy-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 3px solid var(--ink);
+  background: var(--bg-elev);
+}
+
+.policy-grid article {
+  margin: 0;
+  padding: 14px 16px 8px;
+  border-top: 2px solid var(--ink);
+}
+
+.policy-grid article:first-child { border-top: 0; }
+
+.policy-grid h3 {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 1.45rem;
+}
+
+@media (min-width: 800px) {
+  .policy-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .policy-grid article {
+    border-top: 0;
+    border-left: 2px solid var(--ink);
+  }
+  .policy-grid article:first-child { border-left: 0; }
+}
+
+.owner-page .booking,
+.owner-page .block-card,
+.owner-page .stat,
+.owner-page .panel,
+.owner-page .owner-note,
+.owner-page .date-switch .btn-ghost,
+.owner-page .header-inner .btn,
+.owner-page .badge {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+}
+
+.owner-page .booking,
+.owner-page .block-card,
+.owner-page .stat,
+.owner-page .panel {
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.owner-page .stat strong { color: var(--accent); }
+
+.owner-page .badge { box-shadow: none; background: var(--bg); }
+
+.owner-page .btn,
+.owner-page .header-inner .btn {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.owner-page .btn-ghost,
+.owner-page .date-switch .btn-ghost {
+  background: var(--bg-elev);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+.owner-page .btn:focus-visible,
+.owner-page .btn-ghost:focus-visible,
+.owner-page input:focus-visible,
+.owner-page select:focus-visible,
+.owner-page .today-link:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.owner-page input,
+.owner-page select {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+}
+
+@media (hover: hover) {
+  .owner-page .btn:hover { background: var(--accent-hover); }
+  .owner-page .btn-ghost:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+}
+
 @media (min-width: 800px) {
   .meet { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 36px; }
 }

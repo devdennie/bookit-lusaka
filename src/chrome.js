@@ -172,6 +172,22 @@ export function landingInfo(config) {
     </section>`;
 }
 
+export function landingPolicies(config) {
+  const items = (config.policies ?? []).map((policy) => `
+    <article>
+      <h3>${escapeHtml(policy.title)}</h3>
+      <p>${escapeHtml(policy.body)}</p>
+    </article>
+  `).join('');
+  if (!items) return '';
+  return `
+    <section class="policies" aria-labelledby="policies-title">
+      <h2 id="policies-title">Booking policies <span class="example-tag">sample</span></h2>
+      <p class="help">Sample wording only. Change the policies list in this business config.</p>
+      <div class="policy-grid">${items}</div>
+    </section>`;
+}
+
 export function loadErrorPage(message) {
   const home = import.meta.env.BASE_URL;
   return `
