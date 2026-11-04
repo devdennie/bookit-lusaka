@@ -13,6 +13,11 @@
   "phone": {
     "whatsappE164": "260970000000"
   },
+  "social": [
+    { "network": "Instagram", "handle": "@sakasbarber.demo" },
+    { "network": "Facebook", "handle": "sakasbarber.demo" },
+    { "network": "TikTok", "handle": "@sakasbarber.demo" }
+  ],
   "intervalMinutes": 30,
   "theme": {
     "--bg": "#121110",

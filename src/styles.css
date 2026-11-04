@@ -717,6 +717,88 @@ a.book-today:hover { background: var(--accent-hover); }
 
 .meet-copy .book-today { margin-top: 6px; }
 
+.info-grid {
+  width: min(var(--max), calc(100% - 32px));
+  margin: 0 auto 32px;
+  display: grid;
+  gap: 12px;
+}
+
+.info-box {
+  border: 3px solid var(--ink);
+  background: var(--bg-elev);
+  min-width: 0;
+}
+
+.info-box h2 {
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+}
+
+.tag-box h2 {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.info-body { padding: 12px 14px 6px; }
+
+.info-label {
+  margin: 0 0 2px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+.info-hours {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-hours th,
+.info-hours td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  font-weight: 500;
+}
+
+.info-hours th {
+  width: 46%;
+  padding-right: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.handle-list {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.handle-list li {
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.handle-list span {
+  display: inline-block;
+  min-width: 6.5rem;
+  color: var(--accent);
+}
+
+@media (min-width: 900px) {
+  .info-grid { grid-template-columns: 1.15fr 1fr 0.9fr; align-items: stretch; }
+}
+
 @media (min-width: 800px) {
   .meet { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 36px; }
 }

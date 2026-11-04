@@ -13,6 +13,11 @@
   "phone": {
     "whatsappE164": "260970000000"
   },
+  "social": [
+    { "network": "Instagram", "handle": "@chiposbraids.demo" },
+    { "network": "Facebook", "handle": "chiposbraids.demo" },
+    { "network": "TikTok", "handle": "@chiposbraids.demo" }
+  ],
   "intervalMinutes": 30,
   "theme": {
     "--bg": "#f4efe4",

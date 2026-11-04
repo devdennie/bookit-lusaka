@@ -1,6 +1,6 @@
 import { whatsappIcon } from './art.js';
 import { pageHref, presetHref } from './config.js';
-import { escapeHtml, formatDemoPhone, whatsappUrl } from './format.js';
+import { escapeHtml, formatDemoPhone, hoursRows, whatsappUrl } from './format.js';
 
 const PRESETS = [
   ['salon', 'Salon'],
@@ -111,6 +111,64 @@ export function meetStylist(config) {
         <p>${escapeHtml(name)} is the ${escapeHtml(role.toLowerCase())} in ${escapeHtml(place)}. Each visit is booked for the full sitting, so the time you choose is the time you keep.</p>
         <a class="book-today" href="#booking">Book today</a>
       </div>
+    </section>`;
+}
+
+function hourBands(openingHours) {
+  const bands = [];
+  for (const row of hoursRows(openingHours)) {
+    const previous = bands[bands.length - 1];
+    if (previous && previous.value === row.value) {
+      previous.end = row.label;
+    } else {
+      bands.push({ start: row.label, end: row.label, value: row.value });
+    }
+  }
+  return bands.map((band) => ({
+    days: band.start === band.end ? band.start : `${band.start} – ${band.end}`,
+    value: band.value,
+  }));
+}
+
+export function landingInfo(config) {
+  const hours = hourBands(config.openingHours).map((band) => `
+    <tr>
+      <th scope="row">${escapeHtml(band.days)}</th>
+      <td>${escapeHtml(band.value)}</td>
+    </tr>
+  `).join('');
+  const place = [config.area, config.city].filter(Boolean).join(', ');
+  const handles = (config.social ?? []).map((item) => `
+    <li><span>${escapeHtml(item.network)}</span> <strong>${escapeHtml(item.handle)}</strong></li>
+  `).join('');
+  return `
+    <section class="info-grid" aria-label="Hours, visit and social">
+      <article class="info-box">
+        <h2>Hours</h2>
+        <div class="info-body">
+          <table class="info-hours">
+            <caption class="visually-hidden">Opening hours</caption>
+            <tbody>${hours}</tbody>
+          </table>
+        </div>
+      </article>
+      <article class="info-box">
+        <h2>Visit</h2>
+        <div class="info-body">
+          <p class="info-label">WhatsApp</p>
+          <p><strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone?.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
+          <p class="info-label">Location</p>
+          <p>${escapeHtml(config.address || '')}</p>
+          <p>${escapeHtml(place)}</p>
+        </div>
+      </article>
+      <article class="info-box tag-box">
+        <h2>Tag us</h2>
+        <div class="info-body">
+          <p>Share a visit and mention these accounts. They are placeholders, not live profiles.</p>
+          <ul class="handle-list">${handles}</ul>
+        </div>
+      </article>
     </section>`;
 }
 

@@ -13,6 +13,11 @@
   "phone": {
     "whatsappE164": "260970000000"
   },
+  "social": [
+    { "network": "Instagram", "handle": "@mtenderephysio.demo" },
+    { "network": "Facebook", "handle": "mtenderephysio.demo" },
+    { "network": "TikTok", "handle": "@mtenderephysio.demo" }
+  ],
   "intervalMinutes": 30,
   "theme": {
     "--bg": "#f3f7f6",
