@@ -7,6 +7,12 @@
   "city": "Lusaka",
   "address": "Suite 4, Longacres Mall, Lusaka",
   "tagline": "Steady, practical physiotherapy for pain, sport and recovery.",
+  "hero": {
+    "headline": "The full session, not a gap.",
+    "blurb": "Assessment and treatment are booked for the whole visit, so the plan is not squeezed between other patients."
+  },
+  "bubble": "Time to assess, not to rush.",
+  "collageAlt": "Abstract study of circles and ruled lines for the studio",
   "illustration": "clinic",
   "staffNoun": "therapist",
   "colorScheme": "light",
@@ -138,8 +144,8 @@
     ]
   },
   "gallery": [
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles" },
     { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" },
-    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines on a pale ground" },
-    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles" }
+    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines on a pale ground" }
   ]
 }

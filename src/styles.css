@@ -243,10 +243,11 @@ a.btn:visited {
 
 .hero { padding: 28px 0 8px; }
 
-.hero h1 {
+.hero-title {
   margin: 0 0 12px;
-  font-size: clamp(2.25rem, 8vw, 4.8rem);
-  max-width: 11ch;
+  color: var(--ink);
+  font-size: clamp(2.15rem, 5vw, 3.8rem);
+  line-height: 0.96;
   text-wrap: balance;
 }
 
@@ -677,7 +678,8 @@ a.book-today:hover { background: var(--accent-hover); }
   padding: 8px;
 }
 
-.frame img {
+.frame img,
+.frame-art svg {
   display: block;
   width: 100%;
   height: auto;
@@ -688,7 +690,8 @@ a.book-today:hover { background: var(--accent-hover); }
 
 .frame-tall { grid-row: span 2; }
 
-.frame-tall img { aspect-ratio: 3 / 4; }
+.frame-tall img,
+.frame-tall .frame-art svg { aspect-ratio: 3 / 4; }
 
 .frame-tag { position: relative; }
 
@@ -1663,7 +1666,7 @@ select {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
     gap: 56px;
-    align-items: center;
+    align-items: start;
     padding-top: 18px;
   }
 
@@ -1704,7 +1707,8 @@ select {
 @media (max-width: 480px) {
   .collage { grid-template-columns: 1fr; }
   .frame-tall { grid-row: auto; }
-  .frame-tall img { aspect-ratio: 4 / 3; }
+  .frame-tall img,
+  .frame-tall .frame-art svg { aspect-ratio: 4 / 3; }
   .info-hours,
   .info-hours tbody,
   .info-hours tr,

@@ -1,4 +1,4 @@
-import { whatsappIcon } from './art.js';
+import { heroMarkup, whatsappIcon } from './art.js';
 import { pageHref, presetHref } from './config.js';
 import { escapeHtml, formatDemoPhone, hoursRows, whatsappUrl } from './format.js';
 
@@ -66,6 +66,27 @@ export function whatsappFab(config) {
   return `<a class="wa-fab" href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${whatsappIcon}<span>WhatsApp</span><span class="demo-number">demo number</span></a>`;
 }
 
+export function landingHero(config, { status = '', art = '' } = {}) {
+  const headline = escapeHtml(config.hero?.headline || '');
+  const blurb = escapeHtml(config.hero?.blurb || '');
+  const phone = escapeHtml(formatDemoPhone(config.phone?.whatsappE164));
+  return `
+    <section class="hero" aria-label="Today">
+      <div class="wrap hero-grid">
+        <div>
+          <h2 class="hero-title">${headline}</h2>
+          <p class="lede">${blurb}</p>
+          <p class="contact-line">WhatsApp <strong class="phone-display">${phone}</strong> <span class="demo-number">demo number</span></p>
+          <p class="status-pill">${escapeHtml(status)}</p>
+          <div class="hero-actions">
+            <a class="btn-ghost" href="#services">Browse services</a>
+          </div>
+        </div>
+        <div class="hero-art">${art}</div>
+      </div>
+    </section>`;
+}
+
 export function landingMasthead(config) {
   const place = escapeHtml([config.area, config.city].filter(Boolean).join(', '));
   const kicker = escapeHtml(config.tagline || config.name);
@@ -93,17 +114,23 @@ export function meetStylist(config) {
   const name = lead?.name || config.name;
   const role = lead?.role || noun;
   const place = [config.area, config.city].filter(Boolean).join(', ');
-  const base = import.meta.env.BASE_URL;
-  const frames = (config.gallery ?? []).slice(0, 3);
-  const pictures = frames.map((image, index) => `
-    <figure class="frame${index === 0 ? ' frame-tall' : ''}${index === 1 ? ' frame-tag' : ''}">
+  const base = import.meta.env?.BASE_URL || '/';
+  const bubble = escapeHtml(config.bubble || '');
+  const studies = (config.gallery ?? []).slice(0, 2);
+  const leadFrame = `
+    <figure class="frame frame-tall">
+      <div class="frame-art" role="img" aria-label="${escapeHtml(config.collageAlt || '')}">${heroMarkup(config.illustration)}</div>
+    </figure>`;
+  const pictures = studies.map((image, index) => `
+    <figure class="frame${index === 0 ? ' frame-tag' : ''}">
       <img src="${base}${image.src}" alt="${escapeHtml(image.alt || '')}" width="800" height="600" loading="lazy" decoding="async">
-      ${index === 1 ? '<p class="bubble">The whole sitting, not a squeeze.</p>' : ''}
+      ${index === 0 && bubble ? `<p class="bubble">${bubble}</p>` : ''}
     </figure>
   `).join('');
   return `
     <section class="meet" aria-labelledby="meet-title">
       <div class="collage">
+        ${leadFrame}
         ${pictures}
       </div>
       <div class="meet-copy">

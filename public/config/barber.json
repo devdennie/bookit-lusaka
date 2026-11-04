@@ -7,6 +7,12 @@
   "city": "Lusaka",
   "address": "Shop 2, Woodlands Main, Lusaka",
   "tagline": "Clean fades and an unhurried shave in Woodlands.",
+  "hero": {
+    "headline": "The full chair, not a quick gap.",
+    "blurb": "Fades and shaves are booked for the whole sitting. The time you pick is the time the chair is yours."
+  },
+  "bubble": "The whole cut, not a squeeze.",
+  "collageAlt": "Abstract study of blocks and a stripe for the barbershop",
   "illustration": "barber",
   "staffNoun": "barber",
   "colorScheme": "dark",
@@ -145,8 +151,8 @@
     ]
   },
   "gallery": [
-    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" },
     { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines" },
-    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a gold disc" }
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a gold disc" },
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" }
   ]
 }
