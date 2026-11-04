@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Demo booking page for the fictional salon Chipo's Braids & Beauty in Kabulonga, Lusaka. Example prices only.">
-    <meta name="theme-color" content="#f3eee6">
+    <meta name="theme-color" content="#f4efe4">
     <meta name="robots" content="noindex">
     <meta property="og:title" content="Chipo's Braids & Beauty">
     <meta property="og:description" content="Fictional Kabulonga salon. Example prices and sample bookings.">
     <meta property="og:type" content="website">
     <title>Chipo's Braids &amp; Beauty · Book</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
     <script>
       (function () {
         var params = new URLSearchParams(location.search);
@@ -26,19 +29,6 @@
         }
         preload('config/' + id + '.json');
         preload('data/seed.json');
-        try {
-          var raw = sessionStorage.getItem('bookit-theme:' + id);
-          if (!raw) return;
-          var saved = JSON.parse(raw);
-          var theme = saved.vars || {};
-          var root = document.documentElement;
-          Object.keys(theme).forEach(function (key) {
-            if (key.indexOf('--') === 0) root.style.setProperty(key, theme[key]);
-          });
-          if (saved.colorScheme) root.style.colorScheme = saved.colorScheme;
-        } catch (error) {
-          /* The salon theme in CSS is the fallback. */
-        }
       })();
     </script>
     <link rel="stylesheet" href="./src/styles.css">

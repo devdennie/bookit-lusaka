@@ -1,22 +1,25 @@
 :root {
-  --bg: #f3eee6;
-  --bg-elev: #fffdfb;
-  --ink: #241812;
-  --muted: #5e4c43;
-  --accent: #9c4221;
-  --accent-hover: #7c3318;
-  --on-accent: #fffaf6;
-  --accent-soft: #f3e1d4;
-  --line: #e6d9cc;
-  --gold: #8a5a12;
-  --ok: #3f6212;
+  --bg: #f4efe4;
+  --bg-elev: #fbf7f0;
+  --ink: #141414;
+  --muted: #3d3a36;
+  --accent: #be185d;
+  --accent-hover: #9d1249;
+  --on-accent: #ffffff;
+  --accent-soft: #f8d5e5;
+  --line: #141414;
+  --rule: #141414;
+  --gold: #9d1249;
+  --ok: #1f6b32;
   --danger: #9f1239;
-  --focus: #1d4ed8;
-  --banner: #241812;
-  --banner-ink: #f6f1ea;
-  --shadow: 0 18px 50px rgba(36, 24, 18, 0.08);
-  --serif: "Iowan Old Style", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --focus: #141414;
+  --banner: #141414;
+  --banner-ink: #f4efe4;
+  --shadow: 4px 4px 0 rgba(20, 20, 20, 0.16);
+  --font-display: "Barlow Condensed", "Arial Narrow", "Franklin Gothic Medium", sans-serif;
+  --font-body: "Newsreader", "Iowan Old Style", Palatino, Georgia, serif;
+  --serif: var(--font-display);
+  --sans: var(--font-body);
   --max: 1320px;
   color-scheme: light;
 }
@@ -44,10 +47,22 @@ body {
 img, svg { max-width: 100%; }
 
 h1, h2, h3, h4 {
-  font-family: var(--serif);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.rule {
+  border: 0;
+  border-top: 3px solid var(--rule);
+  margin: 1.25rem 0;
+}
+
+.boxed {
+  border: 2px solid var(--rule);
+  background: var(--bg-elev);
 }
 
 p { margin: 0 0 0.8rem; }
@@ -122,7 +137,7 @@ button { cursor: pointer; }
 
 .site-header {
   background: var(--bg-elev);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 3px solid var(--rule);
 }
 
 .header-inner {
@@ -304,7 +319,7 @@ a.btn:visited {
 .stat,
 .panel {
   background: var(--bg-elev);
-  border: 1px solid var(--line);
+  border: 2px solid var(--rule);
   border-radius: 20px;
 }
 
@@ -468,7 +483,21 @@ a.btn:visited {
 .site-footer {
   margin-top: 36px;
   padding: 28px 0 8px;
-  border-top: 1px solid var(--line);
+  border-top: 3px solid var(--line);
+}
+
+.btn,
+.btn-ghost,
+.btn-text,
+.day-nav,
+.eyebrow,
+.footer-label,
+.step-kicker,
+.cat-nav a,
+.preset-nav a,
+label,
+legend {
+  font-family: var(--font-display);
 }
 
 .footer-grid { display: grid; gap: 22px; }
@@ -515,12 +544,21 @@ dialog.booker {
   max-height: min(860px, calc(100dvh - 32px));
   margin: auto;
   padding: 0;
-  border: 0;
-  border-radius: 28px;
+  border: 3px solid var(--line);
+  border-radius: 0;
   background: var(--bg);
   color: var(--ink);
   box-shadow: var(--shadow);
   overflow: hidden;
+}
+
+.landing {
+  background: var(--bg);
+}
+
+.booking {
+  border-top: 3px solid var(--line);
+  scroll-margin-top: 8.5rem;
 }
 
 dialog.booker::backdrop { background: rgba(20, 16, 14, 0.52); }
