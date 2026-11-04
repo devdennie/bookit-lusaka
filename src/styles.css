@@ -1309,6 +1309,75 @@ select {
 
 .reset-box { margin: 12px 0 28px; }
 
+#booking .service,
+#booker .pick,
+#booker .provider,
+#booker .slot,
+#booker .day,
+#booker .day-nav,
+#booker .slot-span,
+#booker input,
+#booker select,
+#booking .cat-nav a,
+#booking .service .example-tag,
+#booker .example-tag,
+#booker .demo-number {
+  border-radius: 0;
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--ink);
+}
+
+#booking .service { border-width: 3px; }
+
+#booking .service .btn,
+#booker .btn {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+#booker .btn-ghost {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+  background: var(--bg-elev);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+#booker .day.is-suggested,
+#booker .slot[aria-checked="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+#booker .day.is-suggested .dow,
+#booker .day.is-suggested .mon,
+#booker .day.is-suggested .dom,
+#booker .slot[aria-checked="true"] small {
+  color: var(--on-accent);
+}
+
+#booker .slot-unavailable,
+#booker .slot:disabled {
+  border-style: dashed;
+  border-color: var(--muted);
+  background: var(--bg);
+  color: var(--muted);
+  box-shadow: none;
+}
+
+#booker .slot-span { border-style: dashed; border-color: var(--muted); }
+
+#booker .slot-span-booked {
+  border-style: solid;
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
 @media (hover: hover) {
   .btn:hover,
   a.btn:hover { background: var(--accent-hover); }
@@ -1316,8 +1385,71 @@ select {
   .pick:hover,
   .provider:hover,
   .slot:hover,
-  .day:hover:not(:disabled),
+  .day:hover:not(.is-closed),
   .booking:hover { border-color: var(--accent); }
+
+  #booker .pick:hover,
+  #booker .provider:hover,
+  #booker .slot:hover:not(:disabled),
+  #booker .day:hover:not(.is-closed),
+  #booking .cat-nav a:hover {
+    background: var(--accent);
+    color: var(--on-accent);
+    border-color: var(--ink);
+  }
+
+  #booker .pick:hover span,
+  #booker .slot:hover:not(:disabled) small,
+  #booker .day:hover:not(.is-closed) .dow,
+  #booker .day:hover:not(.is-closed) .mon,
+  #booker .day:hover:not(.is-closed) .dom {
+    color: var(--on-accent);
+  }
+
+  #booking .service .btn:hover,
+  #booker .btn:hover { background: var(--accent-hover); }
+
+  #booker .btn-ghost:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+}
+
+#booker .pick:focus-visible,
+#booker .provider:focus-visible,
+#booker .slot:focus-visible:not(:disabled),
+#booker .day:focus-visible:not(.is-closed),
+#booking .service .btn:focus-visible,
+#booking .cat-nav a:focus-visible,
+#booker .btn:focus-visible,
+#booker .btn-ghost:focus-visible,
+#booker input:focus-visible,
+#booker select:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+#booker .pick:focus-visible,
+#booker .provider:focus-visible,
+#booker .slot:focus-visible:not(:disabled),
+#booker .day:focus-visible:not(.is-closed) {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+#booker .pick:focus-visible span,
+#booker .slot:focus-visible:not(:disabled) small,
+#booker .day:focus-visible:not(.is-closed) .dow,
+#booker .day:focus-visible:not(.is-closed) .mon,
+#booker .day:focus-visible:not(.is-closed) .dom {
+  color: var(--on-accent);
+}
+
+#booker .day.is-closed:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+  background: transparent;
+  color: var(--ink);
 }
 
 @media (prefers-reduced-motion: no-preference) {
