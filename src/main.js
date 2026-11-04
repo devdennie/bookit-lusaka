@@ -1,5 +1,5 @@
 import { heroMarkup } from './art.js';
-import { demoBanner, loadErrorPage, siteFooter, siteHeader, whatsappFab } from './chrome.js';
+import { demoBanner, landingMasthead, loadErrorPage, siteFooter, whatsappFab } from './chrome.js';
 import {
   applyTheme,
   flattenServices,
@@ -579,20 +579,16 @@ async function boot() {
     app.innerHTML = `
       <div class="top-stack">
         ${demoBanner(config.name)}
-        ${siteHeader(config, '<a class="btn book-now" href="#booking">Book today</a>')}
       </div>
       <main id="main">
         <div id="landing" class="landing">
-        <section class="hero">
+        ${landingMasthead(config)}
+        <section class="hero" aria-label="Today">
           <div class="wrap hero-grid">
             <div>
-              <p class="eyebrow">${escapeHtml(config.area)}, Lusaka</p>
-              <h1>${escapeHtml(config.name)}</h1>
-              <p class="lede">${escapeHtml(config.tagline || '')}</p>
               <p class="contact-line">WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
               <p class="status-pill">${escapeHtml(todayStatus())}</p>
               <div class="hero-actions">
-                <a class="btn" href="#booking">Book today</a>
                 <a class="btn-ghost" href="#services">Browse services</a>
               </div>
             </div>

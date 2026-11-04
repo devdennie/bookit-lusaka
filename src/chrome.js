@@ -21,7 +21,7 @@ export function siteHeader(config, actionHtml) {
           <span class="mark" aria-hidden="true">${escapeHtml(config.initials || '•')}</span>
           <span class="brand-copy">
             <span class="brand-name">${escapeHtml(config.name)}</span>
-            <span class="brand-area">${escapeHtml(config.area)}, Lusaka</span>
+            <span class="brand-area">${escapeHtml([config.area, config.city].filter(Boolean).join(', '))}</span>
           </span>
         </a>
         ${actionHtml}
@@ -64,6 +64,27 @@ export function whatsappFab(config) {
   );
   const label = `WhatsApp ${formatDemoPhone(config.phone?.whatsappE164)}, demo number`;
   return `<a class="wa-fab" href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${whatsappIcon}<span>WhatsApp</span><span class="demo-number">demo number</span></a>`;
+}
+
+export function landingMasthead(config) {
+  const place = escapeHtml([config.area, config.city].filter(Boolean).join(', '));
+  const kicker = escapeHtml(config.tagline || config.name);
+  const book = '<a class="book-today" href="#booking">Book today</a>';
+  return `
+    <header class="masthead">
+      <div class="masthead-banner">
+        ${book}
+        <p class="masthead-kicker">${kicker}</p>
+        ${book}
+      </div>
+      <h1 class="masthead-title">${escapeHtml(config.name)}</h1>
+      <p class="masthead-place">
+        <svg class="pin" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+        <span>${place}</span>
+      </p>
+    </header>`;
 }
 
 export function loadErrorPage(message) {
