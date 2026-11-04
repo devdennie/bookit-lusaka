@@ -66,6 +66,27 @@ export function whatsappFab(config) {
   return `<a class="wa-fab" href="${href}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${whatsappIcon}<span>WhatsApp</span><span class="demo-number">demo number</span></a>`;
 }
 
+export function landingHero(config, { status = '', art = '' } = {}) {
+  const headline = escapeHtml(config.hero?.headline || '');
+  const blurb = escapeHtml(config.hero?.blurb || '');
+  const phone = escapeHtml(formatDemoPhone(config.phone?.whatsappE164));
+  return `
+    <section class="hero" aria-label="Today">
+      <div class="wrap hero-grid">
+        <div>
+          <h2 class="hero-title">${headline}</h2>
+          <p class="lede">${blurb}</p>
+          <p class="contact-line">WhatsApp <strong class="phone-display">${phone}</strong> <span class="demo-number">demo number</span></p>
+          <p class="status-pill">${escapeHtml(status)}</p>
+          <div class="hero-actions">
+            <a class="btn-ghost" href="#services">Browse services</a>
+          </div>
+        </div>
+        <div class="hero-art">${art}</div>
+      </div>
+    </section>`;
+}
+
 export function landingMasthead(config) {
   const place = escapeHtml([config.area, config.city].filter(Boolean).join(', '));
   const kicker = escapeHtml(config.tagline || config.name);

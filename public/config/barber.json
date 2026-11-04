@@ -7,6 +7,10 @@
   "city": "Lusaka",
   "address": "Shop 2, Woodlands Main, Lusaka",
   "tagline": "Clean fades and an unhurried shave in Woodlands.",
+  "hero": {
+    "headline": "The full chair, not a quick gap.",
+    "blurb": "Fades and shaves are booked for the whole sitting. The time you pick is the time the chair is yours."
+  },
   "illustration": "barber",
   "staffNoun": "barber",
   "colorScheme": "dark",

@@ -1,5 +1,5 @@
 import { heroMarkup } from './art.js';
-import { demoBanner, landingInfo, landingMasthead, landingPolicies, loadErrorPage, meetStylist, siteFooter, whatsappFab } from './chrome.js';
+import { demoBanner, landingHero, landingInfo, landingMasthead, landingPolicies, loadErrorPage, meetStylist, siteFooter, whatsappFab } from './chrome.js';
 import {
   applyTheme,
   flattenServices,
@@ -583,18 +583,7 @@ async function boot() {
       <main id="main">
         <div id="landing" class="landing">
         ${landingMasthead(config)}
-        <section class="hero" aria-label="Today">
-          <div class="wrap hero-grid">
-            <div>
-              <p class="contact-line">WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
-              <p class="status-pill">${escapeHtml(todayStatus())}</p>
-              <div class="hero-actions">
-                <a class="btn-ghost" href="#services">Browse services</a>
-              </div>
-            </div>
-            <div class="hero-art">${heroMarkup(config.illustration)}</div>
-          </div>
-        </section>
+        ${landingHero(config, { status: todayStatus(), art: heroMarkup(config.illustration) })}
         ${meetStylist(config)}
         ${landingInfo(config)}
         ${landingPolicies(config)}

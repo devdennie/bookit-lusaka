@@ -7,6 +7,10 @@
   "city": "Lusaka",
   "address": "Plot 18, Kabulonga Road, Lusaka",
   "tagline": "Unhurried braids, nails and hair care in Kabulonga.",
+  "hero": {
+    "headline": "The whole sitting, not a squeeze.",
+    "blurb": "Braids, nails and hair care are booked for the full time. The hour you choose is the hour you keep."
+  },
   "illustration": "salon",
   "staffNoun": "stylist",
   "colorScheme": "light",
