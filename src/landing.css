@@ -63,8 +63,8 @@ body.hub .hub-header {
 
 body.hub .hub-bar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-wrap: nowrap;
+  align-items: flex-start;
   gap: 8px 12px;
   width: min(1120px, calc(100% - 32px));
   margin-inline: auto;
@@ -109,13 +109,18 @@ body.hub .account-actions {
 }
 
 body.hub .header-soon {
+  order: 2;
   flex: 1 0 100%;
   margin: 0;
   color: var(--hub);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: 600;
+  line-height: 1.2;
   text-align: right;
 }
+
+body.hub .account-actions .btn,
+body.hub .account-actions .btn-ghost { order: 1; }
 
 body.hub .btn,
 body.hub a.btn:link,
@@ -515,10 +520,17 @@ body.hub .hub-footer :focus-visible { outline-color: #d7f5e8; }
     gap: 16px;
   }
 
+  body.hub .hub-bar { align-items: center; }
+
   body.hub .header-soon {
+    order: 0;
     flex: 0 0 auto;
+    font-size: 0.9rem;
     text-align: left;
   }
+
+  body.hub .account-actions .btn,
+  body.hub .account-actions .btn-ghost { order: 0; }
 
   body.hub .account-actions { margin-left: auto; }
 

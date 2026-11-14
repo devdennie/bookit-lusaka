@@ -1781,6 +1781,14 @@ select {
   color: var(--ink);
   font-size: clamp(2.1rem, 6vw, 3.4rem);
   line-height: 1.12;
+  text-align: left;
+}
+
+.masthead .eyebrow {
+  color: var(--muted);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .masthead-place {
