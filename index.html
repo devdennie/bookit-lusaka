@@ -1,46 +1,403 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Demo booking page for the fictional salon Chipo's Braids & Beauty in Kabulonga, Lusaka. Example prices only.">
-    <meta name="theme-color" content="#f4efe4">
+    <meta name="description" content="PamoHub is a static demo of a campus booking concept. Three fictional Lusaka businesses can be booked in this browser. Example prices only.">
+    <meta name="theme-color" content="#102B35">
     <meta name="robots" content="noindex">
-    <meta property="og:title" content="Chipo's Braids & Beauty">
-    <meta property="og:description" content="Fictional Kabulonga salon. Example prices and sample bookings.">
+    <meta property="og:title" content="PamoHub">
+    <meta property="og:description" content="A static demo. Three fictional businesses, example prices, and no accounts.">
     <meta property="og:type" content="website">
-    <title>Chipo's Braids &amp; Beauty · Book</title>
+    <title>PamoHub · Campus booking demo</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-    <script>
-      (function () {
-        var params = new URLSearchParams(location.search);
-        var id = (params.get('config') || 'salon').toLowerCase();
-        if (!/^[a-z0-9-]+$/.test(id)) id = 'salon';
-        function preload(href) {
-          var link = document.createElement('link');
-          link.rel = 'preload';
-          link.as = 'fetch';
-          link.href = href;
-          link.crossOrigin = 'anonymous';
-          document.head.appendChild(link);
-        }
-        preload('config/' + id + '.json');
-        preload('data/seed.json');
-      })();
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./src/styles.css">
+    <link rel="stylesheet" href="./src/landing.css">
   </head>
-  <body>
+  <body class="hub" id="top">
     <a class="skip" href="#main">Skip to content</a>
-    <noscript>
-      <p class="demo-banner">Demo only. This is a fictional business. Prices and bookings are examples. JavaScript is required to browse services and times.</p>
-    </noscript>
-    <div id="app" aria-busy="true">
-      <p class="boot">Loading the booking page…</p>
+    <p class="demo-banner" role="note">Demo only. PamoHub is a static concept demo. The businesses are fictional. Prices and bookings are examples, not a live shop.</p>
+    <header class="hub-header">
+      <div class="hub-bar">
+        <a class="wordmark" href="#top">
+          <svg class="mark-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#102B35"/>
+            <circle cx="13" cy="16" r="5" fill="#D7F5E8"/>
+            <circle cx="20" cy="16" r="5" fill="none" stroke="#D7F5E8" stroke-width="2"/>
+          </svg>
+          <span>PamoHub</span>
+        </a>
+        <nav class="hub-nav" aria-label="Primary">
+          <a href="#explore">Explore</a>
+          <a href="#about">About</a>
+          <a href="#campus">Choose your campus</a>
+        </nav>
+        <div class="account-actions">
+          <p id="account-soon" class="header-soon">Coming soon</p>
+          <a class="btn-ghost" href="#accounts" aria-describedby="account-soon">Log in</a>
+          <a class="btn" href="#accounts" aria-describedby="account-soon">Sign up</a>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hub-hero" aria-labelledby="hero-title">
+        <div class="wrap hero-layout">
+          <div class="hero-copy">
+            <h1 id="hero-title">Everything you need, just a booking away.</h1>
+            <p class="hub-lede">Discover trusted campus services, explore local businesses and book your next experience.</p>
+            <a class="btn" href="#explore">Explore services</a>
+          </div>
+          <div class="showcase" data-showcase>
+            <div class="showcase-viewport" role="region" aria-label="Illustrated service cards" aria-describedby="showcase-note">
+              <div class="showcase-track" data-track>
+                <article class="show-card" data-card>
+                  <div class="show-art" aria-hidden="true">
+                    <svg viewBox="0 0 320 140" width="320" height="140">
+                      <rect width="320" height="140" fill="#D7F5E8"/>
+                      <path d="M16 96c28-48 52-48 80 0s52 48 80 0 52-48 80 0" fill="none" stroke="#102B35" stroke-width="8" stroke-linecap="round"/>
+                      <circle cx="248" cy="42" r="18" fill="#fff"/>
+                    </svg>
+                    <p class="confirm-pop">Sample confirmation</p>
+                  </div>
+                  <h2>Barbershops &amp; salons</h2>
+                  <p>Find a provider and reserve an appointment.</p>
+                  <p class="show-links">
+                    <a href="book.html?config=salon">Chipo's Braids &amp; Beauty</a>
+                    <a href="book.html?config=barber">Saka's Barbershop</a>
+                  </p>
+                </article>
+                <article class="show-card" data-card>
+                  <div class="show-art" aria-hidden="true">
+                    <svg viewBox="0 0 320 140" width="320" height="140">
+                      <rect width="320" height="140" fill="#D7F5E8"/>
+                      <circle cx="160" cy="70" r="36" fill="#fff" stroke="#102B35" stroke-width="6"/>
+                      <path d="M84 108h152" fill="none" stroke="#102B35" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
+                    <p class="confirm-pop">Sample confirmation</p>
+                  </div>
+                  <h2>Restaurants</h2>
+                  <p>Discover places and reserve a table.</p>
+                  <p class="soon-tag">Coming soon</p>
+                </article>
+                <article class="show-card" data-card>
+                  <div class="show-art" aria-hidden="true">
+                    <svg viewBox="0 0 320 140" width="320" height="140">
+                      <rect width="320" height="140" fill="#D7F5E8"/>
+                      <rect x="108" y="28" width="104" height="78" rx="12" fill="#fff" stroke="#102B35" stroke-width="6"/>
+                      <circle cx="160" cy="66" r="16" fill="none" stroke="#102B35" stroke-width="6"/>
+                    </svg>
+                    <p class="confirm-pop">Sample confirmation</p>
+                  </div>
+                  <h2>Photography</h2>
+                  <p>Book a photographer or photoshoot.</p>
+                  <p class="soon-tag">Coming soon</p>
+                </article>
+                <article class="show-card" data-card>
+                  <div class="show-art" aria-hidden="true">
+                    <svg viewBox="0 0 320 140" width="320" height="140">
+                      <rect width="320" height="140" fill="#D7F5E8"/>
+                      <path d="M70 112V62a90 48 0 0 1 180 0v50" fill="#fff" stroke="#102B35" stroke-width="6"/>
+                    </svg>
+                    <p class="confirm-pop">Sample confirmation</p>
+                  </div>
+                  <h2>Events &amp; venues</h2>
+                  <p>Discover events and reserve spaces.</p>
+                  <p class="soon-tag">Coming soon</p>
+                </article>
+                <article class="show-card" data-card>
+                  <div class="show-art" aria-hidden="true">
+                    <svg viewBox="0 0 320 140" width="320" height="140">
+                      <rect width="320" height="140" fill="#D7F5E8"/>
+                      <circle cx="118" cy="70" r="28" fill="#fff" stroke="#102B35" stroke-width="6"/>
+                      <path d="M160 98c24-36 64-36 88 0" fill="none" stroke="#102B35" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
+                    <p class="confirm-pop">Sample confirmation</p>
+                  </div>
+                  <h2>Fitness services</h2>
+                  <p>Book classes or training sessions.</p>
+                  <p class="soon-tag">Coming soon</p>
+                </article>
+                <article class="show-card" data-card>
+                  <div class="show-art" aria-hidden="true">
+                    <svg viewBox="0 0 320 140" width="320" height="140">
+                      <rect width="320" height="140" fill="#D7F5E8"/>
+                      <path d="M78 46h164M78 70h128M78 94h96" fill="none" stroke="#102B35" stroke-width="8" stroke-linecap="round"/>
+                    </svg>
+                    <p class="confirm-pop">Sample confirmation</p>
+                  </div>
+                  <h2>Tutoring</h2>
+                  <p>Arrange academic support sessions.</p>
+                  <p class="soon-tag">Coming soon</p>
+                </article>
+                <article class="show-card" data-card>
+                  <div class="show-art" aria-hidden="true">
+                    <svg viewBox="0 0 320 140" width="320" height="140">
+                      <rect width="320" height="140" fill="#D7F5E8"/>
+                      <circle cx="146" cy="70" r="32" fill="#fff" stroke="#102B35" stroke-width="6"/>
+                      <circle cx="184" cy="70" r="22" fill="none" stroke="#102B35" stroke-width="6"/>
+                    </svg>
+                    <p class="confirm-pop">Sample confirmation</p>
+                  </div>
+                  <h2>Physiotherapy</h2>
+                  <p>Open the sample physio studio and book a session.</p>
+                  <p class="show-links">
+                    <a href="book.html?config=clinic">Mtendere Physio Studio</a>
+                  </p>
+                </article>
+              </div>
+            </div>
+            <p id="showcase-note" class="showcase-note">The cards are an illustration. Motion pauses when you interact with them. A sample confirmation is not a real booking.</p>
+            <div class="showcase-controls">
+              <button type="button" class="text-btn" data-prev>Previous</button>
+              <button type="button" class="text-btn" data-pause aria-pressed="false">Pause motion</button>
+              <button type="button" class="text-btn" data-next>Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hub-section" id="campus" aria-labelledby="campus-title">
+        <div class="wrap">
+          <p class="demo-stamp">Demo · coming soon</p>
+          <h2 id="campus-title">Choose your campus</h2>
+          <p>Select your institution to explore available services.</p>
+          <p id="campus-note" class="notice">These names are illustrative examples for this demo. Including them does not imply a partnership, or that the institution has joined PamoHub. Choosing one does not change the businesses on this page. Campus filtering is not available yet.</p>
+          <div class="campus-options" role="radiogroup" aria-labelledby="campus-title" aria-describedby="campus-note">
+            <label><input type="radio" name="campus-illustration" value="NIPA"> NIPA</label>
+            <label><input type="radio" name="campus-illustration" value="University of Zambia"> University of Zambia</label>
+            <label><input type="radio" name="campus-illustration" value="Cavendish University Zambia"> Cavendish University Zambia</label>
+            <label><input type="radio" name="campus-illustration" value="Evelyn Hone College"> Evelyn Hone College</label>
+            <label><input type="radio" name="campus-illustration" value="Copperbelt University"> Copperbelt University</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="hub-section" id="explore" aria-labelledby="explore-title">
+        <div class="wrap">
+          <h2 id="explore-title">Popular categories</h2>
+          <p>The salon, barbershop and physio studio are sample bookings. Restaurants, photography, events, fitness and tutoring are not in this demo.</p>
+          <div class="cat-grid">
+            <a class="cat-card" href="#featured">
+              <h3>Barbershops &amp; salons</h3>
+              <p>Find a provider and reserve an appointment.</p>
+              <span class="cat-go">See the demos</span>
+            </a>
+            <a class="cat-card" href="book.html?config=clinic">
+              <h3>Physiotherapy</h3>
+              <p>Book a session at the sample studio.</p>
+              <span class="cat-go">Open the physio demo</span>
+            </a>
+            <article class="cat-card">
+              <h3>Restaurants</h3>
+              <p>Discover places and reserve a table.</p>
+              <p class="soon-tag">Coming soon</p>
+            </article>
+            <article class="cat-card">
+              <h3>Photography</h3>
+              <p>Book a photographer or photoshoot.</p>
+              <p class="soon-tag">Coming soon</p>
+            </article>
+            <article class="cat-card">
+              <h3>Events &amp; venues</h3>
+              <p>Discover events and reserve spaces.</p>
+              <p class="soon-tag">Coming soon</p>
+            </article>
+            <article class="cat-card">
+              <h3>Fitness services</h3>
+              <p>Book classes or training sessions.</p>
+              <p class="soon-tag">Coming soon</p>
+            </article>
+            <article class="cat-card">
+              <h3>Tutoring</h3>
+              <p>Arrange academic support sessions.</p>
+              <p class="soon-tag">Coming soon</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="hub-section" id="featured" aria-labelledby="featured-title">
+        <div class="wrap">
+          <h2 id="featured-title">Featured services</h2>
+          <p>Three fictional Lusaka businesses. Each booking page marks its prices as example and uses the placeholder WhatsApp number +260 97 000 0000, labelled demo number.</p>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="show-art" aria-hidden="true">
+                <svg viewBox="0 0 320 140" width="320" height="140">
+                  <rect width="320" height="140" fill="#D7F5E8"/>
+                  <path d="M20 100c30-52 58-52 88 0s58 52 88 0 58-52 88 0" fill="none" stroke="#102B35" stroke-width="8" stroke-linecap="round"/>
+                  <circle cx="250" cy="40" r="16" fill="#fff"/>
+                </svg>
+              </div>
+              <h3>Chipo's Braids &amp; Beauty</h3>
+              <p class="feature-place">Kabulonga, Lusaka</p>
+              <p>Unhurried braids, nails and hair care in Kabulonga.</p>
+              <p>Prices on the booking page are marked example.</p>
+              <a class="btn" href="book.html?config=salon">Book at Chipo's Braids &amp; Beauty</a>
+            </article>
+            <article class="feature-card">
+              <div class="show-art" aria-hidden="true">
+                <svg viewBox="0 0 320 140" width="320" height="140">
+                  <rect width="320" height="140" fill="#D7F5E8"/>
+                  <rect x="70" y="28" width="180" height="84" rx="12" fill="#fff"/>
+                  <path d="M92 52h136M92 74h96M92 96h64" fill="none" stroke="#102B35" stroke-width="6" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Saka's Barbershop</h3>
+              <p class="feature-place">Woodlands, Lusaka</p>
+              <p>Clean fades and an unhurried shave in Woodlands.</p>
+              <p>Prices on the booking page are marked example.</p>
+              <a class="btn" href="book.html?config=barber">Book at Saka's Barbershop</a>
+            </article>
+            <article class="feature-card">
+              <div class="show-art" aria-hidden="true">
+                <svg viewBox="0 0 320 140" width="320" height="140">
+                  <rect width="320" height="140" fill="#D7F5E8"/>
+                  <circle cx="148" cy="70" r="34" fill="#fff" stroke="#102B35" stroke-width="6"/>
+                  <circle cx="186" cy="70" r="22" fill="none" stroke="#102B35" stroke-width="6"/>
+                </svg>
+              </div>
+              <h3>Mtendere Physio Studio</h3>
+              <p class="feature-place">Longacres, Lusaka</p>
+              <p>Steady, practical physiotherapy for pain, sport and recovery.</p>
+              <p>Prices on the booking page are marked example.</p>
+              <a class="btn" href="book.html?config=clinic">Book at Mtendere Physio Studio</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="hub-section" id="how" aria-labelledby="how-title">
+        <div class="wrap">
+          <h2 id="how-title">How it works</h2>
+          <ol class="how-list">
+            <li>
+              <span class="how-num">1</span>
+              <h3>Discover</h3>
+              <p>Start with the three fictional businesses on this page.</p>
+            </li>
+            <li>
+              <span class="how-num">2</span>
+              <h3>Choose</h3>
+              <p>Open a booking page and pick a service and a time.</p>
+            </li>
+            <li>
+              <span class="how-num">3</span>
+              <h3>Book</h3>
+              <p>Enter a name and phone. The booking is saved in this browser only.</p>
+            </li>
+            <li>
+              <span class="how-num">4</span>
+              <h3>Confirm</h3>
+              <p>You can send the details on WhatsApp to the demo number shown on that page.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="provider-band" id="provider" aria-labelledby="provider-title">
+        <div class="wrap">
+          <p class="demo-stamp">Demo · coming soon</p>
+          <h2 id="provider-title">Become a provider</h2>
+          <p>Local businesses and independent service providers would register here in a full product. This demo does not take registrations, and there is no form to fill in.</p>
+        </div>
+      </section>
+
+      <section class="hub-section" aria-labelledby="unavailable-title">
+        <div class="wrap">
+          <h2 id="unavailable-title">Not available in this demo</h2>
+          <div class="soon-grid">
+            <article id="accounts">
+              <p class="demo-stamp">Demo · coming soon</p>
+              <h3>Log in and sign up</h3>
+              <p>There are no accounts. This page does not collect passwords, email addresses or other sign-in details.</p>
+            </article>
+            <article id="bookings">
+              <p class="demo-stamp">Demo · coming soon</p>
+              <h3>Bookings</h3>
+              <p>There is no shared bookings list. A booking made on a sample business page is saved only in this browser.</p>
+            </article>
+            <article id="profile">
+              <p class="demo-stamp">Demo · coming soon</p>
+              <h3>Profile</h3>
+              <p>Profiles, saved campus preferences and settings are not part of this demo.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="hub-footer">
+      <div class="wrap footer-layout">
+        <div>
+          <p class="footer-brand">PamoHub</p>
+          <p>A static demo of a campus-first booking concept. Start on this page. The sample businesses are separate booking pages.</p>
+        </div>
+        <nav aria-label="Footer">
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="#terms">Terms</a>
+          <a href="#privacy">Privacy</a>
+        </nav>
+        <nav aria-label="Sample businesses">
+          <a href="book.html?config=salon">Chipo's Braids &amp; Beauty</a>
+          <a href="book.html?config=barber">Saka's Barbershop</a>
+          <a href="book.html?config=clinic">Mtendere Physio Studio</a>
+        </nav>
+      </div>
+      <div class="wrap footer-notes">
+        <section id="about" aria-labelledby="about-title">
+          <h2 id="about-title">About</h2>
+          <p>PamoHub in this repository is a static demo. It is not a live marketplace. There is no account system, no payment and no campus partnership. Chipo's Braids &amp; Beauty, Saka's Barbershop and Mtendere Physio Studio are fictional businesses.</p>
+        </section>
+        <section id="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Contact</h2>
+          <p>This demo does not list an email address or a phone number for PamoHub. Each sample business page shows the placeholder WhatsApp number +260 97 000 0000 and labels it demo number.</p>
+        </section>
+        <section id="terms" aria-labelledby="terms-title">
+          <h2 id="terms-title">Terms</h2>
+          <p>Nothing on this site is an offer to sell a service. Sample prices are examples. The pages send noindex.</p>
+        </section>
+        <section id="privacy" aria-labelledby="privacy-title">
+          <h2 id="privacy-title">Privacy</h2>
+          <p>There is no account. A booking you make on a sample business page is stored in this browser's local storage. It is not sent to a server. Do not enter details you would not want saved on this device.</p>
+        </section>
+        <p id="social">There are no PamoHub social media accounts in this demo. Handles on the sample business pages are placeholders, not live profiles.</p>
+      </div>
+    </footer>
+
+    <div class="campus-dock">
+      <a class="campus-jump" href="#campus">
+        <strong>Choose your campus</strong>
+        <span>Illustrative only. No partnership is implied.</span>
+      </a>
+      <nav class="bottom-nav" aria-label="Mobile">
+        <a href="#top" aria-current="page">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg>
+          <span>Home</span>
+        </a>
+        <a href="#explore">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 4h7v7H4V4zm9 0h7v7h-7V4zM4 13h7v7H4v-7zm9 0h7v7h-7v-7z"/></svg>
+          <span>Explore</span>
+        </a>
+        <a href="#bookings">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm12 8H5v10h14V10z"/></svg>
+          <span>Bookings</span>
+          <span class="nav-soon">Soon</span>
+        </a>
+        <a href="#profile">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"/></svg>
+          <span>Profile</span>
+          <span class="nav-soon">Soon</span>
+        </a>
+      </nav>
     </div>
-    <script type="module" src="./src/main.js"></script>
+    <noscript>
+      <p class="demo-banner">JavaScript is off, so the service cards stay still. The booking links on this page still work.</p>
+    </noscript>
+    <script type="module" src="./src/landing.js"></script>
   </body>
 </html>

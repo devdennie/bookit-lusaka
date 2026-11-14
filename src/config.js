@@ -40,7 +40,7 @@ export function flattenServices(config) {
   return services;
 }
 
-/** Publication colours and type live in CSS. Presets do not paint over them. */
+/** PamoHub colours and type live in CSS. Presets do not paint over them. */
 const PUBLICATION_TOKENS = new Set([
   '--bg',
   '--bg-elev',
@@ -75,18 +75,20 @@ export function applyTheme(config) {
   }
   root.style.colorScheme = 'light';
   const themeColor = document.querySelector('meta[name="theme-color"]');
-  if (themeColor) themeColor.setAttribute('content', '#f4efe4');
+  if (themeColor) themeColor.setAttribute('content', '#102B35');
   void config;
 }
 
+const CUSTOMER_PAGE = 'book.html';
+
 export function pageHref(page, configId = requestedConfigId()) {
-  const file = page === 'owner' ? 'owner.html' : 'index.html';
+  const file = page === 'owner' ? 'owner.html' : CUSTOMER_PAGE;
   const query = configId && configId !== DEFAULT_CONFIG ? `?config=${encodeURIComponent(configId)}` : '';
   return `${import.meta.env.BASE_URL}${file}${query}`;
 }
 
 export function presetHref(page, configId) {
-  const file = page === 'owner' ? 'owner.html' : 'index.html';
+  const file = page === 'owner' ? 'owner.html' : CUSTOMER_PAGE;
   if (!configId || configId === DEFAULT_CONFIG) return `${import.meta.env.BASE_URL}${file}`;
   return `${import.meta.env.BASE_URL}${file}?config=${encodeURIComponent(configId)}`;
 }

@@ -1,19 +1,18 @@
 # bookit-lusaka
 
-A mobile-first booking page for small Lusaka businesses: salons, braiders, clinics and barbers. It is a static demo. There is no account system, no server and no payment provider.
+A static PamoHub demo. The home page introduces the idea of a campus booking hub and links to three fictional Lusaka businesses. There is no account system, no server and no payment provider.
 
-The sample brand is **Chipo's Braids & Beauty, Kabulonga**. The business, staff, prices and bookings are fictional. Every service price is labelled **example**.
+The sample businesses are **Chipo's Braids & Beauty** in Kabulonga, **Saka's Barbershop** in Woodlands and **Mtendere Physio Studio** in Longacres. Staff, prices and bookings are fictional. Every service price is labelled **example**.
 
-## Screenshots
+## Pages
 
-Services, the time picker, confirmation and the owner schedule. The phone shots are 390px wide and the desktop shots are 1440px wide.
+Screenshots of the previous cream and pink magazine layout are not shown here. The pages now use the PamoHub palette.
 
-| | Phone | Desktop |
-| --- | --- | --- |
-| Services | ![Services on a phone](docs/screenshots/mobile-services.png) | ![Services on a desktop](docs/screenshots/desktop-services.png) |
-| Time slots | ![Time slots on a phone](docs/screenshots/mobile-slots.png) | ![Time slots on a desktop](docs/screenshots/desktop-slots.png) |
-| Confirmation | ![Confirmation on a phone](docs/screenshots/mobile-confirmation.png) | ![Confirmation on a desktop](docs/screenshots/desktop-confirmation.png) |
-| Owner view | ![Owner view on a phone](docs/screenshots/mobile-owner.png) | ![Owner view on a desktop](docs/screenshots/desktop-owner.png) |
+**Home** (`index.html`) is the PamoHub landing page. It has a compact header (wordmark, and on a wide screen Explore, About and Choose your campus), Log in and Sign up marked coming soon, the headline "Everything you need, just a booking away.", a short service-card row that moves until you interact with it, an illustrative campus list, popular categories, the three sample businesses, How it works (Discover, Choose, Book, Confirm), and a Become a provider note. On a phone, Choose your campus sits above a bottom bar with Home, Explore, Bookings and Profile. Log in, Sign up, campus filtering, Bookings, Profile and Become a provider are marked demo or coming soon. They do not collect a password. Campus names are illustrative and the page says that no partnership is implied. Restaurants, photography, events, fitness and tutoring are marked coming soon. Only the three sample businesses link to a booking page.
+
+**Booking** (`book.html`) is the customer page. `?config=salon` is the default, `?config=barber` is the barbershop and `?config=clinic` is the physio studio. It keeps the demo banner, the service list, the time picker and the WhatsApp confirmation. Grey times cannot be booked. A highlighted row is a longer booked stretch.
+
+**Owner** (`owner.html`) is the same schedule demo as before, in the same palette, still with no login.
 
 ## Run it
 
@@ -25,12 +24,13 @@ npm test
 npm run dev
 ```
 
-Open [http://localhost:5173/bookit-lusaka/](http://localhost:5173/bookit-lusaka/). The Vite `base` is `/bookit-lusaka/`, so the site is not served from `/`.
+Open [http://localhost:5173/bookit-lusaka/](http://localhost:5173/bookit-lusaka/). That address is the PamoHub home page. The Vite `base` is `/bookit-lusaka/`, so the site is not served from `/`.
 
-Other presets:
+Booking pages:
 
-- Clinic: [http://localhost:5173/bookit-lusaka/?config=clinic](http://localhost:5173/bookit-lusaka/?config=clinic)
-- Barber: [http://localhost:5173/bookit-lusaka/?config=barber](http://localhost:5173/bookit-lusaka/?config=barber)
+- Salon: [http://localhost:5173/bookit-lusaka/book.html](http://localhost:5173/bookit-lusaka/book.html)
+- Barber: [http://localhost:5173/bookit-lusaka/book.html?config=barber](http://localhost:5173/bookit-lusaka/book.html?config=barber)
+- Physio studio: [http://localhost:5173/bookit-lusaka/book.html?config=clinic](http://localhost:5173/bookit-lusaka/book.html?config=clinic)
 - Owner schedule: [http://localhost:5173/bookit-lusaka/owner.html](http://localhost:5173/bookit-lusaka/owner.html)
 
 Build and preview the production files:
@@ -52,9 +52,9 @@ Each business is one JSON file in `public/config/`:
 | `clinic.json` | Mtendere Physio Studio, Longacres | `?config=clinic` |
 | `barber.json` | Saka's Barbershop, Woodlands | `?config=barber` |
 
-Switching is the `config` query parameter. To make another file the default, change `DEFAULT_CONFIG` in `src/config.js` (one line). A new file such as `public/config/nails.json` is picked up by `?config=nails` as long as the name is lowercase letters, numbers and hyphens.
+Switching is the `config` query parameter on `book.html` and `owner.html`. The home page does not take `config`. To make another file the default, change `DEFAULT_CONFIG` in `src/config.js` (one line). A new file such as `public/config/nails.json` is picked up by `book.html?config=nails` as long as the name is lowercase letters, numbers and hyphens.
 
-The JSON sets the name, area, tagline, hero headline and blurb, speech-bubble line, collage description, initials, address, the WhatsApp placeholder, opening hours, staff, services, deposit mock, sample policies, placeholder social handles, and gallery. The framed collage leads with that preset's own illustration. Cream paper, black ink, hot pink, and the display and serif fonts are shared publication tokens in CSS. Salon, clinic, and barber presets all use that palette.
+The JSON sets the name, area, tagline, hero headline and blurb, speech-bubble line, collage description, initials, address, the WhatsApp placeholder, opening hours, staff, services, deposit mock, sample policies, placeholder social handles, and gallery. The framed collage leads with that preset's own illustration. Colour and type are shared PamoHub tokens in CSS, so the salon, clinic and barber presets use one palette. Theme colours inside the JSON files are not applied.
 
 `phone.whatsappE164` is the only phone number. In every shipped preset it is `260970000000`, a **placeholder, not a real WhatsApp account**. The page formats those same digits as `+260 97 000 0000` and labels them **demo number**. The WhatsApp link uses the same digits. Replace this one value when this is no longer a demo.
 
@@ -67,7 +67,7 @@ Sample bookings and blocked times live in `public/data/seed.json`, keyed by the 
 1. Pick a service. Prices show the kwacha amount and the word example.
 2. Optionally pick a staff member, or leave no preference.
 3. Pick a date. Closed days are visible and cannot be selected.
-4. Pick a time. Open times use 24-hour `HH:MM`. Grey times cannot be booked. A peach row is a longer booked stretch, such as `Fully booked 08:00-14:00`.
+4. Pick a time. Open times use 24-hour `HH:MM`. Grey times cannot be booked. A highlighted row is a longer booked stretch, such as `Fully booked 08:00-14:00`.
 5. Enter a name and phone number, then review the booking.
 6. Optionally open the Mobile Money step. It lists MTN MoMo, Airtel Money and Zamtel. It is marked **Demo**. Nothing is charged and nothing is sent to a provider. This step comes after the review.
 7. Confirm on WhatsApp. The booking is saved in this browser and a `wa.me` link is built with the service, date, time, duration, example price, name and phone. The number is read from the config and labelled **demo number**.
@@ -206,17 +206,17 @@ No-show and cancelled bookings do not hide a slot. The time list still shows tho
 
 `.github/workflows/deploy.yml` publishes `dist` to GitHub Pages on a push to `main`. In the repository settings, set Pages to **GitHub Actions**. The public URL for this repository is `https://devdennie.github.io/bookit-lusaka/`.
 
-## Magazine restyle
+## PamoHub look
 
-The customer landing page is laid out like a small magazine: a ruled masthead, a meet-your-stylist collage, an hours and visit grid, and sample booking policies. **Book today** jumps to the booking section, and the next tap opens the existing booking flow. The booking dialog and the owner page use the same cream paper (`#f4efe4`), black ink (`#141414`), and hot pink (`#be185d`).
+The home page, the booking pages and the owner view share one palette: deep teal `#102B35`, mint `#D7F5E8`, off-white `#F7F8F5`, charcoal `#242B2E` and white cards. Buttons and cards are rounded. **Book today** jumps to the booking section, and the next tap opens the existing booking flow.
 
-Hot pink on the cream paper is about 5.3:1, and white text on the pink buttons is about 6:1, so both meet WCAG AA. Pink is not used for small text on the pink itself. Focus is a black outline set off the control. The stylist collage, hours, visit line, tag-us handles, and policies all come from the business config, so `?config=clinic` and `?config=barber` show their own words in the same layout.
+White text on deep teal is about 14.8:1. Charcoal on off-white is about 13.5:1. Deep teal on mint is about 12.8:1. The muted grey `#899397` is about 2.95:1 on off-white, so it is not used for text there. On the deep teal footer it is about 4.7:1, which passes WCAG AA, and that is where it is used. Secondary text on the light pages uses `#5C676B` (about 5.5:1 on off-white). Focus is a teal outline set off the control. The stylist collage, hours, visit line, tag-us handles and policies all come from the business config, so `?config=clinic` and `?config=barber` show their own words in the same layout.
 
 ## Images and fonts
 
-The mark, hero illustrations, and the framed collage are original SVGs drawn for this demo (`public/favicon.svg`, `src/art.js`, `public/images/arc-study.svg`, `public/images/loop-study.svg`, `public/images/circle-study.svg`). There are no third-party photographs. The collage and the visit gallery lazy-load those SVGs.
+The mark, the home-page service drawings, the hero illustrations and the framed collage are original SVGs drawn for this demo (`public/favicon.svg`, `index.html`, `src/art.js`, `public/images/arc-study.svg`, `public/images/loop-study.svg`, `public/images/circle-study.svg`). There are no third-party photographs. The collage and the visit gallery lazy-load those SVGs.
 
-Headings and buttons use [Barlow Condensed](https://fonts.google.com/specimen/Barlow+Condensed). Body text uses [Newsreader](https://fonts.google.com/specimen/Newsreader). Both are served by Google Fonts and used under the SIL Open Font License.
+Headings use [Manrope](https://fonts.google.com/specimen/Manrope) Bold. Body text uses [Inter](https://fonts.google.com/specimen/Inter) Regular. Buttons and labels use Inter SemiBold. Both are served by Google Fonts and used under the SIL Open Font License.
 
 ## Licence
 

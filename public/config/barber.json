@@ -15,7 +15,7 @@
   "collageAlt": "Abstract study of blocks and a stripe for the barbershop",
   "illustration": "barber",
   "staffNoun": "barber",
-  "colorScheme": "dark",
+  "colorScheme": "light",
   "phone": {
     "whatsappE164": "260970000000"
   },
@@ -152,7 +152,7 @@
   },
   "gallery": [
     { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines" },
-    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a gold disc" },
-    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" }
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a teal disc" },
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in deep teal" }
   ]
 }
