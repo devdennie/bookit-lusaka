@@ -75,7 +75,7 @@ export function applyTheme(config) {
   }
   root.style.colorScheme = 'light';
   const themeColor = document.querySelector('meta[name="theme-color"]');
-  if (themeColor) themeColor.setAttribute('content', '#f4efe4');
+  if (themeColor) themeColor.setAttribute('content', '#102B35');
   void config;
 }
 

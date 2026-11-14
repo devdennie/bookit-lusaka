@@ -14,9 +14,11 @@ export function demoBanner(name) {
 }
 
 export function siteHeader(config, actionHtml) {
+  const home = import.meta.env?.BASE_URL || '/';
   return `
     <header class="site-header">
       <div class="wrap header-inner">
+        <a class="hub-link" href="${home}">PamoHub</a>
         <a class="brand" href="${pageHref('customer', config.id)}">
           <span class="mark" aria-hidden="true">${escapeHtml(config.initials || '•')}</span>
           <span class="brand-copy">
@@ -90,22 +92,23 @@ export function landingHero(config, { status = '', art = '' } = {}) {
 
 export function landingMasthead(config) {
   const place = escapeHtml([config.area, config.city].filter(Boolean).join(', '));
-  const kicker = escapeHtml(config.tagline || config.name);
-  const book = '<a class="book-today" href="#booking">Book today</a>';
+  const home = import.meta.env?.BASE_URL || '/';
   return `
     <header class="masthead">
-      <div class="masthead-banner">
-        ${book}
-        <p class="masthead-kicker">${kicker}</p>
-        ${book}
+      <div class="wrap masthead-bar">
+        <a class="hub-link" href="${home}">PamoHub</a>
+        <a class="btn" href="#booking">Book today</a>
       </div>
-      <h1 class="masthead-title">${escapeHtml(config.name)}</h1>
-      <p class="masthead-place">
-        <svg class="pin" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
-        </svg>
-        <span>${place}</span>
-      </p>
+      <div class="wrap masthead-intro">
+        <p class="eyebrow">${escapeHtml(config.tagline || config.name)}</p>
+        <h1 class="masthead-title">${escapeHtml(config.name)}</h1>
+        <p class="masthead-place">
+          <svg class="pin" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+          </svg>
+          <span>${place}</span>
+        </p>
+      </div>
     </header>`;
 }
 
@@ -137,7 +140,7 @@ export function meetStylist(config) {
       <div class="meet-copy">
         <h2 id="meet-title">Meet your <span class="meet-accent">${escapeHtml(noun)}</span></h2>
         <p>${escapeHtml(name)} is the ${escapeHtml(role.toLowerCase())} in ${escapeHtml(place)}. Each visit is booked for the full sitting, so the time you choose is the time you keep.</p>
-        <a class="book-today" href="#booking">Book today</a>
+        <a class="btn" href="#booking">Book today</a>
       </div>
     </section>`;
 }

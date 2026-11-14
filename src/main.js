@@ -292,7 +292,7 @@ async function boot() {
     }).join('');
     const empty = flow.slots.length
       ? ''
-      : `<p class="empty" role="status">No open times on this day. Grey marks a time you cannot book. A peach row is a longer booked stretch.</p>`;
+      : `<p class="empty" role="status">No open times on this day. Grey marks a time you cannot book. A highlighted row is a longer booked stretch.</p>`;
     return `
       <h2 id="booker-title">Pick a time</h2>
       ${summaryHtml()}
@@ -300,7 +300,7 @@ async function boot() {
         <li><span class="legend-swatch legend-grey" aria-hidden="true"></span> Unavailable</li>
         <li><span class="legend-swatch legend-peach" aria-hidden="true"></span> Fully booked</li>
       </ul>
-      <p class="help">Grey times cannot be booked. A peach row is a longer booked stretch, such as Fully booked 08:00-14:00.</p>
+      <p class="help">Grey times cannot be booked. A highlighted row is a longer booked stretch, such as Fully booked 08:00-14:00.</p>
       ${error}
       <div class="slot-grid" role="radiogroup" aria-label="Times">${cells}</div>
       ${empty}
