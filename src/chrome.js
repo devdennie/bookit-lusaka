@@ -30,6 +30,7 @@ export function siteHeader(config, actionHtml) {
 }
 
 export function siteFooter(config, page) {
+  const home = import.meta.env?.BASE_URL || '/';
   const presets = PRESETS.map(([id, label]) => {
     const current = id === config.id ? ' aria-current="page"' : '';
     return `<a href="${presetHref(page, id)}"${current}>${label}</a>`;
@@ -48,7 +49,7 @@ export function siteFooter(config, page) {
         <div>
           <p class="footer-label">Demo presets</p>
           <nav class="preset-nav" aria-label="Demo business presets">${presets}</nav>
-          <p class="footer-links">${cross}</p>
+          <p class="footer-links"><a href="${home}">PamoHub home</a> ${cross}</p>
         </div>
       </div>
       <div class="wrap fine-print">
@@ -216,12 +217,13 @@ export function landingPolicies(config) {
 }
 
 export function loadErrorPage(message) {
-  const home = import.meta.env.BASE_URL;
+  const home = import.meta.env?.BASE_URL || '/';
   return `
     ${demoBanner('This booking page')}
     <main id="main" class="wrap narrow">
       <h1>That demo is not available</h1>
       <p>${escapeHtml(message)}</p>
-      <p><a class="btn" href="${home}">Back to the salon demo</a></p>
+      <p><a class="btn" href="${pageHref('customer', 'salon')}">Back to the salon demo</a></p>
+      <p><a href="${home}">PamoHub home</a></p>
     </main>`;
 }

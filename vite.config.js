@@ -7,6 +7,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
+        book: resolve(import.meta.dirname, 'book.html'),
         owner: resolve(import.meta.dirname, 'owner.html'),
       },
     },
