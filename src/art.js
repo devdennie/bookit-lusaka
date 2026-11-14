@@ -10,16 +10,6 @@ const salon = `
   <rect x="64" y="94" width="104" height="14" rx="7" fill="var(--accent)"/>
 </svg>`;
 
-const clinic = `
-<svg viewBox="0 0 640 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <rect width="640" height="760" fill="var(--accent-soft)"/>
-  <circle cx="430" cy="250" r="150" fill="var(--bg-elev)"/>
-  <circle cx="430" cy="250" r="92" fill="none" stroke="var(--accent)" stroke-width="14"/>
-  <path d="M90 560h460M90 600h320M90 640h220" fill="none" stroke="var(--ink)" stroke-width="12" stroke-linecap="round"/>
-  <rect x="80" y="90" width="150" height="14" rx="7" fill="var(--accent)"/>
-  <rect x="80" y="120" width="90" height="14" rx="7" fill="var(--ink)"/>
-</svg>`;
-
 const barber = `
 <svg viewBox="0 0 640 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <rect width="640" height="760" fill="var(--accent-soft)"/>
@@ -30,7 +20,52 @@ const barber = `
   <circle cx="470" cy="600" r="46" fill="var(--accent)"/>
 </svg>`;
 
-const icons = { salon, clinic, barber };
+const dinah = `
+<svg viewBox="0 0 640 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width="640" height="760" fill="var(--accent-soft)"/>
+  <rect x="70" y="80" width="500" height="600" rx="36" fill="var(--bg-elev)"/>
+  <g fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round">
+    <path d="M140 460c24-120 60-120 84 0"/>
+    <path d="M250 460c28-150 70-150 98 0"/>
+    <path d="M380 460c22-100 54-100 76 0"/>
+    <path d="M480 460c16-70 40-70 56 0"/>
+  </g>
+  <path d="M120 180c40 30 70 30 110 0s70-30 110 0 70 30 110 0 60 30 90 0" fill="none" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+</svg>`;
+
+const tutoring = `
+<svg viewBox="0 0 640 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width="640" height="760" fill="var(--accent-soft)"/>
+  <rect x="80" y="90" width="480" height="560" rx="28" fill="var(--bg-elev)"/>
+  <g fill="none" stroke="var(--accent)" stroke-width="12" stroke-linecap="round">
+    <path d="M130 220h300"/>
+    <path d="M130 300h360"/>
+    <path d="M130 380h320"/>
+    <path d="M130 460h240"/>
+    <path d="M130 540h280"/>
+  </g>
+  <circle cx="470" cy="560" r="36" fill="var(--accent)"/>
+</svg>`;
+
+const steaming = `
+<svg viewBox="0 0 640 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width="640" height="760" fill="var(--accent-soft)"/>
+  <path d="M170 180h300l80 110v280H90V290z" fill="var(--bg-elev)" stroke="var(--accent)" stroke-width="14" stroke-linejoin="round"/>
+  <path d="M170 180l150 80 150-80" fill="none" stroke="var(--ink)" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M320 260v310" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M150 640c40-30 70-30 110 0s70 30 110 0 70-30 110 0" fill="none" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+</svg>`;
+
+const printing = `
+<svg viewBox="0 0 640 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width="640" height="760" fill="var(--accent-soft)"/>
+  <rect x="150" y="120" width="280" height="360" rx="16" fill="var(--bg-elev)" stroke="var(--accent)" stroke-width="12"/>
+  <rect x="210" y="160" width="300" height="400" rx="16" fill="var(--bg-elev)" stroke="var(--ink)" stroke-width="12"/>
+  <path d="M250 250h180M250 310h220M250 370h160M250 430h200" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round"/>
+  <rect x="120" y="560" width="400" height="70" rx="16" fill="var(--accent)"/>
+</svg>`;
+
+const icons = { salon, barber, dinah, tutoring, steaming, printing };
 
 export function heroMarkup(kind) {
   return icons[kind] || icons.salon;

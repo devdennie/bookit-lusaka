@@ -1,0 +1,72 @@
+{
+  "id": "tutoring",
+  "name": "Tutoring",
+  "initials": "TU",
+  "area": null,
+  "city": null,
+  "address": null,
+  "tagline": "Book a 60-minute or 90-minute session.",
+  "hero": {
+    "headline": "A full session, start to finish.",
+    "blurb": "Sessions are 60 or 90 minutes."
+  },
+  "bubble": "Time to work through it.",
+  "collageAlt": "Abstract study of ruled lines and a circle for tutoring",
+  "illustration": "tutoring",
+  "staffNoun": "tutor",
+  "colorScheme": "light",
+  "phone": {
+    "whatsappE164": null,
+    "call": null
+  },
+  "social": [],
+  "policies": [],
+  "intervalMinutes": 30,
+  "openingHours": {
+    "monday": null,
+    "tuesday": null,
+    "wednesday": null,
+    "thursday": null,
+    "friday": null,
+    "saturday": null,
+    "sunday": null
+  },
+  "staff": [
+    { "id": "tutor", "name": null, "role": null }
+  ],
+  "categories": [
+    {
+      "id": "sessions",
+      "name": "Sessions",
+      "blurb": "Choose a 60-minute or 90-minute session.",
+      "services": [
+        {
+          "id": "session-60",
+          "name": "Tutoring session",
+          "description": "A 60-minute session.",
+          "durationMinutes": 60,
+          "priceZmw": null,
+          "staffIds": ["tutor"]
+        },
+        {
+          "id": "session-90",
+          "name": "Extended tutoring session",
+          "description": "A 90-minute session.",
+          "durationMinutes": 90,
+          "priceZmw": null,
+          "staffIds": ["tutor"]
+        }
+      ]
+    }
+  ],
+  "deposit": {
+    "enabled": false,
+    "amountZmw": null,
+    "providers": []
+  },
+  "gallery": [
+    { "src": "images/tutor-study.svg", "alt": "Abstract artwork of ruled lines in deep teal" },
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in deep teal and mint" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a mint disc" }
+  ]
+}

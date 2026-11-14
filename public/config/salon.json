@@ -193,8 +193,8 @@
     ]
   },
   "gallery": [
-    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" },
-    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines on a cream ground" },
-    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a gold disc" }
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in deep teal and mint" },
+    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines on an off-white ground" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a mint disc" }
   ]
 }

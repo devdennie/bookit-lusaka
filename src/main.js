@@ -1,5 +1,5 @@
 import { heroMarkup } from './art.js';
-import { demoBanner, landingHero, landingInfo, landingMasthead, landingPolicies, loadErrorPage, meetStylist, siteFooter, whatsappFab } from './chrome.js';
+import { contactHtml, landingHero, landingInfo, landingMasthead, landingPolicies, loadErrorPage, meetStylist, siteFooter, whatsappFab } from './chrome.js';
 import {
   applyTheme,
   flattenServices,
@@ -14,11 +14,12 @@ import {
   escapeHtml,
   formatDateLong,
   formatDayParts,
-  formatDemoPhone,
   formatDuration,
+  formatKwacha,
   formatPrice,
   formatTime,
   formatTimeRange,
+  hasOpeningHours,
   hoursRows,
   priceHtml,
   staffName,
@@ -50,9 +51,9 @@ function uid(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function demoRef() {
+function bookingRef() {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let value = 'DEMO-';
+  let value = 'REF-';
   for (let index = 0; index < 4; index += 1) {
     value += alphabet[Math.floor(Math.random() * alphabet.length)];
   }
@@ -154,11 +155,23 @@ async function boot() {
       ['details', 'Details'],
     ];
     steps.push(['review', 'Review']);
-    if (config.deposit?.enabled) steps.push(['deposit', 'Deposit']);
+    if (config.deposit?.enabled && (config.deposit.providers?.length ?? 0) > 0) steps.push(['deposit', 'Deposit']);
     return steps;
   }
 
+  function serviceDeposit(service) {
+    const value = service?.depositZmw ?? config.deposit?.amountZmw;
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
+  }
+
+  function hasDuration(service) {
+    const minutes = Number(service?.durationMinutes);
+    return Number.isFinite(minutes) && minutes > 0;
+  }
+
   function todayStatus() {
+    if (!hasOpeningHours(config.openingHours)) return 'Hours to be confirmed';
     const day = config.openingHours?.[weekdayName(today)];
     if (!day) {
       const upcoming = eachDate(addDays(today, 1), 7).find((iso) => config.openingHours?.[weekdayName(iso)]);
@@ -210,7 +223,7 @@ async function boot() {
       `<button type="button" class="pick" data-staff="any"><strong>No preference</strong><span>First ${escapeHtml(config.staffNoun || 'stylist')} who is free for the whole visit</span></button>`,
       ...people.map((person) => `
         <button type="button" class="pick" data-staff="${escapeHtml(person.id)}">
-          <strong>${escapeHtml(person.name)}</strong>
+          <strong>${escapeHtml(person.name || 'Staff')}</strong>
           <span>${escapeHtml(person.role || '')}</span>
         </button>
       `),
@@ -254,6 +267,12 @@ async function boot() {
 
   function timeStep() {
     const service = servicesById[flow.serviceId];
+    if (!hasDuration(service)) {
+      return `
+        <h2 id="booker-title">Pick a time</h2>
+        ${summaryHtml()}
+        <p class="empty" role="status">Times for this service are not listed yet.</p>`;
+    }
     const people = eligibleStaff(service);
     const timeline = getSlotTimeline({
       date: flow.date,
@@ -292,7 +311,7 @@ async function boot() {
     }).join('');
     const empty = flow.slots.length
       ? ''
-      : `<p class="empty" role="status">No open times on this day. Grey marks a time you cannot book. A peach row is a longer booked stretch.</p>`;
+      : `<p class="empty" role="status">No open times on this day. Grey marks a time you cannot book. A highlighted row is a longer booked stretch.</p>`;
     return `
       <h2 id="booker-title">Pick a time</h2>
       ${summaryHtml()}
@@ -300,7 +319,7 @@ async function boot() {
         <li><span class="legend-swatch legend-grey" aria-hidden="true"></span> Unavailable</li>
         <li><span class="legend-swatch legend-peach" aria-hidden="true"></span> Fully booked</li>
       </ul>
-      <p class="help">Grey times cannot be booked. A peach row is a longer booked stretch, such as Fully booked 08:00-14:00.</p>
+      <p class="help">Grey times cannot be booked. A highlighted row is a longer booked stretch, such as Fully booked 08:00-14:00.</p>
       ${error}
       <div class="slot-grid" role="radiogroup" aria-label="Times">${cells}</div>
       ${empty}
@@ -333,11 +352,10 @@ async function boot() {
     if (flow.depositStage === 'mock' && flow.depositProvider) {
       return `
         <h2 id="booker-title">Pay deposit to secure your slot</h2>
-        <p class="demo-stamp">Demo</p>
         <div class="mock-receipt" role="status">
           <h3>No payment was taken</h3>
-          <p>You tapped ${escapeHtml(providerName(flow.depositProvider))}. This is a mock. Nothing was sent to MTN, Airtel or Zamtel, and no money moved.</p>
-          <p>Demo reference <strong>${escapeHtml(flow.depositRef)}</strong>. It is not a payment receipt.</p>
+          <p>You tapped ${escapeHtml(providerName(flow.depositProvider))}. Nothing was sent to MTN, Airtel or Zamtel, and no money moved.</p>
+          <p>Reference <strong>${escapeHtml(flow.depositRef)}</strong>.</p>
           <p>Amount shown: ${amount}</p>
         </div>
         <button type="button" class="btn btn-block" id="deposit-continue">Continue</button>
@@ -352,19 +370,34 @@ async function boot() {
     `).join('');
     return `
       <h2 id="booker-title">Pay deposit to secure your slot</h2>
-      <p class="demo-stamp">Demo</p>
-      <p>Optional. This screen is a mock only. No payment is taken and no data is sent anywhere.</p>
+      <p>Optional. No payment is taken on this page and nothing is sent to a provider.</p>
       <p class="deposit-amt">${amount}</p>
       <div class="provider-list">${providers}</div>
       <button type="button" class="btn btn-block" id="skip-deposit">Continue without a deposit</button>
     `;
   }
 
+  function depositSentence() {
+    const service = servicesById[flow.serviceId];
+    if (!config.deposit?.enabled) return '';
+    const amount = serviceDeposit(service);
+    const amountLabel = amount == null ? '' : formatKwacha(amount);
+    if (flow.depositProvider) {
+      return `${providerName(flow.depositProvider)} selected. No payment is taken on this page.`;
+    }
+    if ((config.deposit.providers?.length ?? 0) > 0) {
+      return amountLabel
+        ? `${amountLabel} deposit option is next. No payment is taken on this page.`
+        : 'A deposit option is next. No payment is taken on this page.';
+    }
+    if (amountLabel) return `${amountLabel}, taken off the total price. No payment is taken on this page.`;
+    return '';
+  }
+
   function reviewList(start, end, staffId, depositNote) {
     const service = servicesById[flow.serviceId];
-    const deposit = depositNote || (flow.depositProvider
-      ? `${providerName(flow.depositProvider)} selected · demo only, not paid`
-      : 'Not paid · demo only');
+    const deposit = depositNote || depositSentence();
+    const depositRow = deposit ? `<div><dt>Deposit</dt><dd>${escapeHtml(deposit)}</dd></div>` : '';
     return `
       <dl class="review">
         <div><dt>Service</dt><dd>${escapeHtml(service.name)}</dd></div>
@@ -375,19 +408,20 @@ async function boot() {
         <div><dt>${escapeHtml(noun)}</dt><dd>${escapeHtml(staffName(config.staff, staffId))}</dd></div>
         <div><dt>Name</dt><dd>${escapeHtml(flow.name)}</dd></div>
         <div><dt>Phone</dt><dd>${escapeHtml(flow.phone)}</dd></div>
-        <div><dt>Deposit</dt><dd>${escapeHtml(deposit)}</dd></div>
+        ${depositRow}
       </dl>`;
   }
 
   function reviewStep() {
     const end = flow.slot.end || endTime(flow.slot.start, servicesById[flow.serviceId].durationMinutes);
-    const depositNote = config.deposit?.enabled ? 'Optional demo deposit is next' : 'Not paid · demo only';
-    const action = config.deposit?.enabled
+    const depositNote = depositSentence();
+    const hasProviderStep = (config.deposit?.providers?.length ?? 0) > 0;
+    const action = hasProviderStep
       ? '<button type="button" class="btn btn-block" id="review-continue">Continue</button>'
       : '<button type="button" class="btn btn-block" id="confirm-booking">Confirm booking</button>';
-    const intro = config.deposit?.enabled
-      ? 'Check the details. The demo deposit comes next, then WhatsApp.'
-      : 'Check the details, then save them on this device. You can send them on WhatsApp after that.';
+    const intro = hasProviderStep
+      ? 'Check the details. You can note a deposit preference next. No payment is taken on this page.'
+      : 'Check the details, then save them on this device.';
     return `
       <h2 id="booker-title">Review your booking</h2>
       <p>${intro}</p>
@@ -399,28 +433,37 @@ async function boot() {
   function doneStep() {
     const saved = flow.saved;
     const end = endTime(saved.start, saved.durationMinutes);
-    const href = whatsappUrl(config.phone.whatsappE164, bookingMessage({
-      businessName: config.name,
-      serviceName: saved.serviceName,
-      dateLabel: formatDateLong(saved.date),
-      timeLabel: formatTimeRange(saved.start, end),
-      durationLabel: formatDuration(saved.durationMinutes),
-      priceLabel: formatPrice(saved.priceZmw),
-      customerName: saved.customerName,
-      customerPhone: saved.customerPhone,
-      depositLabel: saved.depositDemo
-        ? `${providerName(saved.depositDemo)} selected on the demo screen (not charged)`
-        : null,
-    }));
+    const waDigits = String(config.phone?.whatsappE164 ?? '').replace(/\D/g, '');
+    const savedService = servicesById[saved.serviceId];
+    const savedDeposit = serviceDeposit(savedService);
+    const depositLabel = saved.depositDemo
+      ? `${providerName(saved.depositDemo)} selected. No payment was taken on this page.`
+      : (config.deposit?.enabled && savedDeposit != null && (config.deposit.providers?.length ?? 0) === 0
+        ? `${formatKwacha(savedDeposit)}, taken off the total price. No payment was taken on this page.`
+        : null);
+    const href = waDigits
+      ? whatsappUrl(waDigits, bookingMessage({
+        businessName: config.name,
+        serviceName: saved.serviceName,
+        dateLabel: formatDateLong(saved.date),
+        timeLabel: formatTimeRange(saved.start, end),
+        durationLabel: formatDuration(saved.durationMinutes),
+        priceLabel: formatPrice(saved.priceZmw),
+        customerName: saved.customerName,
+        customerPhone: saved.customerPhone,
+        depositLabel,
+      }))
+      : '';
+    const send = href
+      ? `<div class="wa-row"><a class="btn btn-block" href="${href}" target="_blank" rel="noopener noreferrer">Send booking on WhatsApp</a></div>`
+      : '';
+    const contacts = contactHtml(config);
     return `
-      <h2 id="booker-title">Saved in this demo</h2>
+      <h2 id="booker-title">Booking saved</h2>
       <p>The booking is on this device and will show in the owner view. Nothing has been sent yet.</p>
       ${reviewList(saved.start, end, saved.staffId)}
-      <div class="wa-row">
-        <a class="btn btn-block" href="${href}" target="_blank" rel="noopener noreferrer">Send booking on WhatsApp</a>
-        <span class="demo-number">demo number</span>
-      </div>
-      <p class="phone-note">WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
+      ${send}
+      ${contacts ? `<p class="phone-note">${contacts}</p>` : ''}
       <button type="button" class="btn-text" id="book-another">Book another service</button>
     `;
   }
@@ -567,19 +610,20 @@ async function boot() {
         </div>
       </section>
     `).join('');
-    const hours = hoursRows(config.openingHours).map((row) => `
+    const hours = hasOpeningHours(config.openingHours)
+      ? `<table class="hours"><caption class="visually-hidden">Opening hours</caption><tbody>${hoursRows(config.openingHours).map((row) => `
       <tr><th scope="row">${escapeHtml(row.label)}</th><td>${escapeHtml(row.value)}</td></tr>
-    `).join('');
+    `).join('')}</tbody></table>`
+      : '<p>Hours to be confirmed.</p>';
     const gallery = (config.gallery ?? []).map((image) => `
       <figure>
         <img src="${imageSrc(image.src)}" alt="${escapeHtml(image.alt || '')}" width="800" height="600" loading="lazy" decoding="async">
       </figure>
     `).join('');
 
+    const place = [config.area, config.city].filter(Boolean).join(', ');
+    const contacts = contactHtml(config);
     app.innerHTML = `
-      <div class="top-stack">
-        ${demoBanner(config.name)}
-      </div>
       <main id="main">
         <div id="landing" class="landing">
         ${landingMasthead(config)}
@@ -597,7 +641,7 @@ async function boot() {
             <ol class="steps">
               <li><span class="step-num">1</span><h3>Choose a service</h3><p>Add a ${escapeHtml(config.staffNoun || 'stylist')} if you want one.</p></li>
               <li><span class="step-num">2</span><h3>Pick a time that fits</h3><p>Long visits only appear when the whole slot is free.</p></li>
-              <li><span class="step-num">3</span><h3>Confirm on WhatsApp</h3><p>Your name, time and example price are filled in for you.</p></li>
+              <li><span class="step-num">3</span><h3>Confirm on WhatsApp</h3><p>Your name, time and price are filled in for you.</p></li>
             </ol>
           </div>
         </section>
@@ -606,7 +650,7 @@ async function boot() {
             <div class="services-intro">
               <p class="eyebrow">Services</p>
               <h2 id="services-title">Book a time</h2>
-              <p>Prices are in Zambian kwacha and every one is marked example.</p>
+              <p>Prices are in Zambian kwacha. Where a price is not listed yet, the page says price on request.</p>
               <nav class="cat-nav" aria-label="Service categories">${categories}</nav>
             </div>
             <div>${groups}</div>
@@ -616,13 +660,10 @@ async function boot() {
           <div class="wrap visit">
             <div>
               <p class="eyebrow">Visit</p>
-              <h2 id="visit-title">${escapeHtml(config.area)}</h2>
-              <p>${escapeHtml(config.address || '')}</p>
-              <p>WhatsApp <strong class="phone-display">${escapeHtml(formatDemoPhone(config.phone.whatsappE164))}</strong> <span class="demo-number">demo number</span></p>
-              <table class="hours">
-                <caption class="visually-hidden">Opening hours</caption>
-                <tbody>${hours}</tbody>
-              </table>
+              <h2 id="visit-title">${escapeHtml(place || config.name)}</h2>
+              ${config.address ? `<p>${escapeHtml(config.address)}</p>` : ''}
+              ${contacts ? `<p>${contacts}</p>` : ''}
+              ${hours}
             </div>
             <div class="gallery">${gallery}</div>
           </div>
@@ -731,7 +772,7 @@ async function boot() {
     const providerBtn = event.target.closest('[data-provider]');
     if (providerBtn && flow.step === 'deposit') {
       flow.depositProvider = providerBtn.dataset.provider;
-      flow.depositRef = demoRef();
+      flow.depositRef = bookingRef();
       flow.depositStage = 'mock';
       renderStep();
       return;
@@ -851,8 +892,13 @@ async function boot() {
     }
   });
 
+  if (location.hash) {
+    const target = document.querySelector(location.hash);
+    if (target) target.scrollIntoView();
+  }
+
   if (requestedConfigId() && !services.length) {
-    app.innerHTML = loadErrorPage('This demo has no services yet.');
+    app.innerHTML = loadErrorPage('No services are listed yet.');
   }
 }
 

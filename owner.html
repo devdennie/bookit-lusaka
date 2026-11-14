@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Demo owner view for a fictional Lusaka business. No login. Sample bookings stay in this browser.">
-    <meta name="theme-color" content="#f4efe4">
+    <meta name="description" content="Owner schedule. Bookings stay in this browser.">
+    <meta name="theme-color" content="#102B35">
     <meta name="robots" content="noindex">
     <title>Owner · Chipo's Braids &amp; Beauty</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@700&display=swap" rel="stylesheet">
     <script>
       (function () {
         var params = new URLSearchParams(location.search);
@@ -29,11 +29,12 @@
       })();
     </script>
     <link rel="stylesheet" href="./src/styles.css">
+    <link rel="stylesheet" href="./src/hub.css">
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <noscript>
-      <p class="demo-banner">Demo only. This is a fictional business. Prices and bookings are examples. JavaScript is required for the owner view.</p>
+      <p class="noscript-note">JavaScript is required for the owner view.</p>
     </noscript>
     <div id="app" aria-busy="true">
       <p class="boot">Loading the owner view…</p>
