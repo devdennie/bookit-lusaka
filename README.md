@@ -1,19 +1,22 @@
 # bookit-lusaka
 
-A mobile-first booking page for small Lusaka businesses: salons, braiders, clinics and barbers. It is a static demo. There is no account system, no server and no payment provider.
+PamoHub is a static booking site for this repository. It is published on GitHub Pages at `https://devdennie.github.io/bookit-lusaka/`. There is no account system and no server. Bookings stay in this browser. Pages send `noindex`.
 
-The sample brand is **Chipo's Braids & Beauty, Kabulonga**. The business, staff, prices and bookings are fictional. Every service price is labelled **example**.
+The interface does not label prices, phone numbers or businesses as examples. Where a price is missing, the page says **Price on request**. Empty hours, staff names and addresses are omitted or shown as still to be confirmed.
 
-## Screenshots
+## Pages
 
-Services, the time picker, confirmation and the owner schedule. The phone shots are 390px wide and the desktop shots are 1440px wide.
-
-| | Phone | Desktop |
+| Page | File | What it shows |
 | --- | --- | --- |
-| Services | ![Services on a phone](docs/screenshots/mobile-services.png) | ![Services on a desktop](docs/screenshots/desktop-services.png) |
-| Time slots | ![Time slots on a phone](docs/screenshots/mobile-slots.png) | ![Time slots on a desktop](docs/screenshots/desktop-slots.png) |
-| Confirmation | ![Confirmation on a phone](docs/screenshots/mobile-confirmation.png) | ![Confirmation on a desktop](docs/screenshots/desktop-confirmation.png) |
-| Owner view | ![Owner view on a phone](docs/screenshots/mobile-owner.png) | ![Owner view on a desktop](docs/screenshots/desktop-owner.png) |
+| Landing | `index.html` | PamoHub wordmark, hero, and **Choose your campus**. It does not list businesses. |
+| Campuses | `campuses.html` | NIPA can be selected. ZCAS, Evelyn Hone College, UNZA (University of Zambia), Cavendish University Zambia and Copperbelt University are marked Coming soon and cannot be selected. Listing an institution does not imply a partnership. |
+| NIPA services | `nipa.html` | Barbershop, salon, nail art, lash tech, tutoring, suit steaming, and photocopying and printing. Each card links to a booking page. |
+| Booking | `book.html?config=` | One business: services, times, details, review, and WhatsApp when a number is set. |
+| Owner | `owner.html?config=` | The schedule saved in this browser. |
+
+Nail art and lash tech are one business, **Dinah's Nail Art & Lashes** (`dinah`). The two cards open the same page at the matching category.
+
+Log in, Sign up, Bookings, Profile and Become a provider go to plain sections on the landing page. **Accounts are opening soon.** There is no password form.
 
 ## Run it
 
@@ -25,69 +28,160 @@ npm test
 npm run dev
 ```
 
-Open [http://localhost:5173/bookit-lusaka/](http://localhost:5173/bookit-lusaka/). The Vite `base` is `/bookit-lusaka/`, so the site is not served from `/`.
+Open [http://localhost:5173/bookit-lusaka/](http://localhost:5173/bookit-lusaka/). The Vite `base` is `/bookit-lusaka/`.
 
-Other presets:
+Other pages:
 
-- Clinic: [http://localhost:5173/bookit-lusaka/?config=clinic](http://localhost:5173/bookit-lusaka/?config=clinic)
-- Barber: [http://localhost:5173/bookit-lusaka/?config=barber](http://localhost:5173/bookit-lusaka/?config=barber)
-- Owner schedule: [http://localhost:5173/bookit-lusaka/owner.html](http://localhost:5173/bookit-lusaka/owner.html)
-
-Build and preview the production files:
+- Campuses: [http://localhost:5173/bookit-lusaka/campuses.html](http://localhost:5173/bookit-lusaka/campuses.html)
+- NIPA services: [http://localhost:5173/bookit-lusaka/nipa.html](http://localhost:5173/bookit-lusaka/nipa.html)
+- Barber: [http://localhost:5173/bookit-lusaka/book.html?config=barber](http://localhost:5173/bookit-lusaka/book.html?config=barber)
+- Salon: [http://localhost:5173/bookit-lusaka/book.html?config=salon](http://localhost:5173/bookit-lusaka/book.html?config=salon)
+- Dinah, nails: [http://localhost:5173/bookit-lusaka/book.html?config=dinah#cat-nails](http://localhost:5173/bookit-lusaka/book.html?config=dinah#cat-nails)
+- Dinah, lashes: [http://localhost:5173/bookit-lusaka/book.html?config=dinah#cat-lashes](http://localhost:5173/bookit-lusaka/book.html?config=dinah#cat-lashes)
+- Tutoring: [http://localhost:5173/bookit-lusaka/book.html?config=tutoring](http://localhost:5173/bookit-lusaka/book.html?config=tutoring)
+- Suit steaming: [http://localhost:5173/bookit-lusaka/book.html?config=steaming](http://localhost:5173/bookit-lusaka/book.html?config=steaming)
+- Print and copy: [http://localhost:5173/bookit-lusaka/book.html?config=printing](http://localhost:5173/bookit-lusaka/book.html?config=printing)
+- Owner: [http://localhost:5173/bookit-lusaka/owner.html](http://localhost:5173/bookit-lusaka/owner.html)
 
 ```bash
 npm run build
 npm run preview
 ```
 
-The preview is at `http://localhost:4173/bookit-lusaka/`.
+The preview is at `http://localhost:4173/bookit-lusaka/`. The build writes `index.html`, `campuses.html`, `nipa.html`, `book.html` and `owner.html` into `dist`.
 
-## Rebrand
+## Businesses
 
-Each business is one JSON file in `public/config/`:
-
-| File | Preset | Query |
+| File | Page | Notes |
 | --- | --- | --- |
-| `salon.json` | Chipo's Braids & Beauty, Kabulonga | default, or `?config=salon` |
-| `clinic.json` | Mtendere Physio Studio, Longacres | `?config=clinic` |
-| `barber.json` | Saka's Barbershop, Woodlands | `?config=barber` |
+| `public/config/barber.json` | Extol the International Barber | Prices and WhatsApp are set. Hours, location, durations and staff name are empty. |
+| `public/config/salon.json` | Chipo's Braids & Beauty, Kabulonga | Existing placeholder details. |
+| `public/config/dinah.json` | Dinah's Nail Art & Lashes, NIPA Flats | Hours, deposits, WhatsApp and the call number are set. Service prices are empty. |
+| `public/config/tutoring.json` | Tutoring | 60- and 90-minute sessions. Prices, hours, location, staff name and phone are empty. |
+| `public/config/steaming.json` | Suit Steaming | Two-piece (20 min) and three-piece (30 min). Prices, hours, location and phone are empty. |
+| `public/config/printing.json` | Print & Copy | Printing, photocopying and binding, 10 or 15 minutes. Prices, hours, location and phone are empty. Page prices are described in the service text. |
 
-Switching is the `config` query parameter. To make another file the default, change `DEFAULT_CONFIG` in `src/config.js` (one line). A new file such as `public/config/nails.json` is picked up by `?config=nails` as long as the name is lowercase letters, numbers and hyphens.
+`?config=` must be lowercase letters, numbers and hyphens. The default is `salon` (`DEFAULT_CONFIG` in `src/config.js`).
 
-The JSON sets the name, area, tagline, hero headline and blurb, speech-bubble line, collage description, initials, address, the WhatsApp placeholder, opening hours, staff, services, deposit mock, sample policies, placeholder social handles, and gallery. The framed collage leads with that preset's own illustration. Cream paper, black ink, hot pink, and the display and serif fonts are shared publication tokens in CSS. Salon, clinic, and barber presets all use that palette.
+## Editing provider details
 
-`phone.whatsappE164` is the only phone number. In every shipped preset it is `260970000000`, a **placeholder, not a real WhatsApp account**. The page formats those same digits as `+260 97 000 0000` and labels them **demo number**. The WhatsApp link uses the same digits. Replace this one value when this is no longer a demo.
+JSON has no comments. Fill a null or empty value in the config file, save, and reload. `npm test` does not need the missing values.
 
-Leave the demo banner in place until the business, prices and bookings are real. The pages also send `noindex` so the fictional prices are less likely to be indexed. Remove that meta tag for a real business.
+Shared fields:
 
-Sample bookings and blocked times live in `public/data/seed.json`, keyed by the config id. They are copied into `localStorage` on first visit. The owner page has **Reset demo data**, which restores that sample.
+| Field | Meaning | Format |
+| --- | --- | --- |
+| `name` | Business name | Text |
+| `initials` | Letters in the round mark | Short text |
+| `area`, `city`, `address` | Where the business is | Text, or `null` to hide |
+| `tagline` | Line under the name | Text |
+| `hero.headline`, `hero.blurb` | Booking-page introduction | Text |
+| `bubble` | Short line on the collage | Text |
+| `collageAlt` | Description of the collage illustration | Text |
+| `illustration` | Key in `src/art.js` (`salon`, `barber`, `dinah`, `tutoring`, `steaming`, `printing`) | Text |
+| `staffNoun` | Word in “Choose a …” | Text, such as `barber` |
+| `phone.whatsappE164` | WhatsApp number for the `wa.me` link and the visible number | Digits only, such as `260971234567`. Shown as `+260 971 234 567`. `null` hides WhatsApp. |
+| `phone.call` | Separate call link | Digits as dialled, such as `0573954949`. Shown as `057 395 4949` with `tel:` using those digits. Not rewritten to `+260`. `null` hides Call. |
+| `social` | Optional network and handle | `{ "network": "Instagram", "handle": "@name" }`. Handles containing “demo” are not shown. |
+| `policies` | Booking policies | `{ "title": "Deposits", "body": "…" }`. Text containing “demo” or “Sample note” is not shown. |
+| `intervalMinutes` | Gap between start times | Whole minutes, such as `30` |
+| `openingHours` | One key per weekday | `null` means closed, or `{ "open": "09:00", "close": "17:00", "breaks": [] }`. Times are 24-hour `HH:MM`. If every day is `null`, the page says hours are to be confirmed. |
+| `staff` | People who can take the booking | `{ "id": "barber", "name": "Ada", "role": "Barber" }`. An empty `name` is shown as Staff. |
+| `categories` | Groups of services | `id`, `name`, `blurb`, and `services` |
+| `services[].name` | Service name | Text |
+| `services[].description` | Short description | Text |
+| `services[].durationMinutes` | Length of the visit | Whole minutes, such as `45`. `null` means times are not listed yet. |
+| `services[].priceZmw` | Price in Zambian kwacha | Number, such as `50` for K50, shown as `ZMW 50`. `null` shows **Price on request**. |
+| `services[].depositZmw` | Deposit for that service, when it differs | Number of kwacha, or omit |
+| `services[].staffIds` | Who can do it | Staff `id`s. Omit to allow every staff member. |
+| `deposit.enabled` | Whether a deposit is part of this business | `true` or `false` |
+| `deposit.amountZmw` | One deposit for every service | Number, or `null` when each service has `depositZmw` |
+| `deposit.providers` | Optional on-page provider buttons | `{ "id": "mtn", "name": "MTN MoMo", "swatch": "#ffcb05" }`. An empty list skips that step. No payment is taken on the page. |
+| `gallery` | Small illustrations on the booking page | `{ "src": "images/file.svg", "alt": "…" }` |
+
+### Still to fill in
+
+**`public/config/barber.json` (Extol the International Barber)**
+
+- `area`, `city`, `address`
+- `openingHours` for each weekday
+- `staff[0].name` and `staff[0].role`
+- `durationMinutes` on Haircut with dye, Haircut without dye, Lining with dye, Lining without dye, and Plain dyeing
+- `social`, if you want any
+- `phone.call`, if you want a call number as well as WhatsApp
+
+Already set: name, the five service names, `priceZmw` (50, 40, 30, 15, 20), and `phone.whatsappE164` `260771606619`.
+
+**`public/config/dinah.json` (Dinah's Nail Art & Lashes)**
+
+- `priceZmw` on Full nail set and Lash set
+- `city`, if you want one besides NIPA Flats
+- `staff[0].role`, if you want one
+- `social`, if you want any
+
+Already set: name, staff name Dinah, hours, location NIPA Flats, nail duration 150, lash duration 45, deposits K30 and K50, WhatsApp `260967447059`, call `0573954949`, and the booking policies.
+
+**`public/config/tutoring.json`**
+
+- `name`, if Tutoring should be a business name
+- `area`, `city`, `address`
+- `openingHours`
+- `staff[0].name` and `staff[0].role`
+- `priceZmw` on both sessions
+- `phone.whatsappE164` and `phone.call`
+- `social`, if you want any
+
+Already set: a 60-minute session and a 90-minute session.
+
+**`public/config/steaming.json` (Suit Steaming)**
+
+- `name`, if Suit Steaming should be a business name
+- `area`, `city`, `address`
+- `openingHours`
+- `staff[0].name` and `staff[0].role`
+- `priceZmw` on Suit steaming, two-piece and Suit steaming, three-piece
+- `phone.whatsappE164` and `phone.call`
+- `social`, if you want any
+
+Already set: a 20-minute two-piece service and a 30-minute three-piece service.
+
+**`public/config/printing.json` (Print & Copy)**
+
+- `name`, if Print & Copy should be a business name
+- `area`, `city`, `address`
+- `openingHours`
+- `staff[0].name` and `staff[0].role`
+- `priceZmw` on Black and white printing, Colour printing, Photocopying and Binding
+- `phone.whatsappE164` and `phone.call`
+- `social`, if you want any
+
+Already set: those four services, at 10 or 15 minutes. Descriptions say the price will be per page.
+
+**`public/config/salon.json` (Chipo's Braids & Beauty)**
+
+- Replace `phone.whatsappE164` (`260970000000`) when you have the real number
+- Replace `social` handles
+- Replace `policies` if you want them on the page. The current wording is hidden because it says “demo” or “Sample note”.
 
 ## What a customer can do
 
-1. Pick a service. Prices show the kwacha amount and the word example.
+1. Pick a service. A number in `priceZmw` is shown in kwacha. `null` is shown as Price on request.
 2. Optionally pick a staff member, or leave no preference.
-3. Pick a date. Closed days are visible and cannot be selected.
-4. Pick a time. Open times use 24-hour `HH:MM`. Grey times cannot be booked. A peach row is a longer booked stretch, such as `Fully booked 08:00-14:00`.
+3. Pick a date. Closed days are visible and cannot be selected. If hours are not set, the page says they are to be confirmed.
+4. Pick a time, when `durationMinutes` is a number. Open times use 24-hour `HH:MM`. Grey times cannot be booked. A highlighted row is a longer booked stretch, such as `Fully booked 08:00-14:00`.
 5. Enter a name and phone number, then review the booking.
-6. Optionally open the Mobile Money step. It lists MTN MoMo, Airtel Money and Zamtel. It is marked **Demo**. Nothing is charged and nothing is sent to a provider. This step comes after the review.
-7. Confirm on WhatsApp. The booking is saved in this browser and a `wa.me` link is built with the service, date, time, duration, example price, name and phone. The number is read from the config and labelled **demo number**.
+6. Where a deposit is set, the review shows it. Provider buttons, when the config lists them, do not take payment.
+7. Confirm. The booking is saved in this browser. If `phone.whatsappE164` is set, a `wa.me` link is built with the service, date, time, duration, price, name and phone.
 
-A four-hour braid only appears when the whole sitting fits before closing, misses the lunch break, and does not overlap a booking or a block. Knotless braids, jumbo (six hours) only fit on Wednesday at the salon, because that is the day without a lunch break.
+A long visit only appears when the whole sitting fits before closing, misses any break, and does not overlap a booking or a block. For example, knotless braids, jumbo (six hours) only fit on Wednesday at the salon, because that is the day without a lunch break.
 
 ## Owner view
 
-`owner.html` is a demo. It says **Demo: no login** and keeps the longer note, **Demo owner view, no login in this demo.** There is no password. On a phone the header is compact and scrolls away, so it does not cover the day's stats.
+`owner.html` keeps the schedule for that business in this browser. On a phone the header is compact and scrolls away.
 
-From a chosen day you can:
+From a chosen day you can read that day's bookings, block time, remove a block, mark a booking completed or no-show, and restore the original bookings.
 
-- read that day's bookings
-- block time for one person or the whole shop
-- remove a block
-- mark a booking completed or no-show
-- see how many no-shows are on that day and in the saved demo
-- reset the sample data
-
-A confirmed or completed booking holds its slot. A no-show frees it. A booking made on the customer page is stored in `localStorage` and shows up in the owner view on the same device. The slot then disappears from the customer time list.
+A confirmed or completed booking holds its slot. A no-show frees it. A booking made on the booking page is stored in `localStorage` and shows up in the owner view on the same device.
 
 Storage key: `bookit-lusaka:v1:<config id>`.
 
@@ -95,101 +189,30 @@ Storage key: `bookit-lusaka:v1:<config id>`.
 
 Times are 24-hour `HH:MM` in `Africa/Lusaka`. Dates are `YYYY-MM-DD`. Ranges are half-open: a booking that ends at 11:00 does not block an 11:00 start.
 
+Sample bookings live in `public/data/seed.json`, keyed by the config id. `dayOffset` counts open days from today in Lusaka. They are copied into `localStorage` on first visit. **Restore original bookings** puts that list back.
+
 ### Service
 
 ```json
 {
-  "id": "knotless-medium",
-  "name": "Knotless braids, medium",
-  "description": "Lightweight braids with no knot at the scalp.",
-  "durationMinutes": 240,
-  "priceZmw": 550,
-  "staffIds": ["chipo", "bana"]
+  "id": "haircut-dye",
+  "name": "Haircut with dye",
+  "description": "A haircut with dye.",
+  "durationMinutes": null,
+  "priceZmw": 50,
+  "staffIds": ["barber"]
 }
 ```
-
-`staffIds` limits who can do the service. Omit it to allow every staff member. `priceZmw` is an example amount. The interface always prints the word example next to it.
-
-Opening hours are keyed by weekday. `null` means closed. `breaks` are times the service cannot cross.
-
-```json
-"monday": {
-  "open": "08:00",
-  "close": "18:30",
-  "breaks": [{ "start": "13:00", "end": "13:30" }]
-}
-```
-
-### Seed file
-
-`public/data/seed.json` uses `dayOffset` from today in Lusaka, not a fixed calendar date. The offset counts **open** days: `0` is today when today is open, otherwise the next open day, and a negative offset walks backward through open days. Closed days, such as Sunday at the salon, never receive sample bookings or blocks. Each preset has exactly one `no-show`, and a block, on that next open day. When today is closed, the owner schedule and the customer date picker open on that day so the sample is visible immediately. The sample is rebuilt when the calendar day changes; bookings you added stay.
-
-```json
-{
-  "bookings": [
-    {
-      "dayOffset": 0,
-      "start": "09:00",
-      "serviceId": "cornrows",
-      "staffId": "chipo",
-      "customerName": "Mwaka Phiri",
-      "customerPhone": "0972001001",
-      "status": "confirmed"
-    }
-  ],
-  "blocked": [
-    {
-      "dayOffset": 0,
-      "start": "15:00",
-      "end": "17:30",
-      "staffId": "lombe",
-      "reason": "Product training"
-    }
-  ]
-}
-```
-
-`staffId: null` on a block closes that stretch for the whole shop.
 
 ### Saved booking
 
-Written to `localStorage` when someone confirms, or materialised from the seed. Duration and price are copied from the service at that moment.
+Written to `localStorage` when someone confirms, or copied from the seed. Duration and price are copied from the service at that moment.
 
-```json
-{
-  "id": "bk-…",
-  "date": "2026-11-02",
-  "start": "08:00",
-  "durationMinutes": 240,
-  "priceZmw": 550,
-  "serviceId": "knotless-medium",
-  "serviceName": "Knotless braids, medium",
-  "staffId": "bana",
-  "customerName": "Thandiwe Banda",
-  "customerPhone": "0971234567",
-  "status": "confirmed",
-  "depositDemo": null
-}
-```
-
-`status` is `confirmed`, `completed` or `no-show`. `depositDemo` is a provider id if the mock deposit screen was used, otherwise `null`. It does not mean money moved.
-
-### Blocked time
-
-```json
-{
-  "id": "blk-…",
-  "date": "2026-11-02",
-  "start": "15:00",
-  "end": "17:30",
-  "staffId": "lombe",
-  "reason": "Product training"
-}
-```
+`status` is `confirmed`, `completed` or `no-show`. `depositDemo` is a provider id if that screen was used, otherwise `null`. It does not mean money moved.
 
 ## Slot rules
 
-`src/slots.js` builds the time list. `npm test` covers it.
+`src/slots.js` builds the time list. `npm test` covers it. The slot rules are unchanged.
 
 A start time is offered only when all of these are true:
 
@@ -200,24 +223,26 @@ A start time is offered only when all of these are true:
 - the same is true for blocked time, including whole-shop blocks
 - the start is not already in the past when the date is today
 
-No-show and cancelled bookings do not hide a slot. The time list still shows those starts that cannot be booked: one or two as grey unavailable buttons, and three or more as a single row. `getSlotTimeline` builds that list. `getAvailableSlots` is the bookable subset.
+No-show and cancelled bookings do not hide a slot.
+
+## Hero background
+
+The landing hero uses one collage, `public/images/pamohub-collage.webp`, as a blurred background behind a deep-teal overlay. Two copies are stacked and drift upward in a loop. It is decorative: hidden from assistive technology, with empty alt text, and it does not receive clicks or focus. Hover or keyboard focus inside the hero pauses the drift. `prefers-reduced-motion` stops it.
+
+Photographer credits are `public/data/credits.json`. The footer lists each photographer and links to the Pexels page for that photo. Photography and laundry are only in the collage. They are not businesses on the NIPA page.
+
+## Colour and type
+
+Deep teal `#102B35`, mint `#D7F5E8`, off-white `#F7F8F5`, charcoal `#242B2E`, and white cards. Muted grey `#899397` is not used for body text, because it does not meet WCAG AA on this background. Secondary text uses `#3E494C`.
+
+Headings are Manrope Bold. Body text is Inter Regular. Buttons and labels are Inter SemiBold. Both families are served by Google Fonts under the SIL Open Font License.
+
+Illustrations on the booking pages are original SVGs. The hero collage is the Pexels photograph sheet listed in `public/data/credits.json`.
 
 ## Deploy
 
-`.github/workflows/deploy.yml` publishes `dist` to GitHub Pages on a push to `main`. In the repository settings, set Pages to **GitHub Actions**. The public URL for this repository is `https://devdennie.github.io/bookit-lusaka/`.
-
-## Magazine restyle
-
-The customer landing page is laid out like a small magazine: a ruled masthead, a meet-your-stylist collage, an hours and visit grid, and sample booking policies. **Book today** jumps to the booking section, and the next tap opens the existing booking flow. The booking dialog and the owner page use the same cream paper (`#f4efe4`), black ink (`#141414`), and hot pink (`#be185d`).
-
-Hot pink on the cream paper is about 5.3:1, and white text on the pink buttons is about 6:1, so both meet WCAG AA. Pink is not used for small text on the pink itself. Focus is a black outline set off the control. The stylist collage, hours, visit line, tag-us handles, and policies all come from the business config, so `?config=clinic` and `?config=barber` show their own words in the same layout.
-
-## Images and fonts
-
-The mark, hero illustrations, and the framed collage are original SVGs drawn for this demo (`public/favicon.svg`, `src/art.js`, `public/images/arc-study.svg`, `public/images/loop-study.svg`, `public/images/circle-study.svg`). There are no third-party photographs. The collage and the visit gallery lazy-load those SVGs.
-
-Headings and buttons use [Barlow Condensed](https://fonts.google.com/specimen/Barlow+Condensed). Body text uses [Newsreader](https://fonts.google.com/specimen/Newsreader). Both are served by Google Fonts and used under the SIL Open Font License.
+`.github/workflows/deploy.yml` publishes `dist` to GitHub Pages on a push to `main`. In the repository settings, set Pages to **GitHub Actions**.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE). The hero collage photographs are used under the Pexels License.

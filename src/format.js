@@ -12,18 +12,26 @@ export function escapeHtml(value) {
 }
 
 export function formatPrice(amount) {
+  if (amount == null || amount === '') return 'Price on request';
   const number = Number(amount);
-  if (!Number.isFinite(number)) return 'ZMW —';
+  if (!Number.isFinite(number)) return 'Price on request';
   const body = Number.isInteger(number) ? String(number) : number.toFixed(2);
   return `ZMW ${body}`;
 }
 
 export function priceHtml(amount) {
-  return `<span class="price-amt">${formatPrice(amount)}</span> <span class="example-tag">example</span>`;
+  return `<span class="price-amt">${formatPrice(amount)}</span>`;
+}
+
+export function formatKwacha(amount) {
+  const number = Number(amount);
+  if (!Number.isFinite(number)) return '';
+  return `K${Number.isInteger(number) ? number : number.toFixed(2)}`;
 }
 
 export function formatDuration(minutes) {
   const total = Number(minutes);
+  if (!Number.isFinite(total) || total <= 0) return 'Duration to be confirmed';
   const hours = Math.floor(total / 60);
   const mins = total % 60;
   if (hours && mins) return `${hours} hr ${mins} min`;
@@ -41,13 +49,15 @@ export function formatTime(hhmm) {
 }
 
 export function formatTimeRange(start, end) {
+  if (!end) return formatTime(start);
   return `${formatTime(start)} – ${formatTime(end)}`;
 }
 
 export function endTime(start, durationMinutes) {
   const begin = toMinutes(start);
-  if (begin == null) return start;
-  return fromMinutes(begin + durationMinutes);
+  const duration = Number(durationMinutes);
+  if (begin == null || !Number.isFinite(duration) || duration <= 0) return '';
+  return fromMinutes(begin + duration);
 }
 
 function utcDate(iso) {
@@ -91,22 +101,35 @@ export function hoursRows(openingHours) {
   }));
 }
 
-export function staffName(staff, staffId) {
-  if (!staffId) return 'Whole shop';
-  return (staff ?? []).find((person) => person.id === staffId)?.name || 'Staff';
+export function hasOpeningHours(openingHours) {
+  return hoursRows(openingHours).some((row) => row.value !== 'Closed');
 }
 
-/**
- * `e164` is a placeholder in this demo (260970000000), not a real WhatsApp account.
- * The visible number is this same value, formatted (260970000000 becomes +260 97 000 0000).
- */
+export function staffName(staff, staffId) {
+  if (!staffId) return 'Whole shop';
+  const name = (staff ?? []).find((person) => person.id === staffId)?.name;
+  return name || 'Staff';
+}
+
+/** Twelve-digit Zambian numbers are shown as +260 XXX XXX XXX. */
 export function formatDemoPhone(e164) {
   const digits = String(e164 ?? '').replace(/\D/g, '');
+  if (!digits) return '';
   if (digits.startsWith('260') && digits.length === 12) {
     const local = digits.slice(3);
-    return `+260 ${local.slice(0, 2)} ${local.slice(2, 5)} ${local.slice(5)}`;
+    return `+260 ${local.slice(0, 3)} ${local.slice(3, 6)} ${local.slice(6)}`;
   }
-  return digits ? `+${digits}` : '';
+  return `+${digits}`;
+}
+
+/** Local numbers such as 0573954949 are shown as 057 395 4949 and are not rewritten to +260. */
+export function formatCallNumber(value) {
+  const digits = String(value ?? '').replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.length === 10 && digits.startsWith('0')) {
+    return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+  }
+  return String(value);
 }
 
 export function whatsappUrl(e164, text) {
@@ -132,11 +155,10 @@ export function bookingMessage({
     `Date: ${dateLabel}`,
     `Time: ${timeLabel}`,
     `Duration: ${durationLabel}`,
-    `Price: ${priceLabel} (example)`,
+    `Price: ${priceLabel}`,
     `Name: ${customerName}`,
     `Phone: ${customerPhone}`,
   ];
   if (depositLabel) lines.push(`Deposit: ${depositLabel}`);
-  lines.push('', 'Sent from the demo booking page. Example prices only. No payment was taken.');
   return lines.join('\n');
 }

@@ -19,8 +19,11 @@ function ruleBlock(selector) {
 test('the hero headline and blurb are rendered and not hidden', () => {
   const expected = {
     salon: 'The whole sitting, not a squeeze.',
-    clinic: 'The full session, not a gap.',
-    barber: 'The full chair, not a quick gap.',
+    barber: 'Haircuts, lining and dyeing.',
+    dinah: 'The full set, with time to finish.',
+    tutoring: 'A full session, start to finish.',
+    steaming: 'A pressed suit, ready to wear.',
+    printing: 'Print, copy and bind.',
   };
   for (const [id, headline] of Object.entries(expected)) {
     const config = preset(id);
@@ -36,8 +39,11 @@ test('the hero headline and blurb are rendered and not hidden', () => {
 
   const bubbles = {
     salon: 'The whole sitting, not a squeeze.',
-    clinic: 'Time to assess, not to rush.',
-    barber: 'The whole cut, not a squeeze.',
+    barber: 'The full chair, booked properly.',
+    dinah: 'Come with your inspo pictures.',
+    tutoring: 'Time to work through it.',
+    steaming: 'Ready for the appointment.',
+    printing: 'Ready for collection.',
   };
   for (const [id, line] of Object.entries(bubbles)) {
     const html = meetStylist(preset(id));
@@ -45,8 +51,9 @@ test('the hero headline and blurb are rendered and not hidden', () => {
     assert.match(html, new RegExp(`aria-label="${preset(id).collageAlt}"`));
     assert.match(html, /class="frame-art"/);
   }
-  assert.doesNotMatch(meetStylist(preset('clinic')), /The whole sitting, not a squeeze\./);
-  assert.doesNotMatch(meetStylist(preset('barber')), /The whole sitting, not a squeeze\./);
+  for (const id of ['barber', 'dinah', 'tutoring', 'steaming', 'printing']) {
+    assert.doesNotMatch(meetStylist(preset(id)), /The whole sitting, not a squeeze\./);
+  }
 
   for (const selector of ['.hero-title', '.lede']) {
     const block = ruleBlock(selector);

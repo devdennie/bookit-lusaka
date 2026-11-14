@@ -1,158 +1,96 @@
 {
-  "_comment": "whatsappE164 260970000000 is a PLACEHOLDER, not a real phone. The page formats these same digits as +260 97 000 0000 and labels them demo number.",
   "id": "barber",
-  "name": "Saka's Barbershop",
-  "initials": "SB",
-  "area": "Woodlands",
-  "city": "Lusaka",
-  "address": "Shop 2, Woodlands Main, Lusaka",
-  "tagline": "Clean fades and an unhurried shave in Woodlands.",
+  "name": "Extol the International Barber",
+  "initials": "EB",
+  "area": null,
+  "city": null,
+  "address": null,
+  "tagline": "💈 Haircuts, lining and dyeing.",
   "hero": {
-    "headline": "The full chair, not a quick gap.",
-    "blurb": "Fades and shaves are booked for the whole sitting. The time you pick is the time the chair is yours."
+    "headline": "Haircuts, lining and dyeing.",
+    "blurb": "Book a chair with Extol the International Barber."
   },
-  "bubble": "The whole cut, not a squeeze.",
+  "bubble": "The full chair, booked properly.",
   "collageAlt": "Abstract study of blocks and a stripe for the barbershop",
   "illustration": "barber",
   "staffNoun": "barber",
-  "colorScheme": "dark",
+  "colorScheme": "light",
   "phone": {
-    "whatsappE164": "260970000000"
+    "whatsappE164": "260771606619",
+    "call": null
   },
-  "social": [
-    { "network": "Instagram", "handle": "@sakasbarber.demo" },
-    { "network": "Facebook", "handle": "sakasbarber.demo" },
-    { "network": "TikTok", "handle": "@sakasbarber.demo" }
-  ],
-  "policies": [
-    { "title": "Deposits", "body": "The demo may show a sample hold in kwacha. Nothing is charged, and the chair is only saved in this browser." },
-    { "title": "Lateness", "body": "Sample note: arrive within 10 minutes. A late start may mean a shorter cut if the next guest is waiting." },
-    { "title": "Cancellations", "body": "Sample note: tell the shop the day before if you cannot come. Same-day misses can be marked as a no-show in the demo." },
-    { "title": "What to bring", "body": "Sample note: bring a photo of the cut you want. The shop supplies the cape and tools." }
-  ],
+  "social": [],
+  "policies": [],
   "intervalMinutes": 30,
-  "theme": {
-    "--bg": "#121110",
-    "--bg-elev": "#1c1a17",
-    "--ink": "#f6f1e8",
-    "--muted": "#cbbba6",
-    "--accent": "#e2b15a",
-    "--accent-hover": "#f0c57a",
-    "--on-accent": "#1a1408",
-    "--accent-soft": "#2a2418",
-    "--line": "#3a342c",
-    "--gold": "#e2b15a",
-    "--ok": "#b6d38a",
-    "--danger": "#fecdd3",
-    "--focus": "#f6f1e8",
-    "--banner": "#e2b15a",
-    "--banner-ink": "#1a1408",
-    "--shadow": "0 18px 50px rgba(0, 0, 0, 0.35)"
-  },
   "openingHours": {
     "monday": null,
-    "tuesday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
-    "wednesday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
-    "thursday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
-    "friday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
-    "saturday": { "open": "09:00", "close": "19:00", "breaks": [{ "start": "13:00", "end": "14:00" }] },
-    "sunday": { "open": "10:00", "close": "15:00", "breaks": [] }
+    "tuesday": null,
+    "wednesday": null,
+    "thursday": null,
+    "friday": null,
+    "saturday": null,
+    "sunday": null
   },
   "staff": [
-    { "id": "saka", "name": "Saka Mbewe", "role": "Owner" },
-    { "id": "peter", "name": "Peter Zulu", "role": "Barber" }
+    { "id": "barber", "name": null, "role": null }
   ],
   "categories": [
     {
-      "id": "cuts",
-      "name": "Cuts",
-      "blurb": "Fades and classic cuts. The chair is yours for the full slot.",
+      "id": "services",
+      "name": "Services",
+      "blurb": "Haircuts, lining and dyeing.",
       "services": [
         {
-          "id": "skin-fade",
-          "name": "Skin fade",
-          "description": "A tight fade, scissor work on top and a clean lineup.",
-          "durationMinutes": 45,
-          "priceZmw": 100,
-          "staffIds": ["saka", "peter"]
-        },
-        {
-          "id": "classic-cut",
-          "name": "Classic cut",
-          "description": "A straightforward cut and style, no skin fade.",
-          "durationMinutes": 30,
-          "priceZmw": 70,
-          "staffIds": ["saka", "peter"]
-        },
-        {
-          "id": "kids-cut",
-          "name": "Kids cut",
-          "description": "A patient cut for children under 12, with a simple finish.",
-          "durationMinutes": 30,
+          "id": "haircut-dye",
+          "name": "Haircut with dye",
+          "description": "A haircut with dye.",
+          "durationMinutes": null,
           "priceZmw": 50,
-          "staffIds": ["saka", "peter"]
-        }
-      ]
-    },
-    {
-      "id": "beard",
-      "name": "Beard",
-      "blurb": "Shape-ups and a hot towel shave.",
-      "services": [
+          "staffIds": ["barber"]
+        },
         {
-          "id": "beard-shape",
-          "name": "Beard shape",
-          "description": "Line, shape and a short beard oil finish.",
-          "durationMinutes": 20,
+          "id": "haircut",
+          "name": "Haircut without dye",
+          "description": "A haircut without dye.",
+          "durationMinutes": null,
           "priceZmw": 40,
-          "staffIds": ["saka", "peter"]
+          "staffIds": ["barber"]
         },
         {
-          "id": "hot-towel",
-          "name": "Hot towel shave",
-          "description": "A traditional shave with hot towels. Allow half an hour.",
-          "durationMinutes": 30,
-          "priceZmw": 80,
-          "staffIds": ["saka"]
-        }
-      ]
-    },
-    {
-      "id": "packages",
-      "name": "Packages",
-      "blurb": "Longer visits when you want the cut and the beard together.",
-      "services": [
-        {
-          "id": "cut-beard",
-          "name": "Cut and beard",
-          "description": "Skin fade or classic cut plus a beard shape in one hour.",
-          "durationMinutes": 60,
-          "priceZmw": 130,
-          "staffIds": ["saka", "peter"]
+          "id": "lining-dye",
+          "name": "Lining with dye",
+          "description": "Lining with dye.",
+          "durationMinutes": null,
+          "priceZmw": 30,
+          "staffIds": ["barber"]
         },
         {
-          "id": "scalp-treatment",
-          "name": "Scalp treatment",
-          "description": "A short treatment for a dry or itchy scalp, after a consultation.",
-          "durationMinutes": 30,
-          "priceZmw": 90,
-          "staffIds": ["saka"]
+          "id": "lining",
+          "name": "Lining without dye",
+          "description": "Lining without dye.",
+          "durationMinutes": null,
+          "priceZmw": 15,
+          "staffIds": ["barber"]
+        },
+        {
+          "id": "dyeing",
+          "name": "Plain dyeing",
+          "description": "Plain dyeing.",
+          "durationMinutes": null,
+          "priceZmw": 20,
+          "staffIds": ["barber"]
         }
       ]
     }
   ],
   "deposit": {
-    "enabled": true,
-    "amountZmw": 50,
-    "providers": [
-      { "id": "mtn", "name": "MTN MoMo", "swatch": "#ffcb05" },
-      { "id": "airtel", "name": "Airtel Money", "swatch": "#e4002b" },
-      { "id": "zamtel", "name": "Zamtel", "swatch": "#0a8f3d" }
-    ]
+    "enabled": false,
+    "amountZmw": null,
+    "providers": []
   },
   "gallery": [
-    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines" },
-    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a gold disc" },
-    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in warm brown and terracotta" }
+    { "src": "images/loop-study.svg", "alt": "Abstract artwork of looping lines in deep teal" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a mint disc" },
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in deep teal and mint" }
   ]
 }

@@ -1,0 +1,102 @@
+{
+  "id": "dinah",
+  "name": "Dinah's Nail Art & Lashes",
+  "initials": "DL",
+  "area": "NIPA Flats",
+  "city": null,
+  "address": "NIPA Flats",
+  "tagline": "Nail art and lash sets at NIPA Flats.",
+  "hero": {
+    "headline": "The full set, with time to finish.",
+    "blurb": "A full nail set takes 2 hours 30 minutes. A lash set takes 45 minutes."
+  },
+  "bubble": "Come with your inspo pictures.",
+  "collageAlt": "Abstract study of curves and a small arc for nails and lashes",
+  "illustration": "dinah",
+  "staffNoun": "technician",
+  "colorScheme": "light",
+  "phone": {
+    "whatsappE164": "260967447059",
+    "call": "0573954949"
+  },
+  "social": [],
+  "policies": [
+    {
+      "title": "Deposits",
+      "body": "To secure your slot, please send a small deposit of K30 for nails, K50 for lashes. Your deposit is taken off your total price. It is non-refundable, but if you reschedule on time, I will move it to your new date. No deposit means no booking."
+    },
+    {
+      "title": "Lateness",
+      "body": "Please arrive within 15 minutes of your time. If you are more than 15 minutes late, I may have to shorten your set or reschedule you, because the next client is waiting. Please just WhatsApp me if you are running late. I understand traffic and school."
+    },
+    {
+      "title": "Cancellations",
+      "body": "Life happens, especially with school. Please tell me at least one day before if you cannot come. If you cancel the same day or do not show up, your deposit is lost. If you have exams or an emergency, message me and we will talk. I will try to help you reschedule."
+    },
+    {
+      "title": "What to bring",
+      "body": "Come with clean nails, no old polish or old lashes if possible. Come with your inspo pictures, I love that! You are welcome to come with a friend if they are also getting a set done, or you can come alone if you can. My space is small but you will be comfortable. A full set takes 2 hours to 2 hours 30 minutes for nails, and 45 minutes for lashes. Please plan your time."
+    },
+    {
+      "title": "Aftercare",
+      "body": "Do not wet your lashes for 24 hours. Do not pick your nails or lashes. If a nail breaks or a lash falls off within 3 days, message me. I will fix one or two for free for students."
+    }
+  ],
+  "intervalMinutes": 30,
+  "openingHours": {
+    "monday": { "open": "12:00", "close": "19:00", "breaks": [] },
+    "tuesday": { "open": "12:00", "close": "19:00", "breaks": [] },
+    "wednesday": { "open": "12:00", "close": "19:00", "breaks": [] },
+    "thursday": { "open": "10:00", "close": "19:00", "breaks": [] },
+    "friday": { "open": "10:00", "close": "19:00", "breaks": [] },
+    "saturday": { "open": "09:00", "close": "16:30", "breaks": [] },
+    "sunday": null
+  },
+  "staff": [
+    { "id": "dinah", "name": "Dinah", "role": null }
+  ],
+  "categories": [
+    {
+      "id": "nails",
+      "name": "Nail art",
+      "blurb": "A full nail set takes 2 hours 30 minutes.",
+      "services": [
+        {
+          "id": "full-nail-set",
+          "name": "Full nail set",
+          "description": "A full nail set. Please allow 2 hours 30 minutes.",
+          "durationMinutes": 150,
+          "priceZmw": null,
+          "depositZmw": 30,
+          "staffIds": ["dinah"]
+        }
+      ]
+    },
+    {
+      "id": "lashes",
+      "name": "Lash tech",
+      "blurb": "A lash set takes 45 minutes.",
+      "services": [
+        {
+          "id": "lash-set",
+          "name": "Lash set",
+          "description": "A lash set. Please allow 45 minutes.",
+          "durationMinutes": 45,
+          "priceZmw": null,
+          "depositZmw": 50,
+          "staffIds": ["dinah"]
+        }
+      ]
+    }
+  ],
+  "deposit": {
+    "enabled": true,
+    "amountZmw": null,
+    "providers": []
+  },
+  "gallery": [
+    { "src": "images/nail-study.svg", "alt": "Abstract artwork of small arcs in mint and deep teal" },
+    { "src": "images/lash-study.svg", "alt": "Abstract artwork of fine curves on an off-white ground" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a mint disc" }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "id": "printing",
+  "name": "Print & Copy",
+  "initials": "PC",
+  "area": null,
+  "city": null,
+  "address": null,
+  "tagline": "Printing, photocopying and binding.",
+  "hero": {
+    "headline": "Print, copy and bind.",
+    "blurb": "Drop-off and collection slots are about 10 to 15 minutes. Page prices are not listed yet."
+  },
+  "bubble": "Ready for collection.",
+  "collageAlt": "Abstract study of stacked sheets in deep teal and mint",
+  "illustration": "printing",
+  "staffNoun": "assistant",
+  "colorScheme": "light",
+  "phone": {
+    "whatsappE164": null,
+    "call": null
+  },
+  "social": [],
+  "policies": [],
+  "intervalMinutes": 15,
+  "openingHours": {
+    "monday": null,
+    "tuesday": null,
+    "wednesday": null,
+    "thursday": null,
+    "friday": null,
+    "saturday": null,
+    "sunday": null
+  },
+  "staff": [
+    { "id": "assistant", "name": null, "role": null }
+  ],
+  "categories": [
+    {
+      "id": "print",
+      "name": "Photocopying and printing",
+      "blurb": "Short slots for drop-off or collection. Page prices are not listed yet.",
+      "services": [
+        {
+          "id": "bw-print",
+          "name": "Black and white printing",
+          "description": "Black and white printing for collection. The price will be per page.",
+          "durationMinutes": 10,
+          "priceZmw": null,
+          "staffIds": ["assistant"]
+        },
+        {
+          "id": "colour-print",
+          "name": "Colour printing",
+          "description": "Colour printing for collection. The price will be per page.",
+          "durationMinutes": 15,
+          "priceZmw": null,
+          "staffIds": ["assistant"]
+        },
+        {
+          "id": "photocopy",
+          "name": "Photocopying",
+          "description": "Photocopying for collection. The price will be per page.",
+          "durationMinutes": 10,
+          "priceZmw": null,
+          "staffIds": ["assistant"]
+        },
+        {
+          "id": "binding",
+          "name": "Binding",
+          "description": "Binding a document for collection.",
+          "durationMinutes": 15,
+          "priceZmw": null,
+          "staffIds": ["assistant"]
+        }
+      ]
+    }
+  ],
+  "deposit": {
+    "enabled": false,
+    "amountZmw": null,
+    "providers": []
+  },
+  "gallery": [
+    { "src": "images/print-study.svg", "alt": "Abstract artwork of stacked sheets in deep teal and mint" },
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in deep teal and mint" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a mint disc" }
+  ]
+}

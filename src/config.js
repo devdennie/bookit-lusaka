@@ -1,4 +1,3 @@
-// WhatsApp numbers in config JSON (the demo uses 260970000000) are placeholders.
 export const DEFAULT_CONFIG = 'salon';
 
 export function requestedConfigId(search = window.location.search) {
@@ -10,7 +9,7 @@ export async function loadConfig(search = window.location.search) {
   const id = requestedConfigId(search);
   const response = await fetch(`${import.meta.env.BASE_URL}config/${id}.json`);
   if (!response.ok) {
-    const error = new Error(`Could not load the "${id}" demo.`);
+    const error = new Error(`Could not load "${id}".`);
     error.code = 'config';
     throw error;
   }
@@ -40,7 +39,7 @@ export function flattenServices(config) {
   return services;
 }
 
-/** Publication colours and type live in CSS. Presets do not paint over them. */
+/** PamoHub colours and type live in CSS. Presets do not paint over them. */
 const PUBLICATION_TOKENS = new Set([
   '--bg',
   '--bg-elev',
@@ -75,18 +74,29 @@ export function applyTheme(config) {
   }
   root.style.colorScheme = 'light';
   const themeColor = document.querySelector('meta[name="theme-color"]');
-  if (themeColor) themeColor.setAttribute('content', '#f4efe4');
+  if (themeColor) themeColor.setAttribute('content', '#102B35');
   void config;
 }
 
+const PAGE_FILES = {
+  home: 'index.html',
+  campuses: 'campuses.html',
+  nipa: 'nipa.html',
+  customer: 'book.html',
+  owner: 'owner.html',
+};
+
 export function pageHref(page, configId = requestedConfigId()) {
-  const file = page === 'owner' ? 'owner.html' : 'index.html';
+  if (page === 'home' || page === 'campuses' || page === 'nipa') {
+    return `${import.meta.env.BASE_URL}${PAGE_FILES[page]}`;
+  }
+  const file = PAGE_FILES[page] || PAGE_FILES.customer;
   const query = configId && configId !== DEFAULT_CONFIG ? `?config=${encodeURIComponent(configId)}` : '';
   return `${import.meta.env.BASE_URL}${file}${query}`;
 }
 
 export function presetHref(page, configId) {
-  const file = page === 'owner' ? 'owner.html' : 'index.html';
+  const file = page === 'owner' ? 'owner.html' : 'book.html';
   if (!configId || configId === DEFAULT_CONFIG) return `${import.meta.env.BASE_URL}${file}`;
   return `${import.meta.env.BASE_URL}${file}?config=${encodeURIComponent(configId)}`;
 }

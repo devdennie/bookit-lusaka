@@ -1,4 +1,4 @@
-import { demoBanner, loadErrorPage, siteFooter, siteHeader } from './chrome.js';
+import { loadErrorPage, siteFooter, siteHeader } from './chrome.js';
 import { applyTheme, flattenServices, loadConfig, loadSeed, pageHref } from './config.js';
 import { addDays, openDayFromOffset, todayISO, weekdayName } from './dates.js';
 import {
@@ -7,6 +7,7 @@ import {
   formatDateLong,
   formatDuration,
   formatTimeRange,
+  hasOpeningHours,
   hoursLabel,
   priceHtml,
   staffName,
@@ -61,7 +62,7 @@ async function boot() {
   let announced = '';
 
   const staffOptions = (config.staff ?? []).map((person) => `
-    <option value="${escapeHtml(person.id)}">${escapeHtml(person.name)}</option>
+            <option value="${escapeHtml(person.id)}">${escapeHtml(person.name || 'Staff')}</option>
   `).join('');
 
   function scheduleHtml() {
@@ -76,7 +77,9 @@ async function boot() {
     const dayNoShows = dayBookings.filter((booking) => booking.status === 'no-show').length;
     const allNoShows = state.bookings.filter((booking) => booking.status === 'no-show').length;
     const dayHours = config.openingHours?.[weekdayName(selectedDate)];
-    const hoursText = dayHours ? hoursLabel(dayHours) : 'Closed';
+    const hoursText = !hasOpeningHours(config.openingHours)
+      ? 'Hours to be confirmed'
+      : (dayHours ? hoursLabel(dayHours) : 'Closed');
     const closedText = dayHours
       ? ''
       : 'Closed this day. You can still look at saved visits or block time.';
@@ -91,7 +94,7 @@ async function boot() {
             <h3>${escapeHtml(booking.serviceName)}</h3>
             <p>${escapeHtml(booking.customerName)} · ${escapeHtml(booking.customerPhone)}</p>
             <p class="muted">${escapeHtml(staffName(config.staff, booking.staffId))} · ${escapeHtml(formatDuration(booking.durationMinutes))} · ${priceHtml(booking.priceZmw)}</p>
-            <p class="muted">${booking.depositDemo ? 'Deposit option tapped in the demo · not paid' : 'No deposit · demo only, not paid'}</p>
+            <p class="muted">${booking.depositDemo ? 'Deposit preference noted. No payment was taken on this page.' : 'No deposit recorded on this page.'}</p>
             <div class="row-actions">
               <button type="button" class="btn-ghost" data-status="completed" aria-pressed="${booking.status === 'completed'}">Mark completed</button>
               <button type="button" class="btn-ghost" data-status="no-show" aria-pressed="${booking.status === 'no-show'}">Mark no-show</button>
@@ -124,7 +127,7 @@ async function boot() {
       <ul class="stats">
         <li class="stat"><strong>${dayBookings.length}</strong><span>Bookings this day</span></li>
         <li class="stat"><strong>${dayNoShows}</strong><span>No-shows this day</span></li>
-        <li class="stat"><strong>${allNoShows}</strong><span>No-shows in this demo</span></li>
+        <li class="stat"><strong>${allNoShows}</strong><span>No-shows saved here</span></li>
       </ul>
       <h2>Bookings</h2>
       <div class="card-list">${bookings}</div>
@@ -160,9 +163,9 @@ async function boot() {
         </fieldset>
       </form>
       <section class="reset-box">
-        <h2>Reset the sample day</h2>
-        <p>This clears bookings and blocks made in this browser and restores the sample data.</p>
-        <button type="button" class="btn-ghost" id="reset-demo">Reset demo data</button>
+        <h2>Restore the original bookings</h2>
+        <p>This clears bookings and blocks made in this browser and restores the original list.</p>
+        <button type="button" class="btn-ghost" id="reset-bookings">Restore original bookings</button>
         <div id="reset-confirm" hidden>
           <p>Replace everything saved on this device with the sample bookings?</p>
           <div class="row-actions">
@@ -187,14 +190,12 @@ async function boot() {
 
   app.innerHTML = `
     <div class="top-stack">
-      ${demoBanner(config.name)}
-      ${siteHeader(config, `<a class="btn" href="${pageHref('customer', config.id)}">Customer page</a>`)}
+      ${siteHeader(config, `<a class="btn" href="${pageHref('customer', config.id)}">Booking page</a>`)}
     </div>
     <main id="main">
       <div class="wrap">
         <h1 class="owner-title">${escapeHtml(config.name)}</h1>
-        <p class="login-note" role="note"><strong>Demo: no login</strong></p>
-        <p class="owner-note" role="note"><strong>Demo owner view, no login in this demo.</strong> Anyone with this link can change the sample schedule. It is saved only in this browser.</p>
+        <p class="owner-note" role="note">This schedule is saved in this browser.</p>
         <p id="day-live" class="visually-hidden" aria-live="polite"></p>
         <div id="schedule"></div>
       </div>
@@ -240,7 +241,7 @@ async function boot() {
       paint();
       return;
     }
-    if (event.target.closest('#reset-demo')) {
+    if (event.target.closest('#reset-bookings')) {
       const box = document.querySelector('#reset-confirm');
       if (box) box.hidden = false;
       document.querySelector('#reset-yes')?.focus();
@@ -249,14 +250,14 @@ async function boot() {
     if (event.target.closest('#reset-no')) {
       const box = document.querySelector('#reset-confirm');
       if (box) box.hidden = true;
-      document.querySelector('#reset-demo')?.focus();
+      document.querySelector('#reset-bookings')?.focus();
       return;
     }
     if (event.target.closest('#reset-yes')) {
       state = resetState(config.id, seed, servicesById, today, config.openingHours);
       selectedDate = openDayFromOffset(today, 0, config.openingHours);
       blockError = '';
-      paint('#reset-demo');
+      paint('#reset-bookings');
     }
   });
 

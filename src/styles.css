@@ -1,26 +1,28 @@
 :root {
-  --bg: #f4efe4;
-  --bg-elev: #fbf7f0;
-  --ink: #141414;
-  --muted: #3d3a36;
-  --accent: #be185d;
-  --accent-hover: #9d1249;
+  --bg: #f7f8f5;
+  --bg-elev: #ffffff;
+  --ink: #242b2e;
+  --muted: #3e494c;
+  --accent: #102b35;
+  --accent-hover: #0c2129;
   --on-accent: #ffffff;
-  --accent-soft: #f8d5e5;
-  --line: #141414;
-  --rule: #141414;
-  --gold: #9d1249;
-  --ok: #1f6b32;
+  --accent-soft: #d7f5e8;
+  --mint: #d7f5e8;
+  --line: #d5dbd6;
+  --rule: #d5dbd6;
+  --gold: #102b35;
+  --ok: #0f6b45;
   --danger: #9f1239;
-  --focus: #141414;
-  --banner: #141414;
-  --banner-ink: #f4efe4;
-  --shadow: 4px 4px 0 rgba(20, 20, 20, 0.16);
-  --font-display: "Barlow Condensed", "Arial Narrow", "Franklin Gothic Medium", sans-serif;
-  --font-body: "Newsreader", "Iowan Old Style", Palatino, Georgia, serif;
+  --focus: #102b35;
+  --banner: #102b35;
+  --banner-ink: #f7f8f5;
+  --shadow: 0 12px 32px rgba(16, 43, 53, 0.08);
+  --font-display: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-ui: "Inter", "Segoe UI", sans-serif;
   --serif: var(--font-display);
   --sans: var(--font-body);
-  --max: 1320px;
+  --max: 1120px;
   color-scheme: light;
 }
 
@@ -48,10 +50,9 @@ img, svg { max-width: 100%; }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  line-height: 0.95;
-  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .rule {

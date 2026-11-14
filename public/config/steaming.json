@@ -1,0 +1,72 @@
+{
+  "id": "steaming",
+  "name": "Suit Steaming",
+  "initials": "SS",
+  "area": null,
+  "city": null,
+  "address": null,
+  "tagline": "Steam a two-piece or a three-piece suit.",
+  "hero": {
+    "headline": "A pressed suit, ready to wear.",
+    "blurb": "A two-piece suit takes about 20 minutes. A three-piece suit takes about 30 minutes."
+  },
+  "bubble": "Ready for the appointment.",
+  "collageAlt": "Abstract study of a jacket shape in deep teal and mint",
+  "illustration": "steaming",
+  "staffNoun": "attendant",
+  "colorScheme": "light",
+  "phone": {
+    "whatsappE164": null,
+    "call": null
+  },
+  "social": [],
+  "policies": [],
+  "intervalMinutes": 30,
+  "openingHours": {
+    "monday": null,
+    "tuesday": null,
+    "wednesday": null,
+    "thursday": null,
+    "friday": null,
+    "saturday": null,
+    "sunday": null
+  },
+  "staff": [
+    { "id": "attendant", "name": null, "role": null }
+  ],
+  "categories": [
+    {
+      "id": "suits",
+      "name": "Suit steaming",
+      "blurb": "Choose a two-piece or a three-piece suit.",
+      "services": [
+        {
+          "id": "two-piece",
+          "name": "Suit steaming, two-piece",
+          "description": "Steaming for a two-piece suit.",
+          "durationMinutes": 20,
+          "priceZmw": null,
+          "staffIds": ["attendant"]
+        },
+        {
+          "id": "three-piece",
+          "name": "Suit steaming, three-piece",
+          "description": "Steaming for a three-piece suit.",
+          "durationMinutes": 30,
+          "priceZmw": null,
+          "staffIds": ["attendant"]
+        }
+      ]
+    }
+  ],
+  "deposit": {
+    "enabled": false,
+    "amountZmw": null,
+    "providers": []
+  },
+  "gallery": [
+    { "src": "images/steam-study.svg", "alt": "Abstract artwork of a jacket shape in deep teal and mint" },
+    { "src": "images/arc-study.svg", "alt": "Abstract artwork of nested arcs in deep teal and mint" },
+    { "src": "images/circle-study.svg", "alt": "Abstract artwork of overlapping circles and a mint disc" }
+  ]
+}

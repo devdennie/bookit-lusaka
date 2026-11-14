@@ -1,46 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Demo booking page for the fictional salon Chipo's Braids & Beauty in Kabulonga, Lusaka. Example prices only.">
-    <meta name="theme-color" content="#f4efe4">
+    <meta name="description" content="Discover trusted campus services, explore local businesses and book your next experience.">
+    <meta name="theme-color" content="#102B35">
     <meta name="robots" content="noindex">
-    <meta property="og:title" content="Chipo's Braids & Beauty">
-    <meta property="og:description" content="Fictional Kabulonga salon. Example prices and sample bookings.">
-    <meta property="og:type" content="website">
-    <title>Chipo's Braids &amp; Beauty · Book</title>
+    <title>PamoHub</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-    <script>
-      (function () {
-        var params = new URLSearchParams(location.search);
-        var id = (params.get('config') || 'salon').toLowerCase();
-        if (!/^[a-z0-9-]+$/.test(id)) id = 'salon';
-        function preload(href) {
-          var link = document.createElement('link');
-          link.rel = 'preload';
-          link.as = 'fetch';
-          link.href = href;
-          link.crossOrigin = 'anonymous';
-          document.head.appendChild(link);
-        }
-        preload('config/' + id + '.json');
-        preload('data/seed.json');
-      })();
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./src/styles.css">
+    <link rel="stylesheet" href="./src/hub.css">
   </head>
-  <body>
+  <body class="hub-page">
     <a class="skip" href="#main">Skip to content</a>
-    <noscript>
-      <p class="demo-banner">Demo only. This is a fictional business. Prices and bookings are examples. JavaScript is required to browse services and times.</p>
-    </noscript>
-    <div id="app" aria-busy="true">
-      <p class="boot">Loading the booking page…</p>
-    </div>
-    <script type="module" src="./src/main.js"></script>
+    <header class="hub-header" id="top">
+      <div class="wrap hub-header-inner">
+        <a class="wordmark" href="index.html">PamoHub</a>
+        <nav class="desk-nav" aria-label="Primary">
+          <a href="campuses.html">Explore</a>
+          <a href="#about">About</a>
+        </nav>
+        <div class="account-actions">
+          <a href="#accounts">Log in</a>
+          <a class="btn sign-up" href="#accounts">Sign up</a>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hub-hero" aria-labelledby="hero-title">
+        <div class="hub-collage" aria-hidden="true">
+          <div class="collage-drift">
+            <img src="./images/pamohub-collage.webp" alt="" width="1800" height="1541">
+            <img src="./images/pamohub-collage.webp" alt="" width="1800" height="1541">
+          </div>
+        </div>
+        <div class="hub-hero-scrim" aria-hidden="true"></div>
+        <div class="wrap hub-hero-copy">
+          <p class="hub-kicker">PamoHub</p>
+          <h1 id="hero-title">Everything you need, just a booking away.</h1>
+          <p class="lede">Discover trusted campus services, explore local businesses and book your next experience.</p>
+          <div class="hub-hero-actions">
+            <a class="btn" href="campuses.html">Choose your campus</a>
+            <a class="btn-ghost" href="campuses.html">Explore services</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="hub-section" id="about" aria-labelledby="about-title">
+        <div class="wrap">
+          <h2 id="about-title">One place to book</h2>
+          <p class="lede">PamoHub is a campus-first place to discover local services and send a booking. Choose a campus, open a business, and pick a time.</p>
+        </div>
+      </section>
+
+      <section class="hub-section" aria-labelledby="how-title">
+        <div class="wrap">
+          <h2 id="how-title">How it works</h2>
+          <ol class="step-grid">
+            <li><h3>Discover</h3><p>Choose a campus and see the businesses listed there.</p></li>
+            <li><h3>Choose</h3><p>Pick a service and a time that fits.</p></li>
+            <li><h3>Book</h3><p>Add your name and phone, then review the details.</p></li>
+            <li><h3>Confirm</h3><p>Save the booking on this device and send it on WhatsApp when a number is listed.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="hub-section" id="providers" aria-labelledby="provider-title">
+        <div class="wrap">
+          <div class="provider-band">
+            <h2 id="provider-title">Become a provider</h2>
+            <p>Bring your business onto PamoHub. Provider registration opens with customer accounts.</p>
+            <p><a class="btn" href="#accounts">About accounts</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="hub-section" id="bookings" aria-labelledby="bookings-title">
+        <div class="wrap plain-card">
+          <h2 id="bookings-title">Bookings</h2>
+          <p>When you have an account, your reservations will be listed here. Until then, confirm a time on a business page.</p>
+        </div>
+      </section>
+
+      <section class="hub-section" id="accounts" aria-labelledby="accounts-title">
+        <div class="wrap plain-card">
+          <h2 id="accounts-title">Accounts are opening soon</h2>
+          <p>You will be able to sign in, keep a campus and see your bookings here. There is no password form on this page.</p>
+        </div>
+      </section>
+
+      <section class="hub-section" id="contact" aria-labelledby="contact-title">
+        <div class="wrap">
+          <h2 id="contact-title">Contact</h2>
+          <p>Each business page lists the phone numbers it has.</p>
+          <p id="legal">Terms and privacy details will be published when accounts open.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="hub-footer">
+      <div class="wrap">
+        <p class="wordmark">PamoHub</p>
+        <p>
+          <a href="#about">About</a> ·
+          <a href="#contact">Contact</a> ·
+          <a href="#legal">Terms</a> ·
+          <a href="#legal">Privacy</a>
+        </p>
+        <p class="photo-credits" id="photo-credits" hidden></p>
+      </div>
+    </footer>
+    <a class="campus-dock" href="campuses.html">
+      <strong>Choose your campus</strong>
+      <span>Select your institution to explore available services.</span>
+    </a>
+    <nav class="bottom-nav" aria-label="Mobile">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="campuses.html">Explore</a>
+      <a href="#bookings">Bookings</a>
+      <a href="#accounts">Profile</a>
+    </nav>
+    <script type="module" src="./src/landing.js"></script>
   </body>
 </html>
